@@ -1,0 +1,41 @@
+{
+    "manifestVersion": 1,
+    "id": "PublishDacPac",
+    "publisher": "DrJohnT",
+    "name": "Publish SQL Database using a DACPAC and DAC Publish Profile",
+    "description": "Publish SQL Database using a DACPAC and DAC Publish Profile",
+    "version": "1.0.2",
+    "links": {
+        "support": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
+        }
+    },
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "icons": {
+        "default": "icon.png"
+    },
+    "files": [
+        {
+            "path": "task"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "custom-build-release-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "PublishDacPac"
+            }
+        }
+    ]
+}
