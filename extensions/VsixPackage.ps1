@@ -1,5 +1,5 @@
 Remove-Item *.vsix
 foreach ($folder in Get-ChildItem | ?{ $_.PSIsContainer })
 {
-   tfx extension create --manifest-globs vss-extension.json --root $folder 
+   tfx extension create --manifests vss-extension.json --root $folder --rev-version
 }
