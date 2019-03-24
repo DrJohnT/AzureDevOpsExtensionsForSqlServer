@@ -1,0 +1,73 @@
+{
+    "manifestVersion": 1,
+    "id": "AzureDevOpsExtensionsForSqlServer",
+    "name": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
+    "version": "1.0.7",
+    "publisher": "DrJohnT",
+    "description": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
+    "public": true,
+    "icons": {
+        "default": "images/SqlServerIcon.png",
+        "large": "images/SqlServerIcon.svg"
+    },
+    "screenshots": [
+    	{
+      		"path": "images/SqlServerIcon.png"
+    	}
+    ],
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        "deploy",
+        "build",
+        "sqldatabase",
+        "sqlpackage"
+    ],
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki"
+        },
+        "issues": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
+        },
+        "repository": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+        }
+    },
+    "branding": {
+        "color": "#f6f7fb",
+        "theme": "light"
+    },
+    "content": {
+        "details": {
+            "path": "overview.md"
+        }
+    },
+    "scopes": [
+        "vso.build_execute",
+        "vso.serviceendpoint_manage"
+    ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "files": [
+        {
+            "path": "PublishDacPac"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "task-PublishDacPac",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+            "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "PublishDacPac"
+            }
+        }
+    ]
+}

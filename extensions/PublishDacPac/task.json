@@ -1,10 +1,10 @@
 {
     "id": "f22a2ea4-1803-42d3-b3fc-54436e74f005",
-    "friendlyName": "SQL Server Database Deployment using a DACPAC",
     "name": "PublishDacPac",
+    "friendlyName": "SQL Server Database Deployment using a DACPAC",
     "description": "Deploys a SQL Server Database to a server using a DACPAC and a DAC Publish Profile",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki)",
-	"category": "Deploy",
+	"category": "Utility",
     "visibility": [
         "Build",
         "Release"
@@ -13,6 +13,11 @@
 	"demands": [
         "sqlpackage"
     ],
+    "version": {
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "4"
+     },
 	"minimumAgentVersion": "1.95.0",
     "inputs": [
 		{
@@ -59,11 +64,10 @@
             }
         }
     ],
+    "instanceNameFormat": "PublishDacPac",
     "execution": {
         "PowerShell3": {
-            "target": "$(currentDirectory)\\PublishDacPacTask.ps1",
-            "argumentFormat": "",
-            "workingDirectory": "$(currentDirectory)"
+            "target": "PublishDacPacTask.ps1"
         }
     }
 }

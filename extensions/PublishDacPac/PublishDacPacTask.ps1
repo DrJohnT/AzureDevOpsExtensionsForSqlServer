@@ -18,21 +18,16 @@ param()
 
     . $BootStrapPath;
 
-    $DacPacPath = Get-VstsInput -Name "DacPacPath" -Require;
-    $DacPublishProfile = Get-VstsInput -Name "DacPublishProfile" -Require;
-    $TargetServerName = Get-VstsInput -Name  "TargetServerName" -Require;
-    $TargetDatabaseName = Get-VstsInput -Name "TargetDatabaseName";
-    $PreferredVersion = Get-VstsInput -Name "PreferredVersion";
+    [string]$DacPacPath = Get-VstsInput -Name "DacPacPath" -Require;
+    [string]$DacPublishProfile = Get-VstsInput -Name "DacPublishProfile" -Require;
+    [string]$TargetServerName = Get-VstsInput -Name  "TargetServerName" -Require;
+    [string]$TargetDatabaseName = Get-VstsInput -Name "TargetDatabaseName";
+    [string]$PreferredVersion = Get-VstsInput -Name "PreferredVersion";
 
     $global:ErrorActionPreference = 'Stop';
 
     Trace-VstsEnteringInvocation $MyInvocation
     try {
-        #Set-VstsTaskVariable -Name "System.Culture" -Value "en-US";
-
-        #Import-VstsLocStrings "$PSScriptRoot\Task.json";
-
-		#[bool]$debug = Get-VstsTaskVariable -Name System.Debug -AsBool -Default true;
 		if ($TargetDatabaseName -is $null) {
 			Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -TargetServerName $TargetServerName -PreferredVersion $PreferredVersion;
 		} else {

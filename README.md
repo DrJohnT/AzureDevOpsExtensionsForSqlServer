@@ -1,11 +1,17 @@
 ### AzureDevOpsExtensionsForSqlServer
 
-# Azure DevOps Extensions for SQL Server
+Azure DevOps Extensions for Microsoft SQL Server
+================================================
 
-This repo contains extensions to help with SQL Server deployment tasks when using Azure DevOps Pipelines or Azure DevOps Release Manager.  Note that Azure DevOps was previously known under the names VSTS (Visual Studio Team Services) and TFS (Team Foundation Server).
+This repo contains extensions to help with Microsoft SQL Server deployment tasks when
+using Azure DevOps Pipelines and Release Management.
 
-## SQL Server Extensions
+Note that Azure DevOps was previously known under the names VSTS (Visual Studio
+Team Services) and TFS (Team Foundation Server).
 
-| Extension | Description |
-|-----------|-------------|
-| PublishDacPac | Publishes a SQL Server SSDT DacPac using a DacPac publish profile |
+Microsoft SQL Server Extensions
+-------------------------------
+
+| Extension     | Description                                                              |
+|---------------|--------------------------------------------------------------------------|
+| Publish-DacPac | Publishes a Microsoft SQL Server SSDT DACPAC using a DAC publish profile |
