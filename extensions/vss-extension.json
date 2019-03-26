@@ -3,7 +3,7 @@
     "id": "AzureDevOpsExtensionsForSqlServer",
     "name": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
     "version": "1.0.7",
-    "publisher": "DrJohnT",
+    "publisher": "DrJohnExtensions",
     "description": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
     "public": true,
     "icons": {
