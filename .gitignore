@@ -1,0 +1,5 @@
+*.vsix
+.vscode
+*.suo
+*.dbmdl
+builds/DatabaseToPublish/.vs/DatabaseToPublish/v15/.suo

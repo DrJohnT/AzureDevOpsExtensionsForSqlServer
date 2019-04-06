@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "AzureDevOpsExtensionsForSqlServer",
     "name": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
-    "version": "1.0.9",
+    "version": "1.0.12",
     "publisher": "DrJohnExtensions",
     "description": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
     "public": true,
@@ -12,8 +12,14 @@
     },
     "screenshots": [
     	{
-      		"path": "images/SqlServerIcon.png"
-    	}
+            "path": "images/AzureDevOpsAddTask.png"
+        },
+        {
+            "path": "images/AzureDevOpsTaskDetail.png"
+        },
+        {
+            "path": "images/AzureDevOpsPipelineVariables.png"
+        }
     ],
     "categories": [
         "Azure Pipelines"
