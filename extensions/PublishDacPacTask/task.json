@@ -1,0 +1,73 @@
+{
+    "id": "f22a2ea4-1803-42d3-b3fc-54436e74f005",
+    "name": "PublishDacPac",
+    "friendlyName": "SQL Server Database Deployment using a DACPAC",
+    "description": "Deploys a SQL Server Database to a server using a DACPAC and a DAC Publish Profile",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki)",
+	"category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "author": "Dr. John Tunnicliffe",
+	"demands": [
+        "SqlPackage"
+    ],
+    "version": {
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "9"
+     },
+	"minimumAgentVersion": "1.95.0",
+    "inputs": [
+		{
+            "name": "DacPacPath",
+            "type": "filePath",
+            "label": "DACPAC Path",
+            "required": true,
+            "helpMarkDown": "Relative path from repo root of the DacPac to publish.  Wildcards can be used."
+        },
+		{
+            "name": "PublishProfile",
+            "type": "filePath",
+            "label": "DAC Publish Profile Path",
+            "required": true,
+            "helpMarkDown": "DAC Publish Profile. Can be either relative path from repo root to the Dac Publish Profile (using wildcards etc.) or name of DAC Publish Profile in same folder as the DacPac."
+        },
+		{
+            "name": "TargetServerName",
+            "type": "string",
+            "label": "Target Server Name or IP",
+            "required": true,
+            "helpMarkDown": "Target Server Name or IP.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+        },
+		{
+            "name": "TargetDatabaseName",
+            "type": "string",
+            "label": "The name of the database as it should be deployed on the target server",
+            "required": false,
+            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name."
+        },
+		{
+            "name": "sqlPackageVersion",
+            "type": "pickList",
+            "label": "SqlPackage.exe Version",
+            "required": false,
+            "helpMarkDown": "If the preferred version cannot be found, the latest version will be used instead.",
+            "defaultValue": "latest",
+            "options": {
+                "latest": "Latest",
+                "150": "SQL Server 2019",
+                "140": "SQL Server 2017",
+                "130": "SQL Server 2014",
+                "120": "SQL Server 2012"
+            }
+        }
+    ],
+    "instanceNameFormat": "PublishDacPacTask",
+    "execution": {
+        "PowerShell3": {
+            "target": "PublishDacPacTask.ps1"
+        }
+    }
+}

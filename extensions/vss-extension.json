@@ -2,13 +2,13 @@
     "manifestVersion": 1,
     "id": "AzureDevOpsExtensionsForSqlServer",
     "name": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
-    "version": "1.0.7",
+    "version": "1.0.9",
     "publisher": "DrJohnExtensions",
     "description": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
     "public": true,
     "icons": {
         "default": "images/SqlServerIcon.png",
-        "large": "images/SqlServerIcon.svg"
+        "large": "images/SqlServerIconLarge.png"
     },
     "screenshots": [
     	{
@@ -55,18 +55,18 @@
     ],
     "files": [
         {
-            "path": "PublishDacPac"
+            "path": "PublishDacPacTask"
         }
     ],
     "contributions": [
         {
-            "id": "task-PublishDacPac",
+            "id": "PublishDacPacTask",
             "type": "ms.vss-distributed-task.task",
             "targets": [
             "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "PublishDacPac"
+                "name": "PublishDacPacTask"
             }
         }
     ]

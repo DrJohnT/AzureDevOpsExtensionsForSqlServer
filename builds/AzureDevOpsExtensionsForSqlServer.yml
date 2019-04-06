@@ -1,0 +1,13 @@
+variables:
+  BuildConfiguration: 'debug'
+  DacPublishProfile: 'DatabaseToPublish.CI.publish.xml'
+  BuildServerName: 'build02'
+
+
+steps:
+- task: DrJohnExtensions.AzureDevOpsExtensionsForSqlServer.task-PublishDacPac.PublishDacPac@1
+  displayName: 'Publish sample database using DAC Publish Profile'
+  inputs:
+    DacPacPath: '$(System.DefaultWorkingDirectory)\builds\DatabaseToPublish\bin\$(BuildConfiguration)\DatabaseToPublish.dacpac'
+    PublishProfile: '$(DacPublishProfile)'
+    TargetServerName: '$(BuildServerName)'  
