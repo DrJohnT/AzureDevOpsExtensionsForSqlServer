@@ -1,7 +1,7 @@
 {
     "id": "b7c5e301-0282-488b-856d-bfe82c7e4cb9",
     "name": "DeployDatabaseTask",
-    "friendlyName": "Deploy database DACPAC using DAC Publish Profile",
+    "friendlyName": "Deploy database DACPAC using a DAC Publish Profile",
     "description": "Deploys a SQL Server Database DACPAC to a server using a DAC Publish Profile",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki)",
 	"category": "Utility",
