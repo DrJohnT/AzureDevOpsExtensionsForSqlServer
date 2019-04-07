@@ -1,12 +1,21 @@
 ### Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks
 
-### PublishDacPacTask
+# Tasks
+This extension adds the following tasks:
+* Deploy Database 
+* Publish DACPAC
 
-# Deploy a SQL Database DACPAC using a DAC Publish Profile
+Details of how to configure each task is given below.
+
+# Deploy Database
+
+# Publish DACPAC
 
 ## Overview
 
 The **PublishDacPacTask** allows you to deploy a SQL Server Database DACPAC to a SQL Server instance using a DAC Publish Profile.
+
+![Publish DACPAC Task Configuration](images/AzureDevOpsTaskDetail.png "Publish DACPAC Task Configuration")
 
 SSDT (SQL Server Data Tools) is Microsoft's design tool to declare the entire database model including tables, views, stored procedures, functions, schemas, etc. etc. etc.  covering **all** aspects of a database design.
 
@@ -18,7 +27,7 @@ The **PublishDacPacTask** compares the content of a DACPAC to the database alrea
 
 The **PublishDacPacTask** can be used to automate the deployment of databases, either as part of a build in an Azure DevOps pipeline, or as part of a server deployment using Azure DevOps Release Manager.  
 
-**Octopus Deploy** can utilise the PowerShell module [PublishDacPac](https://github.com/DrJohnT/PublishDacPac/) which underpins the PublishDacPacTask.
+To deploy databases using [Octopus Deploy](https://octopus.com/) you can utilise the PowerShell module [PublishDacPac](https://github.com/DrJohnT/PublishDacPac/) which underpins the Publish DACPACO task.
 
 To automate build and deployment of databases in Azure DevOps, you can use MsBuild to create DACPAC from your Visual Studio solution.  You can then add this task to deploy each DACPAC using your own custom [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile).
 

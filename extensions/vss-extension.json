@@ -4,7 +4,7 @@
     "name": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
     "version": "1.0.12",
     "publisher": "DrJohnExtensions",
-    "description": "Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks",
+    "description": "Deploy databases, publish DACPACs",
     "public": true,
     "icons": {
         "default": "images/SqlServerIcon.png",
@@ -73,6 +73,16 @@
             ],
             "properties": {
                 "name": "PublishDacPacTask"
+            }
+        },
+        {
+            "id": "DeployDatabaseTask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+            "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "DeployDatabaseTask"
             }
         }
     ]
