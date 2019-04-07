@@ -11,8 +11,8 @@
         "large": "images/SqlServerIconLarge.png"
     },
     "screenshots": [
-    	{
-            "path": "images/AzureDevOpsAddTask.png"
+        {
+            "path": "images/SqlServerIconLarge.png"
         },
         {
             "path": "images/AzureDevOpsTaskDetail.png"

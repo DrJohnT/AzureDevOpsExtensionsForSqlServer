@@ -2,4 +2,11 @@
 .vscode
 *.suo
 *.dbmdl
-builds/DatabaseToPublish/.vs/DatabaseToPublish/v15/.suo
+*.user
+examples/DatabaseToPublish/.vs/DatabaseToPublish/v15/.suo
+*.dll
+*.pdb
+*.cache
+examples/DatabaseToPublish/obj/Debug/DatabaseToPublish.sqlproj.FileListAbsolute.txt
+examples/DatabaseToPublish/obj/Debug/Model.xml
+
