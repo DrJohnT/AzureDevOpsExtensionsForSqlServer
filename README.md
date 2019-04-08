@@ -1,14 +1,12 @@
 ### AzureDevOpsExtensionsForSqlServer
 
-Azure DevOps Extensions for Microsoft SQL Server Deployment
-===========================================================
+# Azure DevOps Extensions for Microsoft SQL Server Deployment
 
-This repo contains Azure DevOps extensions to help with various deployment tasks when
-dealing with Microsoft SQL Server. using Azure DevOps Pipelines and Release Management.
+This repo contains extensions for Azure Pipelines that help with various deployment tasks when dealing with Microsoft SQL Server.
 
-Azure DevOps Extensions for Microsoft SQL Server Deployment Tasks
------------------------------------------------------------------
+## Tasks
 
-| Extension     | Description                                                              |
+| Extension     | Description                                                             |
 |---------------|--------------------------------------------------------------------------|
-| PublishDacPacTask | Publishes a Microsoft SQL Server database DACPAC using a DAC publish profile |
+| Deploy Database | Publishes a Microsoft SQL Server database DACPAC using a DAC publish profile |
+| Publish DACPAC | Publishes a Microsoft SQL Server database DACPAC using a DAC publish profile |

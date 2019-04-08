@@ -1,13 +1,13 @@
 {
     "manifestVersion": 1,
-    "id": "AzureDevOpsExtensionsForSqlServer",
-    "name": "Microsoft SQL Server Deployment Tasks for Azure Pipelines",
-    "version": "1.0.15",
+    "id": "PublishDacPac",
+    "name": "Publish DACPAC using a DAC Publish Profile",
+    "version": "1.0.2",
     "publisher": "DrJohnExtensions",
-    "description": "Deploy databases, publish DACPACs",
+    "description": "Deploy a database DACPAC to a Microsoft SQL Server instance",
     "public": true,
     "categories": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "tags": [
         "deploy",
@@ -16,29 +16,24 @@
         "sqlpackage"
     ],
     "icons": {
-        "default": "images/SqlServerIcon.png"
+        "default": "images/deploy.png"
     },
     "content": {
         "details": {
-            "path": "README.md"
+            "path": "readme.md"
         }
+    },
+    "license": {
+        "path": "license.md"
     },
     "screenshots": [
         {
-            "path": "images/SqlServerIconLarge.png"
-        },
-        {
-            "path": "images/AzureDevOpsTaskDetail.png"
-        },
-        {
-            "path": "images/AzureDevOpsPipelineVariables.png"
+            "path": "images/TaskDetail.png"
         }
     ],
-
-
     "links": {
         "getstarted": {
-            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki"
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Publish-DacPac"
         },
         "issues": {
             "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
@@ -51,7 +46,6 @@
         "color": "#f6f7fb",
         "theme": "light"
     },
-
     "scopes": [
         "vso.build_execute",
         "vso.serviceendpoint_manage"
@@ -68,7 +62,7 @@
     ],
     "contributions": [
         {
-            "id": "PublishDacPacTask",
+            "id": "PublishDacPac",
             "type": "ms.vss-distributed-task.task",
             "targets": [
             "ms.vss-distributed-task.tasks"
