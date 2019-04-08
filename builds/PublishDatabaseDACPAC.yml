@@ -1,0 +1,12 @@
+variables:
+  BuildConfiguration: 'debug'
+  BuildServerName: 'build02'
+
+steps:
+- task: DrJohnExtensions.PublishDacPac.PublishDacPac.PublishDacPacTask@1
+  displayName: 'Publish database DACPAC using DAC Publish Profile'
+  inputs:
+    DacPacPath: 'examples/DatabaseToPublish/bin/$(BuildConfiguration)/DatabaseToPublish.dacpac'
+    DacPublishProfile: examples/DatabaseToPublish/DatabaseToPublish.CI.publish.xml
+    TargetServerName: '$(BuildServerName)'
+    TargetDatabaseName: MyDatabase

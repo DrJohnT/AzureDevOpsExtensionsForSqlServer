@@ -1,8 +1,8 @@
 {
     "manifestVersion": 1,
     "id": "DeployDatabase",
+    "version": "1.0.8",
     "name": "Deploy Database DACPAC using a DAC Publish Profile",
-    "version": "1.0.2",
     "publisher": "DrJohnExtensions",
     "description": "Deploy a database DACPAC to a Microsoft SQL Server instance",
     "public": true,
@@ -11,7 +11,7 @@
     ],
     "tags": [
         "deploy",
-        "build",
+        "release",
         "sqldatabase",
         "sqlpackage"
     ],
@@ -21,14 +21,14 @@
     "content": {
         "details": {
             "path": "readme.md"
+        },
+        "license": {
+            "path": "license.md"
         }
-    },
-    "license": {
-        "path": "license.md"
     },
     "screenshots": [
         {
-            "path": "images/TaskDetail.png"
+            "path": "images/SqlServerIcon.png"
         }
     ],
     "links": {
@@ -42,14 +42,14 @@
             "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
         }
     },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+    },
     "branding": {
         "color": "#f6f7fb",
         "theme": "light"
     },
-    "scopes": [
-        "vso.build_execute",
-        "vso.serviceendpoint_manage"
-    ],
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -58,6 +58,10 @@
     "files": [
         {
             "path": "DeployDatabaseTask"
+	},
+        {
+            "path": "images",
+            "addressable": true
         }
     ],
     "contributions": [

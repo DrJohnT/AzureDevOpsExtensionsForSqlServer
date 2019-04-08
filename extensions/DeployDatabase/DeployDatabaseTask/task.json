@@ -6,8 +6,7 @@
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Publish-DacPac)",
 	"category": "Utility",
     "visibility": [
-        "Utility",
-        "Deploy",
+        "Build",
         "Release"
     ],
     "author": "Dr. John Tunnicliffe",
@@ -19,35 +18,43 @@
         "Minor": "1",
         "Patch": "0"
      },
-	"minimumAgentVersion": "1.95.0",
+    "minimumAgentVersion": "1.95.0",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+      ],
     "inputs": [
 		{
             "name": "DacPacPath",
             "type": "filePath",
             "label": "DACPAC Path",
             "required": true,
-            "helpMarkDown": "Relative path from repo root of the DacPac to publish.  Wildcards can be used."
+            "helpMarkDown": "Relative path from repo root of the DacPac to publish.  Wildcards can be used. Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
         },
 		{
             "name": "DacPublishProfile",
             "type": "filePath",
             "label": "DAC Publish Profile Path",
             "required": true,
-            "helpMarkDown": "DAC Publish Profile. Can be either relative path from repo root to the Dac Publish Profile (using wildcards etc.) or name of DAC Publish Profile in same folder as the DacPac."
+            "helpMarkDown": "Relative path to the DAC Publish Profile. Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
         },
 		{
             "name": "TargetServerName",
             "type": "string",
-            "label": "Target Server Name or IP",
+            "label": "Target Server Name or IP address",
             "required": true,
-            "helpMarkDown": "Target Server Name or IP.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+            "helpMarkDown": "Target Server Name or IP address.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
         },
 		{
             "name": "TargetDatabaseName",
             "type": "string",
             "label": "The name of the database as it should be deployed on the target server",
             "required": false,
-            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name."
+            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name.",
+            "groupName": "advanced"
         },
 		{
             "name": "PreferredVersion",
@@ -63,7 +70,8 @@
                 "130": "SQL Server 2016",
                 "120": "SQL Server 2014",
                 "110": "SQL Server 2012"
-            }
+            },
+            "groupName": "advanced"
         }
     ],
     "instanceNameFormat": "Deploy database DACPAC using a DAC Publish Profile",

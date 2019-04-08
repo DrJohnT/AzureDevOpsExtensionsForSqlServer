@@ -1,0 +1,9 @@
+variables:
+  BuildConfiguration: 'debug'
+
+steps:
+- task: MSBuild@1
+  displayName: 'Build Database Solution'
+  inputs:
+    solution: examples/DatabaseToPublish/DatabaseToPublish.sln
+    configuration: '$(BuildConfiguration)'
