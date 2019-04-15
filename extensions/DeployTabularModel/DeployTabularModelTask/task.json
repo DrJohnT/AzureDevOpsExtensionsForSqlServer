@@ -1,0 +1,83 @@
+{
+    "id": "eabf475c-6daf-4aca-9baa-aec01ce7aa51",
+    "name": "DeployDatabaseTask",
+    "friendlyName": "Deploy database DACPAC using a DAC Publish Profile",
+    "description": "Deploys a SQL Server Database DACPAC to a server using a DAC Publish Profile",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Publish-DacPac)",
+	"category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "author": "Dr. John Tunnicliffe",
+	"demands": [
+        "SqlPackage"
+    ],
+    "version": {
+        "Major": "1",
+        "Minor": "1",
+        "Patch": "0"
+     },
+    "minimumAgentVersion": "1.95.0",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+      ],
+    "inputs": [
+		{
+            "name": "DacPacPath",
+            "type": "filePath",
+            "label": "DACPAC Path",
+            "required": true,
+            "helpMarkDown": "Relative path from repo root of the DacPac to publish.  Wildcards can be used. Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
+        },
+		{
+            "name": "DacPublishProfile",
+            "type": "filePath",
+            "label": "DAC Publish Profile Path",
+            "required": true,
+            "helpMarkDown": "Relative path to the DAC Publish Profile. Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
+        },
+		{
+            "name": "TargetServerName",
+            "type": "string",
+            "label": "Target Server Name or IP address",
+            "required": true,
+            "helpMarkDown": "Target Server Name or IP address.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+        },
+		{
+            "name": "TargetDatabaseName",
+            "type": "string",
+            "label": "The name of the database as it should be deployed on the target server",
+            "required": false,
+            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name.",
+            "groupName": "advanced"
+        },
+		{
+            "name": "PreferredVersion",
+            "type": "pickList",
+            "label": "SqlPackage.exe Version",
+            "required": false,
+            "helpMarkDown": "If the preferred version cannot be found, the latest version will be used instead.",
+            "defaultValue": "latest",
+            "options": {
+                "latest": "Latest",
+                "150": "SQL Server 2019",
+                "140": "SQL Server 2017",
+                "130": "SQL Server 2016",
+                "120": "SQL Server 2014",
+                "110": "SQL Server 2012"
+            },
+            "groupName": "advanced"
+        }
+    ],
+    "instanceNameFormat": "Deploy database DACPAC using a DAC Publish Profile",
+    "execution": {
+        "PowerShell3": {
+            "target": "PublishDacPacTask.ps1"
+        }
+    }
+}

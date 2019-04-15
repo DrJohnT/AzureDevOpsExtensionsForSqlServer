@@ -15,11 +15,9 @@ param()
     Depends on PowerShell module PublishDacPac written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac
 #>
 
-    # import required modules
     $ModulePath = Split-Path -Parent $MyInvocation.MyCommand.Path;
-	$ModulePath = Resolve-Path "$ModulePath\ps_modules\PublishDacPac\PublishDacPac.psd1";
+    $ModulePath = Resolve-Path "$ModulePath\ps_modules\DeployCube\DeployCube.psd1";
     import-Module -Name $ModulePath;
-
     Write-Host "Reading inputs";
 
     [string]$DacPacPath = Get-VstsInput -Name "DacPacPath" -Require;
@@ -42,7 +40,7 @@ param()
     Write-Host "==============================================================================";
 
     try {
-        Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -Server $TargetServerName -Database $TargetDatabaseName -PreferredVersion $PreferredVersion;
+        Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -TargetServerName $TargetServerName -TargetDatabaseName $TargetDatabaseName -PreferredVersion $PreferredVersion;
     } finally {
         Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation

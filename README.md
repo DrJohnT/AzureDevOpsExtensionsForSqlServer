@@ -10,3 +10,4 @@ This repo contains extensions for Azure Pipelines that help with various deploym
 |---------------|--------------------------------------------------------------------------|
 | Deploy Database | Deploys a Microsoft SQL Server database DACPAC using a DAC publish profile |
 | Publish DACPAC | Publishes a Microsoft SQL Server database DACPAC using a DAC publish profile |
+| Deploy Tabular Cube | Deploys a Microsoft SQL Server Analysis Services tabular cube |

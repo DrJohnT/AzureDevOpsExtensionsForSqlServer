@@ -16,9 +16,11 @@ param()
 #>
 
     # import required modules
-    $BootStrapPath = Join-Path -Path $PSScriptRoot -ChildPath '.\bootstrap.ps1' -Resolve;
+    $ModulePath = Split-Path -Parent $MyInvocation.MyCommand.Path;
+	$ModulePath = Resolve-Path "$ModulePath\ps_modules\PublishDacPac\PublishDacPac.psd1";
+    import-Module -Name $ModulePath;
 
-    . $BootStrapPath;
+    Write-Host "Reading inputs";
 
     [string]$DacPacPath = Get-VstsInput -Name "DacPacPath" -Require;
     [string]$DacPublishProfile = Get-VstsInput -Name "DacPublishProfile" -Require;
@@ -27,7 +29,7 @@ param()
     [string]$PreferredVersion = Get-VstsInput -Name "PreferredVersion";
 
     $global:ErrorActionPreference = 'Stop';
-        
+
     Trace-VstsEnteringInvocation $MyInvocation;
 
     Write-Host "Invoking Publish-DacPac (https://github.com/DrJohnT/PublishDacPac) with the following parameters:";
@@ -36,16 +38,16 @@ param()
     Write-Host "TargetServerName:   $TargetServerName";
     Write-Host "TargetDatabaseName: $TargetDatabaseName"
     Write-Host "PreferredVersion:   $PreferredVersion"
-    
+
     Write-Host "==============================================================================";
 
     try {
-        Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -TargetServerName $TargetServerName -TargetDatabaseName $TargetDatabaseName -PreferredVersion $PreferredVersion;		   
+        Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -Server $TargetServerName -Database $TargetDatabaseName -PreferredVersion $PreferredVersion;
     } finally {
         Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation
     }
 
-    
+
 
 

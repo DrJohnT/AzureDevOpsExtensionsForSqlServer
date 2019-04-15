@@ -1,0 +1,79 @@
+{
+    "manifestVersion": 1,
+    "id": "DeployTabularModel",
+    "version": "1.0.0",
+    "name": "Deploy Tabular Model",
+    "publisher": "DrJohnExtensions",
+    "description": "Deploy a tabular model to a Microsoft SQL Server Analysis Services instance",
+    "public": true,
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        "deploy",
+        "release",
+        "sqldatabase",
+        "sqlpackage"
+    ],
+    "icons": {
+        "default": "images/deploy.png"
+    },
+    "content": {
+        "details": {
+            "path": "readme.md"
+        },
+        "license": {
+            "path": "license.md"
+        }
+    },
+    "screenshots": [
+        {
+            "path": "images/SqlServerIcon.png"
+        }
+    ],
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Publish-TabularModel"
+        },
+        "issues": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
+        },
+        "repository": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+    },
+    "branding": {
+        "color": "#f6f7fb",
+        "theme": "light"
+    },
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "files": [
+        {
+            "path": "DeployTabularModelTask"
+	},
+        {
+            "path": "images",
+            "addressable": true
+        }
+    ],
+    "contributions": [
+        {
+            "id": "DeployTabularModel",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+            "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "DeployTabularModelTask"
+            }
+        }
+    ]
+}
