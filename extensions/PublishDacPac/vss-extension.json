@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "PublishDacPac",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "name": "Publish DACPAC using a DAC Publish Profile",
     "publisher": "DrJohnExtensions",
     "description": "Deploy a database DACPAC to a Microsoft SQL Server instance",

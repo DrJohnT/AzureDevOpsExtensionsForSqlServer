@@ -1,18 +1,15 @@
 {
     "id": "eabf475c-6daf-4aca-9baa-aec01ce7aa51",
-    "name": "DeployDatabaseTask",
-    "friendlyName": "Deploy database DACPAC using a DAC Publish Profile",
-    "description": "Deploys a SQL Server Database DACPAC to a server using a DAC Publish Profile",
-    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Publish-DacPac)",
+    "name": "DeployTabularModelTask",
+    "friendlyName": "Publish a tabular model to SSAS",
+    "description": "Publish a tabular model to SSAS",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/DeployCube)",
 	"category": "Utility",
     "visibility": [
         "Build",
         "Release"
     ],
     "author": "Dr. John Tunnicliffe",
-	"demands": [
-        "SqlPackage"
-    ],
     "version": {
         "Major": "1",
         "Minor": "1",
@@ -21,8 +18,8 @@
     "minimumAgentVersion": "1.95.0",
     "groups": [
         {
-            "name": "advanced",
-            "displayName": "Advanced",
+            "name": "optional",
+            "displayName": "Mode Options",
             "isExpanded": false
         }
       ],
@@ -54,7 +51,7 @@
             "label": "The name of the database as it should be deployed on the target server",
             "required": false,
             "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name.",
-            "groupName": "advanced"
+            "groupName": "optional"
         },
 		{
             "name": "PreferredVersion",
@@ -71,13 +68,13 @@
                 "120": "SQL Server 2014",
                 "110": "SQL Server 2012"
             },
-            "groupName": "advanced"
+            "groupName": "optional"
         }
     ],
-    "instanceNameFormat": "Deploy database DACPAC using a DAC Publish Profile",
+    "instanceNameFormat": "Publish a tabular model to SSAS",
     "execution": {
         "PowerShell3": {
-            "target": "PublishDacPacTask.ps1"
+            "target": "PublishTabularModel.ps1"
         }
     }
 }

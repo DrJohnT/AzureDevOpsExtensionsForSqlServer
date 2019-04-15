@@ -16,7 +16,7 @@
         "sqlpackage"
     ],
     "icons": {
-        "default": "images/deploy.png"
+        "default": "images/microsoft-ssas.png"
     },
     "content": {
         "details": {
@@ -28,7 +28,7 @@
     },
     "screenshots": [
         {
-            "path": "images/SqlServerIcon.png"
+            "path": "images/microsoft-ssas.png"
         }
     ],
     "links": {
