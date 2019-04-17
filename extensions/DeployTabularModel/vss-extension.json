@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "DeployTabularModel",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Deploy Tabular Model",
     "publisher": "DrJohnExtensions",
     "description": "Deploy a tabular model to a Microsoft SQL Server Analysis Services instance",
@@ -28,7 +28,7 @@
     },
     "screenshots": [
         {
-            "path": "images/microsoft-ssas.png"
+            "path": "images/SqlServerLogo300.png"
         }
     ],
     "links": {
