@@ -1,5 +1,5 @@
 {
-    "id": "eabf475c-6daf-4aca-9baa-aec01ce7aa51",
+    "id": "aab8fda5-b933-4ce2-a9a9-4f357b8e2cb4",
     "name": "DeployTabularModelTask",
     "friendlyName": "Publish a tabular model to SSAS",
     "description": "Publish a tabular model to SSAS",
@@ -19,44 +19,37 @@
     "groups": [
         {
             "name": "optional",
-            "displayName": "Mode Options",
+            "displayName": "Additional Options",
             "isExpanded": false
         }
       ],
     "inputs": [
 		{
-            "name": "DacPacPath",
+            "name": "AsDatabasePath",
             "type": "filePath",
-            "label": "DACPAC Path",
+            "label": "AsDatabase Path",
             "required": true,
-            "helpMarkDown": "Relative path from repo root of the DacPac to publish.  Wildcards can be used. Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
+            "helpMarkDown": "Relative path from repo root to the AsDatabase file to publish.  Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
         },
 		{
-            "name": "DacPublishProfile",
-            "type": "filePath",
-            "label": "DAC Publish Profile Path",
-            "required": true,
-            "helpMarkDown": "Relative path to the DAC Publish Profile. Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
-        },
-		{
-            "name": "TargetServerName",
+            "name": "AsServer",
             "type": "string",
-            "label": "Target Server Name or IP address",
+            "label": "SSAS Server Name or IP address",
             "required": true,
-            "helpMarkDown": "Target Server Name or IP address.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+            "helpMarkDown": "SSAS Server Name or IP address.  Include the instance name and port if necessary (e.g. myserver\\myinstance,myport)"
         },
 		{
-            "name": "TargetDatabaseName",
+            "name": "CubeDatabaseName",
             "type": "string",
-            "label": "The name of the database as it should be deployed on the target server",
+            "label": "The name of the cube as it should be deployed on the target server",
             "required": false,
-            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name.",
+            "helpMarkDown": "The name of the cube as it should be deployed on the target server. Can be different from the AsDatabase name.",
             "groupName": "optional"
         },
 		{
             "name": "PreferredVersion",
             "type": "pickList",
-            "label": "SqlPackage.exe Version",
+            "label": "Microsoft.AnalysisServices.Deployment.exe Version",
             "required": false,
             "helpMarkDown": "If the preferred version cannot be found, the latest version will be used instead.",
             "defaultValue": "latest",
@@ -69,9 +62,23 @@
                 "110": "SQL Server 2012"
             },
             "groupName": "optional"
+        },
+        {
+            "name": "ProcessingOption",
+            "type": "pickList",
+            "label": "rocessing Option",
+            "required": false,
+            "helpMarkDown": "Determines if the cube is processed as part of the deployment. Strongly recommend you DO NOT process at this stage as the Data Source connection string may be incorrect.",
+            "defaultValue": "DoNotProcess",
+            "options": {
+                "DoNotProcess": "Do Not Process",
+                "Full": "Full",
+                "Default": "Default"
+            },
+            "groupName": "optional"
         }
     ],
-    "instanceNameFormat": "Publish a tabular model to SSAS",
+    "instanceNameFormat": "Publish a tabular model to SSAS server",
     "execution": {
         "PowerShell3": {
             "target": "PublishTabularModel.ps1"
