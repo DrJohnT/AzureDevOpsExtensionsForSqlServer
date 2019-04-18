@@ -48,7 +48,7 @@ function Publish-Cube {
         $PreferredVersion,
 
         [String] [Parameter(Mandatory = $false)]
-        [ValidateSet('ProcessFull', 'ProcessDefault', 'DoNotProcess')]
+        [ValidateSet('Full', 'Default', 'DoNotProcess')]
         $ProcessingOption
 	)
 
