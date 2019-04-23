@@ -1,0 +1,5 @@
+<DeploymentTarget xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200">
+  <Database>e5acac2d-2293-4c3c-9b4b-81ae3281a59e</Database>
+  <Server>61e15989-c44c-4126-b5ba-27ac13906172</Server>
+  <ConnectionString>DataSource=61e15989-c44c-4126-b5ba-27ac13906172;Timeout=0</ConnectionString>
+</DeploymentTarget>

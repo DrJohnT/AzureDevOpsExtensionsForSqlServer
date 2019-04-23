@@ -1,0 +1,105 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-GB",
+    "dataSources": [
+      {
+        "name": "DatabaseToPublish",
+        "connectionString": "Provider=SQLNCLI11;Data Source=localhost;Initial Catalog=DatabaseToPublish;Integrated Security=SSPI;Persist Security Info=false",
+        "impersonationMode": "impersonateAccount",
+        "account": "qregroup\\jtunnicliffe",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "MyOnlyTable",
+        "columns": [
+          {
+            "name": "MyOnlyTableId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "MyOnlyTableId",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "MyOnlyColumn",
+            "dataType": "string",
+            "sourceColumn": "MyOnlyColumn",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "MyOnlyValue",
+            "dataType": "decimal",
+            "sourceColumn": "MyOnlyValue",
+            "formatString": "\"\"#,0.00;-\"\"#,0.00;\"\"#,0.00",
+            "sourceProviderType": "Currency",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"2057\" DisplayName=\"\" Symbol=\"\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "InMyCurrency",
+            "dataType": "string",
+            "sourceColumn": "InMyCurrency",
+            "sourceProviderType": "Char"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "MyOnlyTable",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[MyOnlyTable].* FROM [dbo].[MyOnlyTable] ",
+              "dataSource": "DatabaseToPublish"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "MyOnlyMeasure",
+            "expression": "SUM([MyOnlyValue])",
+            "formatString": "\"\"#,0.00;-\"\"#,0.00;\"\"#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"2057\" DisplayName=\"\" Symbol=\"\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[MyOnlyTable].* FROM [dbo].[MyOnlyTable] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "MyOnlyTable"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}

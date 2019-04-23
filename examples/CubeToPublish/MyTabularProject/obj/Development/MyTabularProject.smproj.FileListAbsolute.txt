@@ -1,0 +1,7 @@
+C:\MyDev\GitHub\DeployCube\examples\CubeToPublish\MyTabularProject\bin\Model.asdatabase
+C:\MyDev\GitHub\DeployCube\examples\CubeToPublish\MyTabularProject\bin\Model.deploymenttargets
+C:\MyDev\GitHub\DeployCube\examples\CubeToPublish\MyTabularProject\bin\Model.deploymentoptions
+C:\MyDev\GitHub\DeployCube\examples\CubeToPublish\MyTabularProject\obj\Development\MyTabularProject.smproj.CoreCompileInputs.cache
+C:\MyDev\GitHub\DeployCube\examples\CubeToPublish\MyTabularProject\obj\Development\Model.asdatabase
+C:\MyDev\GitHub\DeployCube\examples\CubeToPublish\MyTabularProject\obj\Development\Model.deploymentoptions
+C:\MyDev\GitHub\DeployCube\examples\CubeToPublish\MyTabularProject\obj\Development\Model.deploymenttargets

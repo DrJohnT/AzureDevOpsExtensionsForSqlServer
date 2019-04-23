@@ -1,20 +1,22 @@
 {
     "id": "aab8fda5-b933-4ce2-a9a9-4f357b8e2cb4",
     "name": "DeployTabularModelTask",
-    "friendlyName": "Publish a tabular model to SSAS",
-    "description": "Publish a tabular model to SSAS",
+    "friendlyName": "Publish a tabular cube model to SSAS",
+    "description": "Publish a tabular cube model to SSAS",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/DeployCube)",
-	"category": "Utility",
+	"category": "Deploy",
     "visibility": [
         "Build",
         "Release"
     ],
     "author": "Dr. John Tunnicliffe",
+    "demands": [],
     "version": {
         "Major": "1",
         "Minor": "1",
         "Patch": "0"
      },
+    
     "minimumAgentVersion": "1.95.0",
     "groups": [
         {
