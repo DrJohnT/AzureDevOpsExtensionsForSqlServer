@@ -42,6 +42,7 @@ FunctionsToExport = @(
     'Get-AnalysisServicesDeploymentExePath',
     'Get-SqlConnectionString',
     'Get-SqlAsPath',
+    'Get-ServerMode',
     'Invoke-ExternalCommand',
     'Find-AnalysisServicesDeploymentExeLocations',
     'Update-AnalysisServicesConfig',

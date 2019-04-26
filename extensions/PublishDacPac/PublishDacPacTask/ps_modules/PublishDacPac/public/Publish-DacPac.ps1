@@ -50,7 +50,7 @@ function Publish-DacPac {
 
         [String] [Parameter(Mandatory = $false)]
         [ValidateSet('150', '140', '130', '120', '110', 'latest')]
-        $PreferredVersion
+        $PreferredVersion = 'latest'
 	)
 
 	$global:ErrorActionPreference = 'Stop';

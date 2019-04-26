@@ -20,7 +20,7 @@ function Update-AnalysisServicesConfig {
         The name of the database to be deployed.
 
         .PARAMETER ProcessingOption
-        Valid processing options are: ProcessFull, ProcessDefault and DoNotProcess.  I strongly recommend using the default "DoNotProcess" option as the connection to your source database may not be correct and need adjustment post-deployment.
+        Valid processing options are: Full, Default and DoNotProcess.  I strongly recommend using the default "DoNotProcess" option as the connection to your source database may not be correct and need adjustment post-deployment.
     #>
     [CmdletBinding()]
 	param
@@ -38,8 +38,32 @@ function Update-AnalysisServicesConfig {
         $CubeDatabase,
 
         [String] [Parameter(Mandatory = $false)]
-        [ValidateSet('ProcessFull', 'ProcessDefault', 'DoNotProcess')]
-        $ProcessingOption
+        [ValidateSet('Full', 'Default', 'DoNotProcess')]
+        $ProcessingOption = 'DoNotProcess',
+
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('false','true')]
+        $TransactionalDeployment = 'false',
+
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('DeployPartitions','RetainPartitions')]
+        $PartitionDeployment = 'DeployPartitions',
+
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('DeployRolesAndMembers','DeployRolesRetainMembers','RetainRoles')]
+        $RoleDeployment = 'DeployRolesRetainMembers',
+
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('Retain','Deploy')]
+        $ConfigurationSettingsDeployment = 'Deploy',
+
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('Retain','Deploy')]
+        $OptimizationSettingsDeployment = 'Deploy',
+
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('Create','CreateAlways','UseExisting')]
+        $WriteBackTableCreation = 'UseExisting'
     )
 
     if (Test-Path $AsDatabasePath) {
@@ -66,12 +90,14 @@ function Update-AnalysisServicesConfig {
         {
             Write-Output "Altering $ModelName.deploymentoptions"
 
-            if ([string]::IsNullOrEmpty($ProcessingOption)) {
-                $ProcessingOption = 'DoNotProcess';
-            }
-
             [xml]$deploymentOptions = [xml](Get-Content $deploymentOptionsPath);
             $deploymentOptions.DeploymentOptions.ProcessingOption = $ProcessingOption;
+            $deploymentOptions.DeploymentOptions.TransactionalDeployment = $TransactionalDeployment;
+            $deploymentOptions.DeploymentOptions.PartitionDeployment = $PartitionDeployment;
+            $deploymentOptions.DeploymentOptions.RoleDeployment = $RoleDeployment;
+            $deploymentOptions.DeploymentOptions.ConfigurationSettingsDeployment = $ConfigurationSettingsDeployment;
+            $deploymentOptions.DeploymentOptions.OptimizationSettingsDeployment = $OptimizationSettingsDeployment;
+            $deploymentOptions.DeploymentOptions.WriteBackTableCreation = $WriteBackTableCreation;
             $deploymentOptions.Save($deploymentOptionsPath);
         } else {
             throw "Update-AnalysisServicesConfig: $ModelName.deploymentoptions file does not exist in $configFolder";

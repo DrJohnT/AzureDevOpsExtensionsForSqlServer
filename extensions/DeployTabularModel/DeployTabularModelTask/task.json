@@ -1,35 +1,46 @@
 {
     "id": "aab8fda5-b933-4ce2-a9a9-4f357b8e2cb4",
     "name": "DeployTabularModelTask",
-    "friendlyName": "Publish a tabular cube model to SSAS",
-    "description": "Publish a tabular cube model to SSAS",
-    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/DeployCube)",
-	"category": "Deploy",
-    "visibility": [
-        "Build",
-        "Release"
-    ],
+    "friendlyName": "Deploy SSAS tabular cube model",
+    "description": "Publish a tabular cube model to an SSAS instance",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
     "author": "Dr. John Tunnicliffe",
+    "preview": "true",
+    "deprecated": "false",
+    "showEnvironmentVariables": "false",
+    "runsOn": [
+        "Agent",
+        "MachineGroup"
+    ],
+    "category": [
+        "Deploy",
+        "Azure *"
+    ],
+    "groups": [
+        {
+            "name": "DeploymentOptions",
+            "displayName": "Deployment options",
+            "isExpanded": false
+        },
+        {
+            "name": "AdvancedOptions",
+            "displayName": "Advanced deployment options",
+            "isExpanded": false
+        }
+    ],
     "demands": [],
+    "minimumAgentVersion": "1.95.0",
     "version": {
         "Major": "1",
         "Minor": "1",
-        "Patch": "0"
-     },
-    
-    "minimumAgentVersion": "1.95.0",
-    "groups": [
-        {
-            "name": "optional",
-            "displayName": "Additional Options",
-            "isExpanded": false
-        }
-      ],
+        "Patch": "2"
+    },
+    "instanceNameFormat": "Deploy SSAS tabular model $(CubeDatabaseName)",
     "inputs": [
 		{
             "name": "AsDatabasePath",
             "type": "filePath",
-            "label": "AsDatabase Path",
+            "label": "Path to .asdatabase file",
             "required": true,
             "helpMarkDown": "Relative path from repo root to the AsDatabase file to publish.  Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
         },
@@ -45,13 +56,12 @@
             "type": "string",
             "label": "The name of the cube as it should be deployed on the target server",
             "required": false,
-            "helpMarkDown": "The name of the cube as it should be deployed on the target server. Can be different from the AsDatabase name.",
-            "groupName": "optional"
+            "helpMarkDown": "(optional) The name of the cube as it should be deployed on the target server. Can be different from the AsDatabase name.",
         },
 		{
             "name": "PreferredVersion",
             "type": "pickList",
-            "label": "Microsoft.AnalysisServices.Deployment.exe Version",
+            "label": "Version of Microsoft.AnalysisServices.Deployment.exe to use for the deployment",
             "required": false,
             "helpMarkDown": "If the preferred version cannot be found, the latest version will be used instead.",
             "defaultValue": "latest",
@@ -63,12 +73,12 @@
                 "120": "SQL Server 2014",
                 "110": "SQL Server 2012"
             },
-            "groupName": "optional"
+            "groupName": "DeploymentOptions"
         },
         {
             "name": "ProcessingOption",
             "type": "pickList",
-            "label": "rocessing Option",
+            "label": "Cube Processing Option",
             "required": false,
             "helpMarkDown": "Determines if the cube is processed as part of the deployment. Strongly recommend you DO NOT process at this stage as the Data Source connection string may be incorrect.",
             "defaultValue": "DoNotProcess",
@@ -77,13 +87,72 @@
                 "Full": "Full",
                 "Default": "Default"
             },
-            "groupName": "optional"
+            "groupName": "DeploymentOptions"
+        },
+        {
+			"name": "TransactionalDeployment",
+			"type": "boolean",
+			"label": "Transactional deployment",
+			"defaultValue": "false",
+			"helpMarkDown": "Perform the deployment in one transaction",
+			"groupName": "AdvancedOptions"
+        },
+        {
+			"name": "PartitionDeployment",
+			"type": "pickList",
+			"label": "Partition deployment",
+			"defaultValue": "DeployPartitions",
+			"required": true,
+			"options": {
+				"DeployPartitions": "Deploy partitions",
+				"RetainPartitions": "Retain partitions"
+			},
+			"helpMarkDown": "Deploy partitions: Any existing partition will be replaced\nRetain partitions: Partitions for new measure groups will be deployed, but partitions for existing measure groups will be unaffected",
+			"groupName": "AdvancedOptions"
+        },
+        {
+			"name": "RoleDeployment",
+			"type": "pickList",
+			"label": "Role deployment",
+			"defaultValue": "DeployRolesRetainMembers",
+			"required": true,
+			"options": {
+				"DeployRolesRetainMembers": "Deploy roles and retain members",
+				"DeployRolesAndMembers": "Deploy roles and members",
+				"RetainRoles":  "Retain roles and members"
+			},
+			"helpMarkDown": "Deploy roles and retain members: Roles will be deployed along with their members for new roles. Members for existing roles will be retained.\nDeploy roles and members: Any existing roles and members will be replaced\nRetain roles and members: The roles and members will not be deployed",
+			"groupName": "AdvancedOptions"
+        },
+        {
+			"name": "ConfigurationSettingsDeployment",
+			"type": "pickList",
+			"label": "Retain configuration settings for existing objects",
+			"defaultValue": "Deploy",
+			"helpMarkDown": "Retain configuration settings for existing objects or deploy new ones",
+			"options": {
+				"Retain": "Retain configuration settings for existing objects",
+				"Deploy": "Deploy all configuration settings"
+			},
+			"groupName": "AdvancedOptions"
+        },
+        {
+			"name": "OptimizationSettingsDeployment",
+			"type": "pickList",
+			"label": "Retain optimization settings for existing objects",
+			"defaultValue": "Deploy",
+			"helpMarkDown": "Retain optimization settings for existing objects or deploy new ones",
+			"options": {
+				"Retain": "Retain optimization settings for existing objects",
+				"Deploy": "Deploy all optimization settings"
+			},
+			"groupName": "AdvancedOptions"
         }
     ],
-    "instanceNameFormat": "Publish a tabular model to SSAS server",
     "execution": {
         "PowerShell3": {
-            "target": "PublishTabularModel.ps1"
+            "target": "$(currentDirectory)\\PublishTabularModel.ps1",
+            "platforms": "windows"
         }
     }
 }
