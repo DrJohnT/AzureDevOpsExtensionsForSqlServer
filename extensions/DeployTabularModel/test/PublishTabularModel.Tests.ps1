@@ -32,7 +32,7 @@ Describe "PublishTabularModel" {
             $env:INPUT_OptimizationSettingsDeployment = "Deploy";
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishTabularModelTask));
 
-            ( Ping-SsasDatabase -Server $ServerName -Database $DatabaseName ) | Should -Be $true;
+            ( Ping-SsasDatabase -Server $ServerName -CubeDatabase $DatabaseName ) | Should -Be $true;
         }
 
     }

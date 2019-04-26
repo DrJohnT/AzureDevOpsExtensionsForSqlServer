@@ -43,7 +43,7 @@ function Publish-Cube {
         [ValidateNotNullOrEmpty()]
         $Server,
 
-        [String] [Parameter(Mandatory = $false)]
+        [String] [Parameter(Mandatory = $true)]
         $CubeDatabase,
 
         [String] [Parameter(Mandatory = $false)]
