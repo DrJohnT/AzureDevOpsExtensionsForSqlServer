@@ -12,12 +12,15 @@ param()
     Script written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer
 	This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 
-    Depends on PowerShell module PublishDacPac written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    Depends on PowerShell module DeployCube written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
 #>
 
-    $ModulePath = Split-Path -Parent $MyInvocation.MyCommand.Path;
-    $ModulePath = Resolve-Path "$ModulePath\ps_modules\DeployCube\DeployCube.psd1";
-    import-Module -Name $ModulePath;
+    if (-not (Get-Module -Name "DeployCube")) {
+        # if module is not loaded
+        $ModulePath = Split-Path -Parent $MyInvocation.MyCommand.Path;
+        $ModulePath = Resolve-Path "$ModulePath\ps_modules\DeployCube\DeployCube.psd1";
+        import-Module -Name $ModulePath;
+    }
 
     Write-Host "Reading inputs";
 
@@ -37,7 +40,7 @@ param()
 
     Trace-VstsEnteringInvocation $MyInvocation;
 
-    Write-Host "Invoking Publish-Cube (https://github.com/DrJohnT/DeployCube) with the following parameters:";
+    Write-Host "Invoking Publish-Cube from [DeployCube](https://github.com/DrJohnT/DeployCube) module with the following parameters:";
     Write-Host "AsDatabasePath:     $AsDatabasePath";
     Write-Host "AsServer:           $AsServer";
     Write-Host "CubeDatabaseName:   $CubeDatabaseName"

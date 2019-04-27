@@ -1,0 +1,41 @@
+{
+    "id": "9d1e977a-aefd-486a-9c6c-de05d613a65d",
+    "name": "DropTabularModelTask",
+    "friendlyName": "Drop SSAS tabular cube model",
+    "description": "Delete tabular cube model from an SSAS instance (if exists)",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
+    "author": "Dr. John Tunnicliffe",
+    "preview": true,
+    "deprecated": false,
+    "showEnvironmentVariables": false,
+    "category": "Utility",
+    "demands": [],
+    "minimumAgentVersion": "1.95.0",
+    "version": {
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "3"
+    },
+    "instanceNameFormat": "Drop tabular cube $(CubeDatabaseName)",
+    "inputs": [
+		{
+            "name": "AsServer",
+            "type": "string",
+            "label": "SSAS Server Name or IP address",
+            "required": true,
+            "helpMarkDown": "SSAS Server Name or IP address.  Include the instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+        },
+		{
+            "name": "CubeDatabaseName",
+            "type": "string",
+            "label": "The name of the cube database to drop",
+            "required": true,
+            "helpMarkDown": "The name of the cube database on the SSAS server that needs to be removed, if it exists"
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "$(currentDirectory)\\UnpublishTabularModel.ps1"
+        }
+    }
+}

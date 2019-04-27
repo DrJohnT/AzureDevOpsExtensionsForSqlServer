@@ -11,3 +11,4 @@ examples/DatabaseToPublish/obj/Debug/DatabaseToPublish.sqlproj.FileListAbsolute.
 examples/DatabaseToPublish/obj/Debug/Model.xml
 
 *.jfm
+examples/CubeToPublish/MyTabularProject/bin/AnalysisServicesDeploymentExeLog.txt

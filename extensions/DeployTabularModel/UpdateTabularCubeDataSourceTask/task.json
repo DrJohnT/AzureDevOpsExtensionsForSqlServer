@@ -1,0 +1,93 @@
+{
+    "id": "e4859781-ffd4-4e1d-80b4-08f7663fac07",
+    "name": "UpdateTabularCubeDataSourceTask",
+    "friendlyName": "Update SSAS tabular cube data source",
+    "description": "Update SSAS tabular cube data source connection string to use an on-premise SQL Server database",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
+    "author": "Dr. John Tunnicliffe",
+    "preview": true,
+    "deprecated": false,
+    "showEnvironmentVariables": false,
+    "category": "Utility",
+    "groups": [
+        {
+            "name": "UsernamePassword",
+            "displayName": "Service Account Details",
+            "isExpanded": true
+        }
+    ],
+    "demands": [],
+    "minimumAgentVersion": "1.95.0",
+    "version": {
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "3"
+    },
+    "instanceNameFormat": "Update connection string in cube $(CubeDatabaseName)",
+    "inputs": [
+		{
+            "name": "AsServer",
+            "type": "string",
+            "label": "SSAS Server Name or IP address",
+            "required": true,
+            "helpMarkDown": "SSAS Server Name or IP address.  Include the instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+        },
+		{
+            "name": "CubeDatabaseName",
+            "type": "string",
+            "label": "Name of tabular cube containing the data source connection",
+            "required": true,
+            "helpMarkDown": "The name of the tabular cube containing the data source connection"
+        },
+        {
+            "name": "SourceSqlServer",
+            "type": "string",
+            "label": "Name of source SQL Server",
+            "required": true,
+            "helpMarkDown": "The name of the SQL Server that will be the source of data for the cube"
+        },
+        {
+            "name": "SourceSqlDatabase",
+            "type": "string",
+            "label": "Name of source SQL Database",
+            "required": true,
+            "helpMarkDown": "The name of the SQL database that will be the source of data for the cube"
+        },
+        {
+			"name": "ImpersonationMode",
+			"type": "pickList",
+			"label": "Impersonation mode to be used by the data source",
+			"defaultValue": "ImpersonateAccount",
+			"options": {
+				"ImpersonateAccount": "Use a specfic Windows user and password",
+                "ImpersonateServiceAccount": "Use the SSAS service account"
+			},
+			"required": true,
+            "helpMarkDown":  "Select an impersonation mode to be used by the connection:\n'Use a specfic Windows user and password' will show input fields to specify the username and password.  Strongly recommended that you use a domain based service account\n'Use the SSAS service account' changes the impersonation to use the SSAS service account",
+			"groupName":  "UsernamePassword"
+        },
+        {
+            "name": "ServiceAccountName",
+            "type": "string",
+            "label": "Account Username",
+			"visibleRule": "ImpersonationMode=impersonateAccount",
+            "required": true,
+            "helpMarkDown": "Account name including the domain name e.g. mydomain\\myserviceaccount",
+			"groupName": "UsernamePassword"
+        },
+        {
+            "name": "ServiceAccountPassword",
+            "type": "string",
+            "label": "Password",
+			"visibleRule": "ImpersonationMode=impersonateAccount",
+            "required": true,
+            "helpMarkDown": "Use a  variable for the password, values here are stored unsecure.",
+            "groupName": "UsernamePassword"
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "$(currentDirectory)\\UpdateTabularCubeDataSource.ps1"
+        }
+    }
+}

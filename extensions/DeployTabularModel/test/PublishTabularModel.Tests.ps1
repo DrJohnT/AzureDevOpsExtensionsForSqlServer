@@ -18,11 +18,13 @@ $ServerName = "localhost";
 Describe "PublishTabularModel" {
 
     Context "Deploy Cube Model with New-Guid as Name" {
+
+        $CubeDatabase = New-Guid;
+
         It "Tabular model should be deployed" {
-            $DatabaseName = New-Guid;
             $env:INPUT_AsDatabasePath = $AsDatabasePath;
             $env:INPUT_AsServer = $ServerName;
-            $env:INPUT_CubeDatabaseName = $DatabaseName;
+            $env:INPUT_CubeDatabaseName = $CubeDatabase;
             $env:INPUT_PreferredVersion = "latest";
             $env:INPUT_ProcessingOption = "DoNotProcess";
             $env:INPUT_TransactionalDeployment = "false";
@@ -32,9 +34,38 @@ Describe "PublishTabularModel" {
             $env:INPUT_OptimizationSettingsDeployment = "Deploy";
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishTabularModelTask));
 
-            ( Ping-SsasDatabase -Server $ServerName -CubeDatabase $DatabaseName ) | Should -Be $true;
+            ( Ping-SsasDatabase -Server $ServerName -CubeDatabase $CubeDatabase ) | Should -Be $true;
         }
 
+        It "Drop cube should not throw" {
+            # clean up
+            { Unpublish-Cube -Server $ServerName -CubeDatabase $CubeDatabase } | Should Not Throw;
+        }
+
+        It "Check the cube dropped" {
+            ( Ping-SsasDatabase -Server $ServerName -CubeDatabase $CubeDatabase ) | Should Be $false;
+        }
+    }
+
+    Context "Attempt to deploy cube with Full processing should fail" {
+        $CubeDatabase = New-Guid;
+
+        It "Deploy cube with Full processing should fail" {
+
+            $env:INPUT_AsDatabasePath = $AsDatabasePath;
+            $env:INPUT_AsServer = $ServerName;
+            $env:INPUT_CubeDatabaseName = $CubeDatabase;
+            $env:INPUT_PreferredVersion = "latest";
+            $env:INPUT_ProcessingOption = "Full";
+            $env:INPUT_TransactionalDeployment = "true";
+            $env:INPUT_PartitionDeployment = "DeployPartitions";
+            $env:INPUT_RoleDeployment = "DeployRolesRetainMembers";
+            $env:INPUT_ConfigurationSettingsDeployment = "Deploy";
+            $env:INPUT_OptimizationSettingsDeployment = "Deploy";
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishTabularModelTask));
+
+            ( Ping-SsasDatabase -Server $ServerName -CubeDatabase $CubeDatabase ) | Should Be $false;
+        }
     }
 
 }

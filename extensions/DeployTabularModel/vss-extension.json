@@ -1,10 +1,10 @@
 {
     "manifestVersion": 1,
     "id": "DeployTabularModel",
-    "version": "1.0.2",
+    "version": "1.0.6",
     "name": "Deploy SSAS Tabular Cube Model",
     "publisher": "DrJohnExtensions",
-    "description": "Deploy a tabular cube model to a Microsoft SQL Server Analysis Services instance",
+    "description": "Publish a tabular cube model to a Microsoft SQL Server Analysis Services (SSAS) instance",
     "public": true,
     "categories": [
         "Azure Pipelines"
@@ -29,12 +29,21 @@
     },
     "screenshots": [
         {
-            "path": "images/SqlServerLogo300.png"
+            "path": "images/microsoft-ssas-250.png"
+        },
+        {
+            "path": "images/update-ssas-250.png"
+        },
+        {
+            "path": "images/drop_ssas_cube-250.png"
+        },
+        {
+            "path": "images/SqlServerLogo250.png"
         }
     ],
     "links": {
         "getstarted": {
-            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Publish-TabularModel"
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube"
         },
         "issues": {
             "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
@@ -59,7 +68,13 @@
     "files": [
         {
             "path": "DeployTabularModelTask"
-	},
+        },
+        {
+            "path": "UpdateTabularCubeDataSourceTask"
+        },
+        {
+            "path": "DropCubeTask"
+	    },
         {
             "path": "images",
             "addressable": true
@@ -70,10 +85,30 @@
             "id": "DeployTabularModel",
             "type": "ms.vss-distributed-task.task",
             "targets": [
-            "ms.vss-distributed-task.tasks"
+                "ms.vss-distributed-task.tasks"
             ],
             "properties": {
                 "name": "DeployTabularModelTask"
+            }
+        },
+        {
+            "id": "UpdateTabularCubeDS",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "UpdateTabularCubeDataSourceTask"
+            }
+        },
+        {
+            "id": "DropCube",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "DropCubeTask"
             }
         }
     ]

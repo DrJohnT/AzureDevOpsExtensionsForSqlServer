@@ -19,13 +19,6 @@
         "Patch": "0"
      },
     "minimumAgentVersion": "1.95.0",
-    "groups": [
-        {
-            "name": "optional",
-            "displayName": "Additional Options",
-            "isExpanded": false
-        }
-      ],
     "inputs": [
 		{
             "name": "DacPacPath",
@@ -53,8 +46,7 @@
             "type": "string",
             "label": "The name of the database as it should be deployed on the target server",
             "required": false,
-            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name.",
-            "groupName": "optional"
+            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name."
         },
 		{
             "name": "PreferredVersion",
@@ -70,8 +62,7 @@
                 "130": "SQL Server 2016",
                 "120": "SQL Server 2014",
                 "110": "SQL Server 2012"
-            },
-            "groupName": "optional"
+            }
         }
     ],
     "instanceNameFormat": "Publish database DACPAC using DAC Publish Profile",
