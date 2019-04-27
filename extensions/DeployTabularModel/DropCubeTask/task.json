@@ -5,7 +5,7 @@
     "description": "Delete tabular cube model from an SSAS instance (if exists)",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
     "author": "Dr. John Tunnicliffe",
-    "preview": true,
+    "preview": false,
     "deprecated": false,
     "showEnvironmentVariables": false,
     "category": "Utility",
@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "3"
+        "Patch": "5"
     },
     "instanceNameFormat": "Drop tabular cube $(CubeDatabaseName)",
     "inputs": [

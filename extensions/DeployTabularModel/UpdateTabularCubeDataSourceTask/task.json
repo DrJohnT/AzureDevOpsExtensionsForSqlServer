@@ -5,7 +5,7 @@
     "description": "Update SSAS tabular cube data source connection string to use an on-premise SQL Server database",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
     "author": "Dr. John Tunnicliffe",
-    "preview": true,
+    "preview": false,
     "deprecated": false,
     "showEnvironmentVariables": false,
     "category": "Utility",
@@ -21,7 +21,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "3"
+        "Patch": "4"
     },
     "instanceNameFormat": "Update connection string in cube $(CubeDatabaseName)",
     "inputs": [

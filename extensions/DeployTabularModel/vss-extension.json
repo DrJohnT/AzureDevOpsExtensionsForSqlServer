@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "DeployTabularModel",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "name": "Deployment tools for SSAS Tabular Cube Models",
     "publisher": "DrJohnExtensions",
     "description": "Deploy, update and drop a tabular cube model on a Microsoft SQL Server Analysis Services (SSAS) server",

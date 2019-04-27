@@ -5,7 +5,7 @@
     "description": "Load a tabular cube model with data by processing",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
     "author": "Dr. John Tunnicliffe",
-    "preview": true,
+    "preview": false,
     "deprecated": false,
     "showEnvironmentVariables": false,
     "category": "Utility",
@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "0"
+        "Patch": "1"
     },
     "instanceNameFormat": "Process tabular cube $(CubeDatabaseName)",
     "inputs": [
@@ -34,11 +34,11 @@
         },
         {
             "name": "RefreshType",
-            "type": "string",
+            "type": "pickList",
             "label": "Processing option",
             "required": true,
             "helpMarkDown": "Type of processing to perform on the tabular cube database",
-            "defaultValue": "ProcessFull",
+            "defaultValue": "Full",
             "options": {
                 "Full": "Full",
                 "Automatic": "Default",

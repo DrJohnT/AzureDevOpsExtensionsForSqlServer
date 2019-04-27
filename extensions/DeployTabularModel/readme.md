@@ -1,6 +1,6 @@
 # Deployment tools for SSAS Tabular Cube Models
 
-This extension adds three useful tasks to Azure DevOps which are ideal for integrating tabular cube models into your CI pipeline.
+This extension adds four useful tasks to Azure DevOps which are ideal for integrating tabular cube models into your CI pipeline.
 With these tasks you can deploy, update, process and drop tabular cube models from an on-premise Microsoft SQL Server Analysis Services (SSAS) server.
 
 This extension provides four tasks:
@@ -9,8 +9,8 @@ This extension provides four tasks:
 |---------------|--------------------------------------------------------------------------|
 | [Deploy SSAS tabular cube model](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube) | Deploys SSAS tabular cube models |
 | [Update SSAS tabular cube data source](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube) | Updates SSAS tabular cube data source connection string to use an on-premise SQL Server database |
-| [Process SSAS Tabular cube model](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube) | Process SSAS tabular cube data source connection string to use an on-premise SQL Server database |
-| [Drop SSAS tabular cube model](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube) | Drops SSAS tabular cube models |
+| [Process SSAS Tabular cube model](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube) | Process SSAS tabular cube using data from an an on-premise SQL Server database |
+| [Drop SSAS tabular cube model](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube) | Deletes SSAS tabular cube models |
 
 As part of your CI pipeline you can use these tasks to deploy and populate your cube with data so you can run a suite of automated tests against your cube.
 
