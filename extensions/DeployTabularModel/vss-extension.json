@@ -1,10 +1,10 @@
 {
     "manifestVersion": 1,
     "id": "DeployTabularModel",
-    "version": "1.0.6",
-    "name": "Deploy SSAS Tabular Cube Model",
+    "version": "1.0.7",
+    "name": "Deployment tools for SSAS Tabular Cube Models",
     "publisher": "DrJohnExtensions",
-    "description": "Publish a tabular cube model to a Microsoft SQL Server Analysis Services (SSAS) instance",
+    "description": "Deploy, update and drop a tabular cube model on a Microsoft SQL Server Analysis Services (SSAS) server",
     "public": true,
     "categories": [
         "Azure Pipelines"
@@ -35,10 +35,10 @@
             "path": "images/update-ssas-250.png"
         },
         {
-            "path": "images/drop_ssas_cube-250.png"
+            "path": "images/process_ssas_cube250.png"
         },
         {
-            "path": "images/SqlServerLogo250.png"
+            "path": "images/drop_ssas_cube250.png"
         }
     ],
     "links": {
@@ -73,6 +73,9 @@
             "path": "UpdateTabularCubeDataSourceTask"
         },
         {
+            "path": "ProcessTabularModelTask"
+        },
+        {
             "path": "DropCubeTask"
 	    },
         {
@@ -99,6 +102,16 @@
             ],
             "properties": {
                 "name": "UpdateTabularCubeDataSourceTask"
+            }
+        },
+        {
+            "id": "ProcessTabularModel",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "ProcessTabularModelTask"
             }
         },
         {

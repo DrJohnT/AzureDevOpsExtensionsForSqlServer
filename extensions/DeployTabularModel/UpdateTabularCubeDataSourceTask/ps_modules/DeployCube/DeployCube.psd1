@@ -43,7 +43,10 @@ FunctionsToExport = @(
     'Get-SqlConnectionString',
     'Get-SqlAsPath',
     'Get-ServerMode',
+    'Get-ModuleByName',
+    'Get-SsasProcessingMessages',
     'Invoke-ExternalCommand',
+    'Invoke-ProcessSsasDatabase',
     'Find-AnalysisServicesDeploymentExeLocations',
     'Update-AnalysisServicesConfig',
     'Update-CubeDataSource'

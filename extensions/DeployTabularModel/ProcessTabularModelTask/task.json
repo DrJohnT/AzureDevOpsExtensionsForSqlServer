@@ -1,0 +1,55 @@
+{
+    "id": "9b3a0af3-a72e-4579-8595-8307be6cbfe9",
+    "name": "ProcessTabularModelTask",
+    "friendlyName": "Process SSAS Tabular cube model",
+    "description": "Load a tabular cube model with data by processing",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
+    "author": "Dr. John Tunnicliffe",
+    "preview": true,
+    "deprecated": false,
+    "showEnvironmentVariables": false,
+    "category": "Utility",
+    "demands": [],
+    "minimumAgentVersion": "1.95.0",
+    "version": {
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "0"
+    },
+    "instanceNameFormat": "Process tabular cube $(CubeDatabaseName)",
+    "inputs": [
+		{
+            "name": "AsServer",
+            "type": "string",
+            "label": "SSAS Server Name or IP address",
+            "required": true,
+            "helpMarkDown": "SSAS Server Name or IP address.  Include the instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+        },
+		{
+            "name": "CubeDatabaseName",
+            "type": "string",
+            "label": "Tabular cube database name that needs processing",
+            "required": true,
+            "helpMarkDown": "The name of the cube database on the SSAS server that needs to be processed"
+        },
+        {
+            "name": "RefreshType",
+            "type": "string",
+            "label": "Processing option",
+            "required": true,
+            "helpMarkDown": "Type of processing to perform on the tabular cube database",
+            "defaultValue": "ProcessFull",
+            "options": {
+                "Full": "Full",
+                "Automatic": "Default",
+                "ClearValues": "Clear Values",
+                "Calculate": "Calculate"
+            }
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "$(currentDirectory)\\ProcessTabularModel.ps1"
+        }
+    }
+}

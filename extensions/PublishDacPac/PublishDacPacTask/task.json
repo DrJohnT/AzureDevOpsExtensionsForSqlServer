@@ -16,7 +16,7 @@
     "version": {
         "Major": "1",
         "Minor": "1",
-        "Patch": "0"
+        "Patch": "1"
      },
     "minimumAgentVersion": "1.95.0",
     "inputs": [
@@ -65,7 +65,7 @@
             }
         }
     ],
-    "instanceNameFormat": "Publish database DACPAC using DAC Publish Profile",
+    "instanceNameFormat": "Publish database $(TargetDatabaseName) using DAC Publish Profile",
     "execution": {
         "PowerShell3": {
             "target": "PublishDacPacTask.ps1"

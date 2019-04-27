@@ -12,6 +12,7 @@ Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
 
 $PublishTabularModelTask =  Resolve-Path "$CurrentFolder\..\DeployTabularModelTask\PublishTabularModel.ps1";
 $UpdateTabularCubeDataSource =  Resolve-Path "$CurrentFolder\..\UpdateTabularCubeDataSourceTask\UpdateTabularCubeDataSource.ps1";
+$ProcessTabularModelTask =  Resolve-Path "$CurrentFolder\..\ProcessTabularModelTask\ProcessTabularModel.ps1";
 $UnpublishTabularModelTask =  Resolve-Path "$CurrentFolder\..\DropCubeTask\UnpublishTabularModel.ps1";
 #Write-host $PublishTabularModelTask
 
@@ -95,6 +96,38 @@ Describe "Integration tests" {
 
             # prove it worked by processing the cube
             { Invoke-ProcessASDatabase -Server $AsServer -DatabaseName $CubeDatabaseName -RefreshType Full }  | Should Not Throw;
+        }
+
+        It "Process Clear cube" {
+            $env:INPUT_AsServer = $AsServer;
+            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $env:INPUT_RefreshType = 'ClearValues';
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask));
+
+        }
+
+        It "Process Full cube" {
+            $env:INPUT_AsServer = $AsServer;
+            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $env:INPUT_RefreshType = 'Full';
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask));
+
+        }
+
+        It "Process Calculate cube" {
+            $env:INPUT_AsServer = $AsServer;
+            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $env:INPUT_RefreshType = 'Calculate';
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask));
+
+        }
+
+        It "Process Default cube" {
+            $env:INPUT_AsServer = $AsServer;
+            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $env:INPUT_RefreshType = 'Automatic';
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask));
+
         }
 
         It "Unpublish cube should delete cube" {

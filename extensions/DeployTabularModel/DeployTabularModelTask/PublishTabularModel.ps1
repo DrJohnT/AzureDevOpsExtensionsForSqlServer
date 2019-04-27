@@ -22,8 +22,6 @@ param()
         import-Module -Name $ModulePath;
     }
 
-    Write-Host "Reading inputs";
-
     [string]$AsDatabasePath = Get-VstsInput -Name "AsDatabasePath" -Require;
     [string]$AsServer = Get-VstsInput -Name  "AsServer" -Require;
     [string]$CubeDatabaseName = Get-VstsInput -Name "CubeDatabaseName";

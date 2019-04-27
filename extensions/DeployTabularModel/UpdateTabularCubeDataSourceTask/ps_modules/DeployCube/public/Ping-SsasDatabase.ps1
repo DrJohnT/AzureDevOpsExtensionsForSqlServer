@@ -23,7 +23,9 @@ function Ping-SsasDatabase {
     )
 
     try {
-        Import-Module -Name SqlServer;
+        # ensure SqlServer module is installed
+        Get-ModuleByName -Name SqlServer;
+
         # request a list of databases on the SSAS server. If the server does not exist, it will return an empty string
   		# Annoyingly, Invoke-ASCmd does not generate an error we can capture with try/catch. But it does write output to the error console,
 		# so we have to redirect the error output to the normal output to stop the error been detected by processes monitoring the error output such as the build pipeline
@@ -50,7 +52,7 @@ function Ping-SsasDatabase {
         }
     }
     catch {
-        Write-Warning "Error $_";
+        Write-Error "Error $_";
         return $false;
     }
 }

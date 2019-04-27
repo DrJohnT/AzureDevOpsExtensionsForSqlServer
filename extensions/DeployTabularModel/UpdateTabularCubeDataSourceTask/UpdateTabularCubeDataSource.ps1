@@ -45,9 +45,14 @@ param()
     try {
         if ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) {
             if ([string]::IsNullOrEmpty($ImpersonationAccount)) {
-                Update-CubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
+                $result = Update-CubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
             } else {
-                Update-CubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPassword $ImpersonationPassword;
+                $result = Update-CubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPassword $ImpersonationPassword;
+            }
+            if ($result) {
+                Write-Output "Tabular cube data source updated sucessfully";
+            } else {
+                Write-Error "Failed to update cube data source correctly";
             }
         }
     } finally {
