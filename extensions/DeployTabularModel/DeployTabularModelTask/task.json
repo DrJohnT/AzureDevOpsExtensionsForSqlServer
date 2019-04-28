@@ -21,7 +21,7 @@
     "version": {
         "Major": "1",
         "Minor": "1",
-        "Patch": "4"
+        "Patch": "5"
     },
     "instanceNameFormat": "Deploy SSAS tabular model $(CubeDatabaseName)",
     "inputs": [
@@ -60,20 +60,6 @@
                 "130": "SQL Server 2016",
                 "120": "SQL Server 2014",
                 "110": "SQL Server 2012"
-            },
-            "groupName": "DeploymentOptions"
-        },
-        {
-            "name": "ProcessingOption",
-            "type": "pickList",
-            "label": "Cube Processing Option",
-            "required": false,
-            "helpMarkDown": "Determines if the cube is processed as part of the deployment. Strongly recommend you DO NOT process at this stage as the Data Source connection string may be incorrect.",
-            "defaultValue": "DoNotProcess",
-            "options": {
-                "DoNotProcess": "Do Not Process",
-                "Full": "Full",
-                "Default": "Default"
             },
             "groupName": "DeploymentOptions"
         },

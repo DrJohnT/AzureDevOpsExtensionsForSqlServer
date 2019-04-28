@@ -26,7 +26,6 @@ param()
     [string]$AsServer = Get-VstsInput -Name  "AsServer" -Require;
     [string]$CubeDatabaseName = Get-VstsInput -Name "CubeDatabaseName";
     [string]$PreferredVersion = Get-VstsInput -Name "PreferredVersion";
-    [string]$ProcessingOption = Get-VstsInput -Name "ProcessingOption";
 
     [string]$TransactionalDeployment = Get-VstsInput -Name "TransactionalDeployment";
     [string]$PartitionDeployment = Get-VstsInput -Name "PartitionDeployment";
@@ -47,7 +46,7 @@ param()
     Write-Host "==============================================================================";
 
     try {
-        Publish-Cube -AsDatabasePath $AsDatabasePath -Server $AsServer -CubeDatabase $CubeDatabaseName -PreferredVersion $PreferredVersion -ProcessingOption $ProcessingOption `
+        Publish-Cube -AsDatabasePath $AsDatabasePath -Server $AsServer -CubeDatabase $CubeDatabaseName -PreferredVersion $PreferredVersion `
             -TransactionalDeployment $TransactionalDeployment -PartitionDeployment $PartitionDeployment -RoleDeployment $RoleDeployment `
             -ConfigurationSettingsDeployment $ConfigurationSettingsDeployment -OptimizationSettingsDeployment $OptimizationSettingsDeployment;
     } finally {

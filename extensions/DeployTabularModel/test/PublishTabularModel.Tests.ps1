@@ -26,7 +26,6 @@ Describe "PublishTabularModel" {
             $env:INPUT_AsServer = $ServerName;
             $env:INPUT_CubeDatabaseName = $CubeDatabase;
             $env:INPUT_PreferredVersion = "latest";
-            $env:INPUT_ProcessingOption = "DoNotProcess";
             $env:INPUT_TransactionalDeployment = "false";
             $env:INPUT_PartitionDeployment = "DeployPartitions";
             $env:INPUT_RoleDeployment = "DeployRolesRetainMembers";
@@ -46,7 +45,7 @@ Describe "PublishTabularModel" {
             ( Ping-SsasDatabase -Server $ServerName -CubeDatabase $CubeDatabase ) | Should Be $false;
         }
     }
-
+<#
     Context "Attempt to deploy cube with Full processing should fail" {
         $CubeDatabase = New-Guid;
 
@@ -56,7 +55,6 @@ Describe "PublishTabularModel" {
             $env:INPUT_AsServer = $ServerName;
             $env:INPUT_CubeDatabaseName = $CubeDatabase;
             $env:INPUT_PreferredVersion = "latest";
-            $env:INPUT_ProcessingOption = "Full";
             $env:INPUT_TransactionalDeployment = "true";
             $env:INPUT_PartitionDeployment = "DeployPartitions";
             $env:INPUT_RoleDeployment = "DeployRolesRetainMembers";
@@ -67,7 +65,7 @@ Describe "PublishTabularModel" {
             ( Ping-SsasDatabase -Server $ServerName -CubeDatabase $CubeDatabase ) | Should Be $false;
         }
     }
-
+#>
 }
 
 Remove-Module VstsTaskSdk;
