@@ -14,9 +14,9 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "6"
+        "Patch": "7"
     },
-    "instanceNameFormat": "Drop tabular cube $(CubeDatabaseName)",
+    "instanceNameFormat": "Drop SSAS tabular cube $(CubeDatabaseName)",
     "inputs": [
 		{
             "name": "AsServer",

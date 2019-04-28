@@ -1,10 +1,10 @@
 {
     "manifestVersion": 1,
     "id": "DeployTabularModel",
-    "version": "1.0.8",
+    "version": "1.0.10",
     "name": "Deployment tools for SSAS Tabular Cube Models",
     "publisher": "DrJohnExtensions",
-    "description": "Deploy, update and drop a tabular cube model on a Microsoft SQL Server Analysis Services (SSAS) server",
+    "description": "Deploy, update, process and drop tabular cube models on Microsoft SQL Server Analysis Services (SSAS)",
     "public": true,
     "categories": [
         "Azure Pipelines"
@@ -29,16 +29,7 @@
     },
     "screenshots": [
         {
-            "path": "images/microsoft-ssas-250.png"
-        },
-        {
-            "path": "images/update-ssas-250.png"
-        },
-        {
-            "path": "images/process_ssas_cube250.png"
-        },
-        {
-            "path": "images/drop_ssas_cube250.png"
+            "path": "images/DeploymentToolsForSsasTabularCubeModels.png"
         }
     ],
     "links": {

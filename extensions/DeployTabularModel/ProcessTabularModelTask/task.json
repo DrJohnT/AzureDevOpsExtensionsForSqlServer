@@ -2,7 +2,7 @@
     "id": "9b3a0af3-a72e-4579-8595-8307be6cbfe9",
     "name": "ProcessTabularModelTask",
     "friendlyName": "Process SSAS Tabular cube model",
-    "description": "Load a tabular cube model with data by processing",
+    "description": "Load a SSAS tabular cube model with data from an an on-premise SQL Server database by processing the cube",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
     "author": "Dr. John Tunnicliffe",
     "preview": false,
@@ -14,9 +14,9 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "1"
+        "Patch": "2"
     },
-    "instanceNameFormat": "Process tabular cube $(CubeDatabaseName)",
+    "instanceNameFormat": "Process SSAS tabular cube $(CubeDatabaseName)",
     "inputs": [
 		{
             "name": "AsServer",

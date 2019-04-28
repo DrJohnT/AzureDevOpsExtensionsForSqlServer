@@ -21,9 +21,9 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "4"
+        "Patch": "5"
     },
-    "instanceNameFormat": "Update connection string in cube $(CubeDatabaseName)",
+    "instanceNameFormat": "Update SSAS tabular cube data source in $(CubeDatabaseName)",
     "inputs": [
 		{
             "name": "AsServer",
