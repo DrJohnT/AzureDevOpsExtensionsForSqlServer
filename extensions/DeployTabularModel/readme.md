@@ -42,11 +42,11 @@ Microsoft.AnalysisServices.Deployment.exe
 
 Microsoft.AnalysisServices.Deployment.exe is known as the [Analysis Services Deployment Utility](https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/deploy-model-solutions-with-the-deployment-utility?view=sql-server-2017) and is installed alongside [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017) (SSMS).
 
-The basic inputs for the **Deploy SSAS Tabular Cube Model** task are simply the path to the _.asdatabase_ file, the target SSAS server and target cube database name.
+The basic inputs for the **Deploy SSAS Tabular Cube Model** task are simply the path to the _.asdatabase_ file, the target SSAS server and target cube database name.  Note that the tabular cube is always deployed without processing, as the data source connection settings are likely to be incorrect.  The **Process SSAS Tabular cube model** task can be used to load data into the cube.
 
 ![image](images/Inputs-DeployTabularCubeInputs.png "Deploy SSAS Tabular Cube Model Inputs")
 
-The task also offers the following deployment options for fine control over your deployment.  Note that the tabular cube is always deployed without processing, as the data source connection settings are likely to be incorrect.  The **Process SSAS Tabular cube model** task can be used to load data into the cube.
+The task also offers the following deployment options for fine control over your deployment.
 
 ![image](images/Inputs-DeployTabularCubeDeploymentOptions.png "Deploy SSAS Tabular Cube Model Deployment Options")
 
