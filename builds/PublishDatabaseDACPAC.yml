@@ -1,6 +1,6 @@
 variables:
   BuildConfiguration: 'debug'
-  BuildServerName: 'build02'
+  BuildServerName: 'SZRH3012.qregroup.net'
 
 steps:
 - task: DrJohnExtensions.PublishDacPac.PublishDacPac.PublishDacPacTask@1

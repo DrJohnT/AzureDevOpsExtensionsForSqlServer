@@ -15,6 +15,9 @@ function Unpublish-Cube {
         $CubeDatabase
     )
 
+    # ensure SqlServer module is installed
+    Get-ModuleByName -Name SqlServer;
+
     $asCmd = "<Delete xmlns='http://schemas.microsoft.com/analysisservices/2003/engine'><Object><DatabaseID>$CubeDatabase</DatabaseID></Object></Delete>";
     Invoke-ASCmd -Server $Server -Query $asCmd;
 }

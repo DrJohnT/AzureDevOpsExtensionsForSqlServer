@@ -30,7 +30,7 @@ function Invoke-ProcessSsasDatabase {
         Get-ModuleByName -Name SqlServer;
 
         if ( Ping-SsasDatabase -Server $Server -CubeDatabase $CubeDatabase ) {
-            Write-Host "Processing tabular cube database $Server.$CubeDatabase using $RefreshType";
+            Write-Output "Processing tabular cube database $Server.$CubeDatabase using $RefreshType";
             $ModelOperationResults = Invoke-ProcessASDatabase -Server $Server -DatabaseName $CubeDatabase -RefreshType $RefreshType;
             Get-SsasProcessingMessages $ModelOperationResults;
         } else {

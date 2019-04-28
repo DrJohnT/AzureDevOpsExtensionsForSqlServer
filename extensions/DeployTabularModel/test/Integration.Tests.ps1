@@ -90,8 +90,8 @@ Describe "Integration tests" {
             $env:INPUT_SourceSqlServer = $DbServer;
             $env:INPUT_SourceSqlDatabase = 'DatabaseToPublish';
             $env:INPUT_ImpersonationMode = 'ImpersonateAccount';
-            $env:INPUT_ImpersonationAccount = 'qregroup\jtunnicliffe';
-            $env:INPUT_ImpersonationPassword = '13Lilac!';
+            $env:INPUT_ImpersonationAccount = 'QREGROUP\QReSvcSWBuild';
+            $env:INPUT_ImpersonationPassword = 'OSzkzmvdVC-n9+BT';
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($UpdateTabularCubeDataSource));
 
             # prove it worked by processing the cube
@@ -138,8 +138,6 @@ Describe "Integration tests" {
             ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) | Should -Be $false;
         }
     }
-
-
 }
 
 Remove-Module VstsTaskSdk;

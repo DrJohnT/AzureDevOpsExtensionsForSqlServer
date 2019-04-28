@@ -20,7 +20,7 @@ Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
 $PublishDacPacTask =  Resolve-Path "$CurrentFolder\..\PublishDacPacTask\PublishDacPacTask.ps1";
 #Write-host $PublishDacPacTask
 
-$ServerName = "build02";
+$ServerName = "SZRH3012.qregroup.net";
 
 Describe "PublishDacPacTask" {
 
