@@ -45,6 +45,7 @@ FunctionsToExport = @(
     'Get-ServerMode',
     'Get-ModuleByName',
     'Get-SsasProcessingMessages',
+    'Get-CubeDatabaseCompatibilityLevel',
     'Invoke-ExternalCommand',
     'Invoke-ProcessSsasDatabase',
     'Find-AnalysisServicesDeploymentExeLocations',

@@ -26,6 +26,7 @@ function Invoke-ProcessSsasDatabase {
     )
 
     if ( Ping-SsasDatabase -Server $Server -CubeDatabase $CubeDatabase ) {
+
         Write-Output "Processing tabular cube $Server.$CubeDatabase using Refresh Type: $RefreshType";
 
         $tmslStructure = [pscustomobject]@{
@@ -35,11 +36,8 @@ function Invoke-ProcessSsasDatabase {
             }
         }
 
-        $tmsl = $tmslStructure | ConvertTo-Json;
-        $tmsl = $tmsl -replace '\"@{', '{ "'
-        $tmsl = $tmsl -replace '=', '": "'
-        $tmsl = $tmsl -replace '}"', '" }'
-#        Write-Output $tmsl;
+        $tmsl = $tmslStructure | ConvertTo-Json -Depth 3;
+        #Write-Output $tmsl;
 
         $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query $tmsl;
         Get-SsasProcessingMessages -ASCmdReturnString $returnResult;
