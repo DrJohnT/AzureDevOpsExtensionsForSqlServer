@@ -81,26 +81,25 @@ function Publish-Cube {
 
 	$global:ErrorActionPreference = 'Stop';
 
-    try {
-        # find the specific version of Microsoft.AnalysisServices.Deployment.exe or the latest if not available
-        $Version = Select-AnalysisServicesDeploymentExeVersion -PreferredVersion $PreferredVersion;
-        $AnalysisServicesDeploymentExePath = Get-AnalysisServicesDeploymentExePath -Version $Version;
+    if (Ping-SsasServer -Server $Server) {
+        try {
+            # find the specific version of Microsoft.AnalysisServices.Deployment.exe or the latest if not available
+            $Version = Select-AnalysisServicesDeploymentExeVersion -PreferredVersion $PreferredVersion;
+            $AnalysisServicesDeploymentExePath = Get-AnalysisServicesDeploymentExePath -Version $Version;
 
-	    if (!(Test-Path -Path $AnalysisServicesDeploymentExePath)) {
-		    Write-Error "Could not find Microsoft.AnalysisServices.Deployment.exe in order to deploy the cube AsDatabase file!";
-            throw "Could not find Microsoft.AnalysisServices.Deployment.exe in order to deploy the cube AsDatabase!";
-	    }
+            if (!(Test-Path -Path $AnalysisServicesDeploymentExePath)) {
+                Write-Error "Could not find Microsoft.AnalysisServices.Deployment.exe in order to deploy the cube AsDatabase file!";
+                throw "Could not find Microsoft.AnalysisServices.Deployment.exe in order to deploy the cube AsDatabase!";
+            }
 
-        [String]$ProductVersion = (Get-Item $AnalysisServicesDeploymentExePath).VersionInfo.ProductVersion;
+            [String]$ProductVersion = (Get-Item $AnalysisServicesDeploymentExePath).VersionInfo.ProductVersion;
 
-	    if (!(Test-Path -Path $AsDatabasePath)) {
-		    throw "AsDatabase path does not exist in $AsDatabasePath";
-        }
+            if (!(Test-Path -Path $AsDatabasePath)) {
+                throw "AsDatabase path does not exist in $AsDatabasePath";
+            }
 
-        $AsDatabaseName = Split-Path -Path $AsDatabasePath -Leaf;
-	    $AsDatabaseFolder = Split-Path -Path $AsDatabasePath -Parent;
-
-        if (Ping-SsasServer -Server $Server) {
+            $AsDatabaseName = Split-Path -Path $AsDatabasePath -Leaf;
+            $AsDatabaseFolder = Split-Path -Path $AsDatabasePath -Parent;
 
             # change the config files so that SSAS Deployment Wizard deploys to the correct server
             Update-AnalysisServicesConfig -AsDatabasePath $AsDatabasePath -Server $Server -CubeDatabase $CubeDatabase -ProcessingOption $ProcessingOption `
@@ -135,7 +134,7 @@ function Publish-Cube {
             Invoke-ExternalCommand -Command $AnalysisServicesDeploymentExePath -Arguments $ArgList -PipeOutNull $true;
 
             $log = Get-Content "$AsDatabaseFolder\AnalysisServicesDeploymentExeLog.txt";
-	        foreach ($line in $log) {
+            foreach ($line in $log) {
                 if ($line -like '*error*') {
                     Write-Error $line;
                 } else {
@@ -143,11 +142,12 @@ function Publish-Cube {
                 }
             }
 
-        } else {
-            throw "Invalid SSAS Server: $Server";
+
+        } catch {
+            throw "Error: $_";
         }
-    } catch {
-        throw "Error: $_";
+    } else {
+        throw "Invalid SSAS Server: $Server";
     }
 }
 

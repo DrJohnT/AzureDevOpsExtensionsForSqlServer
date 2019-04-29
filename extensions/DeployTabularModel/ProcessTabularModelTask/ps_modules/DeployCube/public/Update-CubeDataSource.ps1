@@ -71,7 +71,7 @@ function Update-CubeDataSource
             $ConnectionString  = Get-SqlConnectionString -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ExistingConnectionString $ExistingConnectionString;
 
             if ($ImpersonationMode -eq 'ImpersonateAccount') {
-                $dataSource += @{
+                $dataSource = [pscustomobject]@{
                     name = $DataSourceName
                     connectionString = $ConnectionString
                     maxConnections = $MaxConnections

@@ -15,11 +15,14 @@ function Unpublish-Cube {
         $CubeDatabase
     )
 
-    # ensure SqlServer module is installed
-    Get-ModuleByName -Name SqlServer;
-
-    $asCmd = "<Delete xmlns='http://schemas.microsoft.com/analysisservices/2003/engine'><Object><DatabaseID>$CubeDatabase</DatabaseID></Object></Delete>";
-    Invoke-ASCmd -Server $Server -Query $asCmd;
+    # only attempt to drop the cube if it actually exists!
+    if ( Ping-SsasDatabase -Server $Server -CubeDatabase $CubeDatabase ) {
+        $asCmd = "<Delete xmlns='http://schemas.microsoft.com/analysisservices/2003/engine'><Object><DatabaseID>$CubeDatabase</DatabaseID></Object></Delete>";
+        $returnResult = Invoke-ASCmd -Server $Server -Query $asCmd;
+        if (-not ($returnResult -like '*urn:schemas-microsoft-com:xml-analysis:empty*')) {
+            throw "Failed to drop cube $CubeDatabase";
+        }
+    }
 }
 
 New-Alias -Name Drop-Cube -Value Unpublish-Cube;

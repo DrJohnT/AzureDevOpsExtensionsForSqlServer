@@ -1,19 +1,26 @@
 function Get-SsasProcessingMessages {
     <#
         .SYNOPSIS
-        Examines the XML returned by the Invoke-AsCmd or Invoke-ProcessAsDatabase function to find errors.  Write an error message if error message found.
+        Examines the XML returned by the Invoke-AsCmd function to find errors.  Write an error message if error message found.
     #>
     [CmdletBinding()]
-    [Parameter(Mandatory = $true)]
-    $ModelOperationResults
+    param
+    (
+        [String] [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $ASCmdReturnString
+    )
 
-    $xmlaResultCollection = $ModelOperationResults.XmlaResults;
-    foreach ($xmlaResult in $xmlaResultCollection)
-    {
-        foreach ($xmlaMessage in $xmlaResult.Messages)
-        {
-            $msg = $xmlaMessage.Description;
-            Write-Output "Processing message: $msg";
-        }
+    $returnXml = New-Object -TypeName System.Xml.XmlDocument;
+    $returnXml.LoadXml($ASCmdReturnString);
+
+    [System.Xml.XmlNamespaceManager] $nsmgr = $returnXml.NameTable;
+    $nsmgr.AddNamespace('xmlAnalysis', 	'urn:schemas-microsoft-com:xml-analysis');
+    $nsmgr.AddNamespace('rootNS', 		'urn:schemas-microsoft-com:xml-analysis:empty');
+    $nsmgr.AddNamespace('exceptionNS',  'urn:schemas-microsoft-com:xml-analysis:exception');
+
+    $rows = $returnXML.SelectNodes("//xmlAnalysis:return/rootNS:root/exceptionNS:Messages/exceptionNS:Error", $nsmgr) ;
+    foreach ($row in $rows) {
+        throw $row.Description;
     }
 }

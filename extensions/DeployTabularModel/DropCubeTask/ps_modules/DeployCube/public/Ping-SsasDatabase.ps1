@@ -44,10 +44,10 @@ function Ping-SsasDatabase {
 
                 $rows = $returnXML.SelectNodes("//xmlAnalysis:DiscoverResponse/xmlAnalysis:return/rootNS:root/rootNS:row/rootNS:DATABASE_ID", $nsmgr) ;
                 foreach ($row in $rows) {
-                $FoundDb = $row.InnerText;
-                if ($FoundDb -eq  $CubeDatabase) {
+                    $FoundDb = $row.InnerText;
+                    if ($FoundDb -eq  $CubeDatabase) {
                         return $true;
-                }
+                    }
                 }
                 return $false;
             }
