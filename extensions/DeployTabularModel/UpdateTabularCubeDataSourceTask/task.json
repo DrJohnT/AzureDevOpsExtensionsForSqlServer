@@ -9,19 +9,12 @@
     "deprecated": false,
     "showEnvironmentVariables": false,
     "category": "Utility",
-    "groups": [
-        {
-            "name": "UsernamePassword",
-            "displayName": "Service Account Details",
-            "isExpanded": false
-        }
-    ],
     "demands": [],
     "minimumAgentVersion": "1.95.0",
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "7"
+        "Patch": "8"
     },
     "instanceNameFormat": "Update SSAS tabular cube data source in $(CubeDatabaseName)",
     "inputs": [
@@ -63,7 +56,7 @@
                 "ImpersonateServiceAccount": "Use the SSAS service account"
 			},
 			"required": true,
-            "helpMarkDown":  "Select an impersonation mode to be used by the connection:\n'Use a specfic Windows user and password' will show input fields to specify the username and password.  Strongly recommended that you use a domain based service account\n'Use the SSAS service account' changes the impersonation to use the SSAS service account",
+            "helpMarkDown":  "Select an impersonation mode to be used by the connection:\n'Use a specfic Windows user and password' will show input fields to specify the username and password.  Strongly recommended that you use a domain based service account\n'Use the SSAS service account' changes the impersonation to use the SSAS service account"
         },
         {
             "name": "ServiceAccountName",
@@ -71,8 +64,7 @@
             "label": "Account Username",
 			"visibleRule": "ImpersonationMode=ImpersonateAccount",
             "required": true,
-            "helpMarkDown": "Account name including the domain name e.g. mydomain\\myserviceaccount",
-			"groupName": "UsernamePassword"
+            "helpMarkDown": "Account name including the domain name e.g. mydomain\\myserviceaccount"
         },
         {
             "name": "ServiceAccountPassword",
@@ -80,8 +72,7 @@
             "label": "Password",
 			"visibleRule": "ImpersonationMode=ImpersonateAccount",
             "required": true,
-            "helpMarkDown": "Use a  variable for the password, values here are stored unsecure.",
-            "groupName": "UsernamePassword"
+            "helpMarkDown": "Use a  variable for the password, values here are stored unsecure."
         }
     ],
     "execution": {
