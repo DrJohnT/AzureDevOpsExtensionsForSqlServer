@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "8"
+        "Patch": "9"
     },
     "instanceNameFormat": "Update SSAS tabular cube data source in $(CubeDatabaseName)",
     "inputs": [
@@ -59,20 +59,20 @@
             "helpMarkDown":  "Select an impersonation mode to be used by the connection:\n'Use a specfic Windows user and password' will show input fields to specify the username and password.  Strongly recommended that you use a domain based service account\n'Use the SSAS service account' changes the impersonation to use the SSAS service account"
         },
         {
-            "name": "ServiceAccountName",
+            "name": "ImpersonationAccount",
             "type": "string",
             "label": "Account Username",
 			"visibleRule": "ImpersonationMode=ImpersonateAccount",
-            "required": true,
+            "required": false,
             "helpMarkDown": "Account name including the domain name e.g. mydomain\\myserviceaccount"
         },
         {
-            "name": "ServiceAccountPassword",
+            "name": "ImpersonationPassword",
             "type": "string",
-            "label": "Password",
+            "label": "Account Password",
 			"visibleRule": "ImpersonationMode=ImpersonateAccount",
-            "required": true,
-            "helpMarkDown": "Use a  variable for the password, values here are stored unsecure."
+            "required": false,
+            "helpMarkDown": "Use a locked variable for the password, values here are stored unsecure."
         }
     ],
     "execution": {
