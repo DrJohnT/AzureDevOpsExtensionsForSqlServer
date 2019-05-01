@@ -1,3 +1,6 @@
+[![Build status](https://qatar-re.visualstudio.com/QatarRe.BI/_apis/build/status/Build%20%26%20Deploy%20Database%20and%20Cube)](https://qatar-re.visualstudio.com/QatarRe.BI/_build/latest?definitionId=57)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
+
 # Deploy database using DACPAC and DAC Publish Profile
 
 The **Deploy Database** task allows you to deploy a SQL Server Database to a SQL Server instance using a DACPAC and a DAC Publish Profile.
@@ -13,7 +16,7 @@ The **Deploy Database** task compares the content of a DACPAC to the database al
 Note that [DAC Publish Profiles](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) are created in Visual Studio when you **Publish** a database.  Clicking the **Save Profile** button in the **Publish** screen saves your [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) into your Visual Studio project for later re-use.
 
 
-The **Deploy Database** task can be used to automate the deployment of databases, either as part of a build in an Azure DevOps pipeline, or as part of a server deployment using Azure DevOps Release Manager.   To deploy databases using [Octopus Deploy](https://octopus.com/) or other deployment service, you can utilise the PowerShell module [PublishDacPac](https://github.com/DrJohnT/PublishDacPac/) which underpins the **Deploy Database** task.  [PublishDacPac](https://www.powershellgallery.com/packages/PublishDacPac/) is available on the [PowerShell Gallery here](https://www.powershellgallery.com/packages/PublishDacPac/).
+The **Deploy Database** task can be used to automate the deployment of databases, either as part of a build in an Azure DevOps pipeline, or as part of a server deployment using Azure DevOps Release Manager.   To deploy databases using [Octopus Deploy](https://octopus.com/) or other deployment service, you can utilise the PowerShell module [PublishDacPac](https://github.com/DrJohnT/PublishDacPac/) which underpins the **Deploy Database** task.  [PublishDacPac](https://www.powershellgallery.com/packages/PublishDacPac/) is available on the [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PublishDacPac.svg)](https://www.powershellgallery.com/packages/PublishDacPac)
 
 ## Example Configuration
 
