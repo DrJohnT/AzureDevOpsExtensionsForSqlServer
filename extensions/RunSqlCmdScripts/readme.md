@@ -1,0 +1,1 @@
+# Runs a SQL Script in SQLCMD mode passing multiple parameters via SqlCmdVariables array

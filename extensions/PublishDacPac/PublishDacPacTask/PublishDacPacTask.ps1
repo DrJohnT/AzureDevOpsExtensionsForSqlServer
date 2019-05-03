@@ -20,8 +20,6 @@ param()
 	$ModulePath = Resolve-Path "$ModulePath\ps_modules\PublishDacPac\PublishDacPac.psd1";
     import-Module -Name $ModulePath;
 
-    Write-Host "Reading inputs";
-
     [string]$DacPacPath = Get-VstsInput -Name "DacPacPath" -Require;
     [string]$DacPublishProfile = Get-VstsInput -Name "DacPublishProfile" -Require;
     [string]$TargetServerName = Get-VstsInput -Name  "TargetServerName" -Require;

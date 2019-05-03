@@ -1,0 +1,56 @@
+{
+    "id": "d5486d4d-52f1-43ce-93ae-fcd4f2be7428",
+    "name": "RunSqlCmdScriptTask",
+    "friendlyName": "Run SQL Script in SQLCMD mode",
+    "description": "Run a single SQL Script in SQLCMD mode passing multiple parameters via SqlCmdVariables array",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
+    "author": "Dr. John Tunnicliffe",
+    "preview": true,
+    "deprecated": false,
+    "showEnvironmentVariables": false,
+    "category": "Utility",
+    "demands": [],
+    "minimumAgentVersion": "1.95.0",
+    "version": {
+        "Major": "0",
+        "Minor": "1",
+        "Patch": "3"
+    },
+    "instanceNameFormat": "Run SQLCMD Script $(SqlCmdSciptPath)",
+    "inputs": [
+		{
+            "name": "SqlCmdSciptPath",
+            "type": "filePath",
+            "label": "Path to .sql file",
+            "required": true,
+            "helpMarkDown": "Relative path from repo root to the SQL script to run.  Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
+        },
+		{
+            "name": "Server",
+            "type": "string",
+            "label": "Server name or IP address",
+            "required": true,
+            "helpMarkDown": "Server name or IP address.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+        },
+		{
+            "name": "Database",
+            "type": "string",
+            "label": "The name of the SQL database",
+            "required": true,
+            "helpMarkDown": "The name of the database against which the script will be run"
+        },
+        {
+            "name": "SqlCmdVariables",
+            "type": "multiLine",
+            "label": "SqlCmd Variables and Values (var=varvalue)",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "A list of SqlCmd variables and their values in the format var=varvalue. e.g. \nvar1=varvalue1\nvar2=varvalue2\nvar3=varvalue3\nvar4=varvalue4"
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "$(currentDirectory)\\RunSqlCmdScript.ps1"
+        }
+    }
+}

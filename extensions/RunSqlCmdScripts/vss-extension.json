@@ -1,0 +1,77 @@
+{
+    "manifestVersion": 1,
+    "id": "RunSqlCmdScripts",
+    "version": "0.0.3",
+    "name": "Run SQL Scripts in SQLCMD mode with multiple SQLCMD variables",
+    "publisher": "DrJohnExtensions",
+    "description": "Run upgrade or pre/post-deployment scripts against your on-premise SQL Server database",
+    "public": true,
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        "deploy",
+        "release",
+        "sql",
+        "database",
+        "sqlcmd"
+    ],
+    "icons": {
+        "default": "images/blue-sql-400.png"
+    },
+    "content": {
+        "details": {
+            "path": "readme.md"
+        },
+        "license": {
+            "path": "license.md"
+        }
+    },
+    "screenshots": [
+        {
+            "path": "images/SqlServerLogo300.png"
+        }
+    ],
+    "links": {
+        "issues": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
+        },
+        "repository": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+    },
+    "branding": {
+        "color": "#f6f7fb",
+        "theme": "light"
+    },
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "files": [
+        {
+            "path": "RunSqlCmdScriptTask"
+        },
+        {
+            "path": "images",
+            "addressable": true
+        }
+    ],
+    "contributions": [
+        {
+            "id": "RunSqlCmdScript",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "RunSqlCmdScriptTask"
+            }
+        }
+    ]
+}
