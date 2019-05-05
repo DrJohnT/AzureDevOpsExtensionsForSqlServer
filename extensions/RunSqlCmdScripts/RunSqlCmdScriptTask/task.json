@@ -3,7 +3,7 @@
     "name": "RunSqlCmdScriptTask",
     "friendlyName": "Run SQL Script in SQLCMD mode",
     "description": "Run a single SQL Script in SQLCMD mode passing multiple parameters via SqlCmdVariables array",
-    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube)",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/RunSqlCmdScripts)",
     "author": "Dr. John Tunnicliffe",
     "preview": true,
     "deprecated": false,

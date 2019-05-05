@@ -7,7 +7,23 @@ function Ping-SqlDatabase {
         Checks that the database exists on the SQL Server instance
 
 		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+        This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+
+        .PARAMETER Server
+        Name of the target server, including instance and port if required.
+
+        .PARAMETER Database
+        The name of the database you are checking exists.
+
+		.OUTPUTS
+        Returns $true if the database is found, $false otherwise.
+
+        .EXAMPLE
+        Ping-SqlDatabase -Server localhost -Database 'MyDatabase'
+
+        Find 'MyDatabase' on your local machine
+
+
     #>
     [OutputType([Boolean])]
     [CmdletBinding()]

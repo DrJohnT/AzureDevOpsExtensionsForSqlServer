@@ -23,7 +23,7 @@ function Get-ModuleByName {
             # if module is not installed
             Write-Output "Installing PowerShell module $Name for current user"
             Install-PackageProvider -Name NuGet -Force -Scope CurrentUser;
-            Install-Module -Name $Name -Force -Scope CurrentUser -Repository PSGallery -SkipPublisherCheck;
+            Install-Module -Name $Name -Force -AllowClobber -Scope CurrentUser -Repository PSGallery -SkipPublisherCheck;
         }
         if (-not (Get-Module -Name $Name)) {
             # if module is not loaded

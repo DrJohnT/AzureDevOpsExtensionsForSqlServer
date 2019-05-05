@@ -15,21 +15,21 @@ foreach ($folder in Get-ChildItem | ?{ $_.PSIsContainer })
     [string] $index = $folder
     # get the required module
     $RequiredModule = $moduleMap[$index]
+    if ($RequiredModule) {
 
+        $sourceDir = Resolve-Path "$moduleRoot\$RequiredModule\$RequiredModule";
 
-    $sourceDir = Resolve-Path "$moduleRoot\$RequiredModule\$RequiredModule";
+        $taskFolder = "{0}Task" -f $folder;
+        #$targetDir = "$ScriptPath\$folder\$taskFolder\ps_modules";
 
-    $taskFolder = "{0}Task" -f $folder;
-    #$targetDir = "$ScriptPath\$folder\$taskFolder\ps_modules";
-
-    $targetDirs = Get-Childitem -Path "$ScriptPath\$folder\*Task\ps_modules" -ErrorAction SilentlyContinue;
-    foreach ($targetDir in $targetDirs) {
-        #Write-host $sourceDir;
-        #Write-host $targetDir;
-        Write-host "Copying $RequiredModule to $targetDir";
-        Copy-Item -Path  $sourceDir -Destination $targetDir -Recurse -Force;
+        $targetDirs = Get-Childitem -Path "$ScriptPath\$folder\*Task\ps_modules" -ErrorAction SilentlyContinue;
+        foreach ($targetDir in $targetDirs) {
+            #Write-host $sourceDir;
+            #Write-host $targetDir;
+            Write-host "Copying $RequiredModule to $targetDir";
+            Copy-Item -Path  $sourceDir -Destination $targetDir -Recurse -Force;
+        }
     }
-
 }
 
 Write-host "Copying PublishDacPacTask.ps1 to DeployDatabase";

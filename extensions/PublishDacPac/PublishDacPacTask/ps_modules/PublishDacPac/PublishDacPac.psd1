@@ -12,7 +12,7 @@
 RootModule = 'PublishDacPac.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.2'
+ModuleVersion = '1.0.3'
 
 # ID used to uniquely identify this module
 GUID = '12957ebe-7de8-4bf6-9b19-c07596b04f9f'
@@ -70,7 +70,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'https://github.com/DrJohnT/PublishDacPac/releases/tag/1.0.2'
+        ReleaseNotes = 'https://github.com/DrJohnT/PublishDacPac/releases/tag/1.0.3'
 
     } # End of PSData hashtable
 

@@ -9,12 +9,4 @@
     <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
     <CreateNewDatabase>True</CreateNewDatabase>
   </PropertyGroup>
-  <ItemGroup>
-    <SqlCmdVariable Include="StagingDBName">
-      <Value>StagingDB</Value>
-    </SqlCmdVariable>
-    <SqlCmdVariable Include="StagingDBServer">
-      <Value>localhost</Value>
-    </SqlCmdVariable>
-  </ItemGroup>
 </Project>

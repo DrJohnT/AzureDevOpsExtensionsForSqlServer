@@ -20,7 +20,7 @@ Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
 $PublishDacPacTask =  Resolve-Path "$CurrentFolder\..\PublishDacPacTask\PublishDacPacTask.ps1";
 #Write-host $PublishDacPacTask
 
-$ServerName = "SZRH3012.qregroup.net";
+$ServerName = "localhost";
 
 Describe "PublishDacPacTask" {
 
@@ -52,6 +52,45 @@ Describe "PublishDacPacTask" {
         }
     }
 
+    Context "Deploy Database with SqlCmdVariables" {
+        [string]$SqlCmdVariablesInJson = @'
+{
+    "StagingDBName": "StagingDB1",
+    "StagingDBServer": "myserver1"
+}
+'@
+        [string]$SqlCmdVariablesInText = @'
+StagingDBName=StagingDB2
+StagingDBServer=myserver2
+'@
+        It "Deploy Database with JSON SqlCmdVariables with LOCAL publish profile" {
+            $DatabaseName = New-Guid;
+            $env:INPUT_DacPacPath = $DacPacPath;
+            $env:INPUT_DacPublishProfile = $AltDacProfilePath;
+            $env:INPUT_TargetServerName = $ServerName;
+            $env:INPUT_TargetDatabaseName = $DatabaseName;
+            $env:INPUT_PreferredVersion = "150";
+            $env:INPUT_SqlCmdVariableType = "json";
+            $env:INPUT_SqlCmdVariablesInJson = $SqlCmdVariablesInJson;
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishDacPacTask));
+
+            ( Ping-SqlDatabase -Server $ServerName -Database $DatabaseName ) | Should -Be $true;
+        }
+
+        It "Deploy Database with TEXT SqlCmdVariables with LOCAL publish profile" {
+            $DatabaseName = New-Guid;
+            $env:INPUT_DacPacPath = $DacPacPath;
+            $env:INPUT_DacPublishProfile = $AltDacProfilePath;
+            $env:INPUT_TargetServerName = $ServerName;
+            $env:INPUT_TargetDatabaseName = $DatabaseName;
+            $env:INPUT_PreferredVersion = "150";
+            $env:INPUT_SqlCmdVariableType = "text";
+            $env:INPUT_SqlCmdVariablesInText = $SqlCmdVariablesInText;
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishDacPacTask));
+
+            ( Ping-SqlDatabase -Server $ServerName -Database $DatabaseName ) | Should -Be $true;
+        }
+    }
 }
 
 Remove-Module VstsTaskSdk;

@@ -4,10 +4,15 @@ function Find-SqlPackageLocations {
         Lists all locations of SQLPackage.exe files on the machine
 
         .DESCRIPTION
-        Finds and lists the location path to every version of SqlPackage.exe on the machine
+        Simply finds and lists the location path to every version of SqlPackage.exe on the machine
 
 		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+        This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+
+        .EXAMPLE
+        Find-SqlPackageLocations
+
+        Simply lists all instances of SqlPackage.exe on the host machine
 	#>
 
     try {

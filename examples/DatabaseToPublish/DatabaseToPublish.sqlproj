@@ -57,10 +57,10 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
-    <Folder Include="Scripts" />
+    <Folder Include="dbo" />
     <Folder Include="Scripts\Post-Deploy" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\MyOnlyTable.sql" />
@@ -68,10 +68,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseToPublish.CI.publish.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DatabaseToPublish.LOCAL.publish.xml">
-      <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="DatabaseToPublish.NoVars.publish.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="StagingDBName">
+      <DefaultValue>StagingDB</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="StagingDBServer">
+      <DefaultValue>localhost</DefaultValue>
+      <Value>$(SqlCmdVar__2)</Value>
+    </SqlCmdVariable>
   </ItemGroup>
 </Project>

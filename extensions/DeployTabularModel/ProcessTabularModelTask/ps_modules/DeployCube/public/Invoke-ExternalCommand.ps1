@@ -5,6 +5,22 @@ function Invoke-ExternalCommand {
 
         .DESCRIPTION
         Invokes (executes) an external executable via the command-line
+
+        .PARAMETER Command
+        The command-line or windows executable you wish to execute.  Should be a full path to the file if the executable is not in the PATH.
+
+        .PARAMETER Arguments
+        An array of parameters to the passed on the command-line
+
+        .PARAMETER PipeOutNull
+        Windows executables are started in thier own process, so we stop this by piping the output to Out-Null;
+
+        .EXAMPLE
+        Invoke-ExternalCommand -Command bcp.exe -Arguments $myStringArray
+
+        Invokes bcp (SQL Bulk Copy) with the parameters stored in $myStringArray.
+        Note that the above will only work if bcp.exe is in your PATH.  Otherwise, use the full path to bcp.exe
+
 	#>
     [CmdletBinding()]
     param(

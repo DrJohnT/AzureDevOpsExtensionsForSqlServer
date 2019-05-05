@@ -33,8 +33,7 @@ param()
     [string]$SqlCmdVariables = Get-VstsInput -Name "SqlCmdVariables";
 
     if (!([string]::IsNullOrEmpty($SqlCmdVariables))) {
-
-        [string[]]$SqlCmdArray = $SqlCmdVariables -split "`n" | % { $_.trim() }
+        [string[]]$SqlCmdArray = $SqlCmdVariables -split "`n" | ForEach-Object { $_.trim() }
     }
 
 
