@@ -12,9 +12,7 @@ This repo contains extensions for Azure Pipelines that help with various deploym
 | Version | Extension on Visual Studio Marketplace   | Description and Project Link |
 |-------|--------|--------------------------------------------------------------------------|
 | [![Publish DACPAC using a DAC Publish Profile](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.PublishDacPac.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac) | [Publish DACPAC using a DAC Publish Profile](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac) | [Deploys a SQL Server Database DACPAC to a server using a DAC Publish Profile](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/PublishDacPac) |
-
 | [![Deployment tools for SSAS Tabular Cube Models](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.DeployTabularModel.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployTabularModel) | [Deployment tools for SSAS Tabular Cube Models](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployTabularModel) | [Deploy, update and drop a tabular cube model on Microsoft SQL Server Analysis Services (SSAS)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeployTabularModel) |
-
 | [![Deploy Database DACPAC using a DAC Publish Profile](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.DeployDatabase.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployDatabase) | [Deploy Database DACPAC using a DAC Publish Profile](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployDatabase) | [Deploys a SQL Server Database DACPAC to a server using a DAC Publish Profile](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeployDatabase) |
 
 
