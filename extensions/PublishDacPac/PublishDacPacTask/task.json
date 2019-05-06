@@ -16,7 +16,7 @@
     "version": {
         "Major": "1",
         "Minor": "2",
-        "Patch": "1"
+        "Patch": "2"
      },
     "minimumAgentVersion": "1.95.0",
     "inputs": [
@@ -57,8 +57,8 @@
             "defaultValue": "none",
             "options": {
                 "none": "No SQLCMD Variables need overwriting",
-                "json": "JSON format name/value pairs (Recommended)",
-                "text": "Muiti-line text input"
+                "json": "JSON format (Recommended)",
+                "text": "Muiti-line text input as name/value pairs"
             }
         },
         {
