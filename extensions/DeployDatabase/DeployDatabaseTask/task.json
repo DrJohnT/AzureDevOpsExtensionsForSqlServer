@@ -15,17 +15,10 @@
     ],
     "version": {
         "Major": "1",
-        "Minor": "1",
-        "Patch": "0"
+        "Minor": "2",
+        "Patch": "2"
      },
     "minimumAgentVersion": "1.95.0",
-    "groups": [
-        {
-            "name": "optional",
-            "displayName": "Additional Options",
-            "isExpanded": false
-        }
-      ],
     "inputs": [
 		{
             "name": "DacPacPath",
@@ -51,17 +44,47 @@
 		{
             "name": "TargetDatabaseName",
             "type": "string",
-            "label": "The name of the database as it should be deployed on the target server",
+            "label": "Target Database Name",
             "required": false,
-            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name.",
-            "groupName": "optional"
+            "helpMarkDown": "The name of the database as it should be deployed on the target server. Can be different from the DacPac name."
+        },
+        {
+            "name": "SqlCmdVariableType",
+            "type": "pickList",
+            "label": "Overwrite SQLCMD Variables Options",
+            "required": true,
+            "helpMarkDown": "Choose if you wish to overwrite SQLCMD Variables within the DAC Publish Profile and, if so, in which format.\nWe recommend JSON format as this is easy to validate.",
+            "defaultValue": "none",
+            "options": {
+                "none": "No SQLCMD Variables need overwriting",
+                "json": "JSON format (Recommended)",
+                "text": "Muiti-line text input as name/value pairs"
+            }
+        },
+        {
+            "name": "SqlCmdVariablesInJson",
+            "type": "multiLine",
+            "label": "SqlCmd Variables and Values (JSON format)",
+            "defaultValue": "{\n\"var1\": \"jsonvalue1\",\n\"var2\": \"jsonvalue2\"}",
+            "required": false,
+            "visibleRule": "SqlCmdVariableType=json",
+            "helpMarkDown": "A list of SqlCmd variables and their values in JSON format. \nThese will be used to dynamically update the DAC Publish Profile"
+        },
+        {
+            "name": "SqlCmdVariablesInText",
+            "type": "multiLine",
+            "label": "SqlCmd Variables and Values (name/value pair format)",
+            "defaultValue": "var1=varvalue1\nvar2=varvalue2",
+            "required": false,
+            "visibleRule": "SqlCmdVariableType=text",
+            "helpMarkDown": "A list of SqlCmd variables and their values in the format var=varvalue. \nThese will be used to dynamically update the DAC Publish Profile"
         },
 		{
             "name": "PreferredVersion",
             "type": "pickList",
             "label": "SqlPackage.exe Version",
             "required": false,
-            "helpMarkDown": "If the preferred version cannot be found, the latest version will be used instead.",
+            "helpMarkDown": "Defines the preferred version of SqlPackage.exe you wish to use.  Use 'latest' for the latest version. If the preferred version cannot be found, the latest version will be used instead.",
             "defaultValue": "latest",
             "options": {
                 "latest": "Latest",
@@ -70,8 +93,7 @@
                 "130": "SQL Server 2016",
                 "120": "SQL Server 2014",
                 "110": "SQL Server 2012"
-            },
-            "groupName": "optional"
+            }
         }
     ],
     "instanceNameFormat": "Deploy database DACPAC using a DAC Publish Profile",

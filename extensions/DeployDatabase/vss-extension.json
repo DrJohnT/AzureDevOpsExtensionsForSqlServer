@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "DeployDatabase",
-    "version": "1.0.8",
+    "version": "1.0.10",
     "name": "Deploy Database DACPAC using a DAC Publish Profile",
     "publisher": "DrJohnExtensions",
     "description": "Deploy a database DACPAC to a Microsoft SQL Server instance",
@@ -28,23 +28,23 @@
     },
     "screenshots": [
         {
-            "path": "images/SqlServerLogo300.png"
+            "path": "images/BuildPipelineSidebar.png"
         }
     ],
     "links": {
         "getstarted": {
-            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Publish-DacPac"
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/PublishDacPac"
         },
         "issues": {
             "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
         },
         "repository": {
-            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/PublishDacPac"
         }
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/PublishDacPac"
     },
     "branding": {
         "color": "#f6f7fb",

@@ -19,7 +19,7 @@ foreach ($folder in Get-ChildItem | ?{ $_.PSIsContainer })
 
         $sourceDir = Resolve-Path "$moduleRoot\$RequiredModule\$RequiredModule";
 
-        $taskFolder = "{0}Task" -f $folder;
+        #$taskFolder = "{0}Task" -f $folder;
         #$targetDir = "$ScriptPath\$folder\$taskFolder\ps_modules";
 
         $targetDirs = Get-Childitem -Path "$ScriptPath\$folder\*Task\ps_modules" -ErrorAction SilentlyContinue;
