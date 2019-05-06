@@ -13,3 +13,6 @@ examples/DatabaseToPublish/obj/Debug/Model.xml
 *.jfm
 examples/CubeToPublish/MyTabularProject/bin/AnalysisServicesDeploymentExeLog.txt
 examples/CubeToPublish/MyTabularProject/obj/Development/MyTabularProject.smproj.FileListAbsolute.txt
+examples/CubeToPublish/MyTabularProject/bin/Model.deploymenttargets
+examples/CubeToPublish/MyTabularProject/bin/Model.deploymentoptions
+examples/CubeToPublish/MyTabularProject/obj/Development/MyTabularProject.smproj.FileListAbsolute.txt

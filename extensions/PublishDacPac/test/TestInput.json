@@ -1,0 +1,4 @@
+{
+    "StagingDBName": "$(StagingDBName)",
+    "StagingDBServer": "$(SqlServerName)"
+}

@@ -1,0 +1,2 @@
+StagingDBName=$(StagingDBName)
+StagingDBServer=$(SqlServerName)

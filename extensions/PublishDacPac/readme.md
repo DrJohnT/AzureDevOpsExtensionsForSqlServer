@@ -6,22 +6,31 @@
 
 The **Publish DACPAC** task allows you to deploy a SQL Server Database to a SQL Server instance using a DACPAC and a DAC Publish Profile.
 
-SQL Server Data Tools (SSDT) is Microsoft's design tool to declare the entire database model including tables, views, stored procedures, functions, schemas, etc. etc. covering **all** aspects of the database design.
+SQL Server Data Tools (SSDT) is Microsoft's design tool to declare the entire database model including tables, views, stored procedures, functions, schemas, etc. etc. covering **all** aspects of the database design.  When you perform a **build** of a SSDT Visual Studio project, it creates a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx) which defines all of the SQL Server objects associated with a database.  Once you have a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx), it can be deployed using the **Publish** function in Visual Studio, or by using the [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) command-line interface.
 
-SQL Server Data Tools is now fully integrated into Visual Studio so that when you perform a **build** of a SSDT Visual Studio project, it creates a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx) which defines all of the SQL Server objects - like tables, views, store procedures and functions - associated with a database.  Once you have a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx), it can be deployed using the **Publish** function in Visual Studio, or by using the [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) command-line interface.
+The **Publish DACPAC** task simplifies the use of [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) to deploy a database from a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx) using a [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile).  The great thing about [DAC Publish Profiles](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) is that they give you fine-grained control over how your database is upgraded.  Essentially, during a database upgrade, [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) compares the content of the DACPAC with the existing database and generates a custom SQLCMD script which alters (upgrades) only those objects that are affected.  You can tailor how [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) operates through the settings in the [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile). Typically, your will have several [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) within your Visual Studio solution; one for the CI pipeline, one for deployment during development and another for production upgrades.  This is all explained in our guide to the [DAC Publish Profile here](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile).
 
+To create a [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) you simply **Publish** from within Visual Studio.  Clicking the **Save Profile** button in the **Publish** screen saves your [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) into your Visual Studio project for later re-use.
 
-The **Publish DACPAC** task simplifies the use of [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) to deploy a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx) by using a [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) which provides for fine-grained control over the database creation and upgrades, including upgrades for schema, triggers, stored procedures, roles, users, extended properties etc. Using a [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile), multiple different properties can be set to ensure that the database is created or upgraded properly.
+## Pre-requisites
 
-The **Publish DACPAC** task compares the content of a DACPAC to the database already on the target server and generates a deployment script. You can tailor how database publishing works by altering the content of your [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile).   See our guide to using the [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) effectively.
-Note that [DAC Publish Profiles](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) are created in Visual Studio when you **Publish** a database.  Clicking the **Save Profile** button in the **Publish** screen saves your [DAC Publish Profile](https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile) into your Visual Studio project for later re-use.
+The **Publish-DacPac** task can be run on an in-house hosted Azure DevOps agent once [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) is installed.  This can be done by installing either of the following:
 
+* [Microsoft® SQL Server® Data-Tier Application Framework](https://docs.microsoft.com/en-us/sql/tools/sqlpackage-download)
 
-The **Publish DACPAC** task can be used to automate the deployment of databases, either as part of a build in an Azure DevOps pipeline, or as part of a server deployment using Azure DevOps Release Manager.   To deploy databases using [Octopus Deploy](https://octopus.com/) or other deployment service, you can utilise the PowerShell module [PublishDacPac](https://github.com/DrJohnT/PublishDacPac/) which underpins the Publish DACPAC task.  [PublishDacPac](https://www.powershellgallery.com/packages/PublishDacPac/) is available on the [PowerShell Gallery here](https://www.powershellgallery.com/packages/PublishDacPac/).
+* Visual Studio 2012 or later
+
+Note that the latest [SQLPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage-download) provides support for all previous versions of SQL Server.
+
+## Continuous Deployment
+
+The **Publish DACPAC** task can be used to automate the deployment of databases, either as part of a build in an Azure DevOps pipeline, or as part of a server deployment using Azure DevOps Release Manager.  To deploy databases using [Octopus Deploy](https://octopus.com/) or other deployment service, you can utilise the PowerShell module [PublishDacPac](https://github.com/DrJohnT/PublishDacPac/) which underpins the Publish DACPAC task.  [PublishDacPac](https://github.com/DrJohnT/PublishDacPac/) is available on the [PowerShell Gallery here](https://www.powershellgallery.com/packages/PublishDacPac/).
 
 ## Example Configuration
 
-![Publish DACPAC Task Configuration](images/TaskDetail.png "Publish DACPAC Task Configuration")
+The following screenshot shows all the input parameters for the **Publish DACPAC** task which are explained in detail at the bottom of the page.
+
+![Publish DACPAC Task Configuration](images/PublishDacPac-SqlCmdVariables-MultilineTextInput.png "Publish DACPAC Task Configuration")
 
 ## Example Pipeline
 
@@ -33,15 +42,7 @@ Below we show an example pipeline in Azure DevOps.  First MsBuild builds the pro
 
 ![image](images/ExamplePipeline01.png "Example Pipeline - Initial two tasks")
 
-Configure the MsBuild task by selecting the solution file path.
-
-![image](images/ExamplePipeline02.png "Example Pipeline - MsBuild task settings")
-
-Note that it is best to configure a variable to hold the value of build configuration which is either **debug** or **release** as shown below.
-
-![image](images/ExamplePipeline02VariablesHighlighted.png "Example Pipeline - Build Variables")
-
-Configure the settings for the **Publish DACPAC** task by entering the location that the previous step will place the DACPAC.
+Configure the settings for the **Publish DACPAC** task by entering the location that the previous build step will place the DACPAC.
 
 ![image](images/ExamplePipeline05.png "Example Pipeline - Publish DACPAC settings")
 
@@ -52,3 +53,54 @@ Save and queue your build. A few minutes later, you should see a screen like thi
 Below is the output of the Publish DACPAC task for a very simple database.
 
 ![image](images/ExamplePipeline10BuildReport.png "Example Pipeline - Publish DACPAC Build Report")
+
+## Input Parameters
+
+The following screenshot shows all the input parameters for the **Publish DACPAC** task which are explained in detail below.
+
+![Publish DACPAC Task Configuration](images/PublishDacPac-SqlCmdVariables-MultilineTextInput.png "Publish DACPAC Task Configuration")
+
+### DACPAC Path
+Relative path to the database DACPAC that needs to be deployed.  Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory).
+
+### DAC Publish Profile Path
+Relative path to the DAC Publish Profile.  Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)
+
+### Target Server Name or IP address
+Name of the target server, including instance and port if required.  Setting this overwrites the server defined in the DAC Publish Profile
+
+### Target Database Name
+Optional. Normally, the database will be named the same as your DACPAC.  However, by completing this parameter, you can name the database anything you like.
+Setting this overwrites the database name defined in the DAC Publish Profile.
+
+### Overwrite SQLCMD Variables Options
+Choose if you wish to overwrite SQLCMD Variables within the DAC Publish Profile.  If so, select the format in which you will provide the values.
+We recommend JSON format as this is easy to validate in Visual Studio Code.
+
+## SqlCmd Variables and Values
+Optional.  A multi-line string containing SqlCmd Variables to be updated within the DAC Publish Profile. Using the previous selector, you can choose to provide these in either JSON format or as name/value pairs as depicted below.
+
+JSON format
+```json
+{
+    "StagingDBName": "$(StagingDBName)",
+    "StagingDBServer": "$(SqlServerName)"
+}
+```
+
+Name/value pairs
+```yaml
+StagingDBName=StagingDBName
+StagingDBServer=SqlServerName
+```
+
+### SqlPackage.exe Version
+Defines the preferred version of SqlPackage.exe to use.  Simply pick 'latest' to use the latest version which can be used to deploy to all previous version of SQL Server.  Note that if the preferred version cannot be found, the latest version will be used instead.
+
+|Version|SQL Server Release|
+|-------|------------------|
+|latest|Latest SQL Server version found on agent|
+|150|SQL Server 2019|
+|140|SQL Server 2017|
+|130|SQL Server 2016|
+|120|SQL Server 2014|

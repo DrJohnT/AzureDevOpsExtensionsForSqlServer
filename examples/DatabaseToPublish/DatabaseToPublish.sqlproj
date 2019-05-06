@@ -70,10 +70,10 @@
     <None Include="DatabaseToPublish.CI.publish.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DatabaseToPublish.LOCAL.publish.xml">
+    <None Include="DatabaseToPublish.Upgrade.publish.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DatabaseToPublish.NoVars.publish.xml">
+    <None Include="DatabaseToPublish.LOCAL.publish.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
