@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "DeployTabularModel",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "name": "Deployment tools for SSAS Tabular Cube Models",
     "publisher": "DrJohnExtensions",
     "description": "Deploy, update, process and drop tabular cube models on Microsoft SQL Server Analysis Services (SSAS)",
@@ -34,18 +34,18 @@
     ],
     "links": {
         "getstarted": {
-            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Deploy-Tabular-Cube"
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeployTabularModel"
         },
         "issues": {
             "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
         },
         "repository": {
-            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeployTabularModel"
         }
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer"
+        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeployTabularModel"
     },
     "branding": {
         "color": "#f6f7fb",
