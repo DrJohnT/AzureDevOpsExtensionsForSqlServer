@@ -1,14 +1,26 @@
 function Get-ModuleByName {
-    <#
-        .SYNOPSIS
-        Loads the named PowerShell module, installing it if needbe
+<#
+    .SYNOPSIS
+    Loads the named PowerShell module, installing it if needed
 
-        .DESCRIPTION
-        Loads the named PowerShell module, installing it if needbe
+    .DESCRIPTION
+    Loads the named PowerShell module, installing it if needed.
 
-		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
-    #>
+    .PARAMETER Name
+    Name of the PowerShell module to load.
+
+    .EXAMPLE
+    Get-ModuleByName -Name SqlServer;
+
+    Will load the SqlServer module, or install it if not present on the host machine.
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+    .NOTES
+    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
     [CmdletBinding()]
     param
     (

@@ -1,8 +1,29 @@
 function Get-SsasProcessingMessages {
-    <#
-        .SYNOPSIS
-        Examines the XML returned by the Invoke-AsCmd function to find errors.  Write an error message if error message found.
-    #>
+<#
+    .SYNOPSIS
+    Examines the XML returned by the Invoke-AsCmd function to find errors.  Writes error message if errors are found.
+
+    .DESCRIPTION
+    Examines the XML returned by the Invoke-AsCmd function to find errors.  Writes error message if errors are found.
+
+    .PARAMETER ASCmdReturnString
+    The XML returned by the Invoke-AsCmd function.
+
+    .OUTPUTS
+    No return parameters.  Writes to error stream only if an error is detected.
+
+    .EXAMPLE
+    Get-SsasProcessingMessages -ASCmdReturnString $xmlMessages;
+
+    Analyses the messages within the $xmlMessages for errors.
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+.NOTES
+    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
     [CmdletBinding()]
     param
     (

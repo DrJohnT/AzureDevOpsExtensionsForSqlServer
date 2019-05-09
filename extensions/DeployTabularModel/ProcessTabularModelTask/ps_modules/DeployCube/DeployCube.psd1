@@ -34,23 +34,23 @@ PowerShellVersion = '5.0'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
-    'Publish-Cube',
-    'Unpublish-Cube',
+    'Find-AnalysisServicesDeploymentExeLocations',
+    'Get-AnalysisServicesDeploymentExePath',
+    'Get-CubeDatabaseCompatibilityLevel',
+    'Get-ModuleByName',
+    'Get-ServerMode',
+    'Get-SqlAsPath',
+    'Get-SqlConnectionString',
+    'Get-SsasProcessingMessages',
+    'Invoke-ExternalCommand',
+    'Invoke-ProcessTabularCubeDatabase',
     'Ping-SsasDatabase',
     'Ping-SsasServer',
+    'Publish-Cube',
     'Select-AnalysisServicesDeploymentExeVersion',
-    'Get-AnalysisServicesDeploymentExePath',
-    'Get-SqlConnectionString',
-    'Get-SqlAsPath',
-    'Get-ServerMode',
-    'Get-ModuleByName',
-    'Get-SsasProcessingMessages',
-    'Get-CubeDatabaseCompatibilityLevel',
-    'Invoke-ExternalCommand',
-    'Invoke-ProcessSsasDatabase',
-    'Find-AnalysisServicesDeploymentExeLocations',
+    'Unpublish-Cube',
     'Update-AnalysisServicesConfig',
-    'Update-CubeDataSource'
+    'Update-TabularCubeDataSource'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -90,7 +90,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-HelpInfoURI = 'https://github.com/DrJohnT/DeployCube/wiki'
+HelpInfoURI = 'https://github.com/DrJohnT/DeployCube'
 
 }
 

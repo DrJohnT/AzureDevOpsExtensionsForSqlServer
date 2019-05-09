@@ -1,14 +1,26 @@
 function Get-ServerMode {
-    <#
-        .SYNOPSIS
-        Returns the mode of the server: Tabular or Multidimensional
+<#
+    .SYNOPSIS
+    Returns the mode of the SSAS server: Tabular or Multidimensional
 
-        .DESCRIPTION
-        Returns the mode of the server: Tabular or Multidimensional
+    .DESCRIPTION
+    Returns the mode of the SSAS server: Tabular or Multidimensional
 
-		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
-    #>
+    .PARAMETER Server
+    Name of the SSAS server, including instance and port if required.
+
+    .EXAMPLE
+    Get-ServerMode -Server localhost;
+
+    Returns 'Tabular'
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+    .NOTES
+    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
     [OutputType([String])]
     [CmdletBinding()]
     param
@@ -30,8 +42,6 @@ function Get-ServerMode {
     } catch {
         throw "SSAS server $Server does not exist";
     }
-    #Write-host $ssasServer.SupportedCompatibilityLevels;
-    #Write-host $ssasServer.DefaultCompatibilityLevel;
 
     return $returnValue;
 }

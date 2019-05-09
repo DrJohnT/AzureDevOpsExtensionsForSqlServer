@@ -8,7 +8,7 @@
         "name": "DatabaseToPublish",
         "connectionString": "Provider=SQLNCLI11;Data Source=localhost;Initial Catalog=DatabaseToPublish;Integrated Security=SSPI;Persist Security Info=false",
         "impersonationMode": "impersonateAccount",
-        "account": "qregroup\\jtunnicliffe",
+        "account": "jtunnicliffe",
         "annotations": [
           {
             "name": "ConnectionEditUISource",

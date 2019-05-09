@@ -1,15 +1,26 @@
 function Ping-SsasServer {
-	<#
-		.SYNOPSIS
-		Checks that the SQL Server SSAS instance exists
+<#
+	.SYNOPSIS
+	Checks that the SQL Server SSAS instance exists.
 
-        .DESCRIPTION
-        Checks that the SQL Server SSAS instance exists
+	.DESCRIPTION
+	Checks that the SQL Server SSAS instance exists.
 
-		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+    .PARAMETER Server
+    Name of the SSAS server, including instance and port if required.
 
-	#>
+	.EXAMPLE
+	 Ping-SsasServer -Server build02;
+
+	Returns true if server build02 exists and has SSAS installed.
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+	.NOTES
+	Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+	This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
 	[OutputType([Boolean])]
     [CmdletBinding()]
 	param

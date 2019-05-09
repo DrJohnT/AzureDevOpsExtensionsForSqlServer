@@ -35,7 +35,7 @@ param()
     Write-Host "==============================================================================";
 
     try {
-        Invoke-ProcessSsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName -RefreshType $RefreshType;
+        Invoke-ProcessTabularCubeDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName -RefreshType $RefreshType;
     } finally {
         Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation

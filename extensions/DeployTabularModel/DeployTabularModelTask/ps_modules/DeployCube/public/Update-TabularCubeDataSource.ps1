@@ -1,13 +1,48 @@
-function Update-CubeDataSource
+function Update-TabularCubeDataSource
 {
-    <#
-        .SYNOPSIS
-        Updates the cube's connection to the source SQL database
-        Returns true if it succeeded.
+<#
+    .SYNOPSIS
+    Updates the tabular cube's connection to the source SQL database.
 
-		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
-    #>
+    .DESCRIPTION
+    Connects to the deployed tabular cube and updates the connection to the source SQL database.
+    Supports the newer PowerQuery style tabular cubes with CompatibilityLevel = 1400.
+
+    .PARAMETER Server
+    SSAS Server Name or IP address.  Include the instance name and port if necessary (e.g. myserver\\myinstance,myport)
+
+    .PARAMETER CubeDatabase
+    The name of the deployed tabular cube database.
+
+    .PARAMETER SourceSqlServer
+    The name of the source SQL Server server or its IP address.  Include the instance name and port if necessary.
+
+    .PARAMETER SourceSqlDatabase
+    The name of the database which will act as a source of data for the tabular cube database.
+
+    .PARAMETER ImpersonationMode
+    Defines how the cube will connect to the data source. Possible options are 'ImpersonateServiceAccount' which connects to the SQL Server database using ,
+    or 'ImpersonateAccount' which uses a specific username/password.  When using 'ImpersonateAccount' it is best to use a domain based service account with a static password.
+
+    .PARAMETER ImpersonationAccount
+    The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.
+
+    .PARAMETER ImpersonationPassword
+    The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.
+
+    .EXAMPLE
+    Update-TabularCubeDataSource -Server localhost -CubeDatabase MyCube -SourceSqlServer localhost -SourceSqlDatabase MyDB -ImpersonationMode ImpersonateServiceAccount;
+
+    .OUTPUTS
+    Returns true if the cube's data source was updated successfully.
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+    .NOTES
+    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
     [OutputType([Boolean])]
     [CmdletBinding()]
     param
@@ -150,12 +185,10 @@ function Update-CubeDataSource
 
         $tmsl = $tmslStructure | ConvertTo-Json -Depth 5;
 
-        #Write-Output "CompatibilityLevel: $CompatibilityLevel"
         #Write-Output $tmsl
-        #Write-Output
 
         # now send the createOrReplace command to the cube
-        Write-Output "Updating SQL data source $DataSourceName with a connection to $SourceSqlServer.$SourceSqlDatabase using cube compatibility level $CompatibilityLevel";
+        #Write-Output "Updating SQL data source $DataSourceName with a connection to $SourceSqlServer.$SourceSqlDatabase using cube compatibility level $CompatibilityLevel";
 
         $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query $tmsl;
 

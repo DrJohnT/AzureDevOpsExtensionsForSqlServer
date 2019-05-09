@@ -1,8 +1,27 @@
 function Unpublish-Cube {
-    <#
-		.SYNOPSIS
-        Unpublish-Cube drops a tabular or multidimenstional cube from a SQL Server Analysis Services instance.
-    #>
+<#
+    .SYNOPSIS
+    Unpublish-Cube drops a tabular or multidimenstional cube from a SQL Server Analysis Services instance.
+
+    .DESCRIPTION
+    Unpublish-Cube drops a tabular or multidimenstional cube from a SQL Server Analysis Services instance.
+
+    .PARAMETER Server
+    Name of the SSAS server, including instance and port if required.
+
+    .PARAMETER CubeDatabase
+    The name of the cube database to be dropped.
+
+    .EXAMPLE
+    Unpublish-Cube -Server $ServerName -CubeDatabase $CubeName;
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+    .NOTES
+    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
     [CmdletBinding()]
 	param
 	(

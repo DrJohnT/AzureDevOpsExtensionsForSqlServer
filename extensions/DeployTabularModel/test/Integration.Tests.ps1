@@ -21,8 +21,8 @@ $DacPacFolder = Resolve-Path "$mediaFolder\DatabaseToPublish\bin\Debug";
 $DacPacPath = Resolve-Path "$DacPacFolder\$DacPac";
 $DacProfile = "DatabaseToPublish.CI.publish.xml";
 $SqlDatabaseName = 'DatabaseToPublish';
-$AsServer = "SZRH3012.qregroup.net";
-$DbServer = "SZRH3012.qregroup.net";
+$AsServer = "localhost";
+$DbServer = "localhost";
 
 Describe "Integration tests" {
 

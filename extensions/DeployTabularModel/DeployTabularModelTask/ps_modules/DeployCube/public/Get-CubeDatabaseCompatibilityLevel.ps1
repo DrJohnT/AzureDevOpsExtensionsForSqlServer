@@ -1,14 +1,29 @@
 function Get-CubeDatabaseCompatibilityLevel {
-    <#
-        .SYNOPSIS
-        Gets the compatibility level of a deployed cube
+<#
+    .SYNOPSIS
+    Gets the compatibility level of a deployed cube.
 
-        .DESCRIPTION
-        Gets the compatibility level of a deployed cube
+    .DESCRIPTION
+    Returns the compatibility level of a deployed cube as an integer.
 
-		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
-    #>
+    .PARAMETER Server
+    Name of the SSAS server, including instance and port if required.
+
+    .PARAMETER CubeDatabase
+    The name of the cube database to be deployed.
+
+    .EXAMPLE
+    Get-CubeDatabaseCompatibilityLevel -Server localhost -CubeDatabase MyTabularCube;
+
+    Finds MyTabularCube on localhost and returns 1400
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+    .NOTES
+    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
     [OutputType([int])]
     [CmdletBinding()]
     param
@@ -28,7 +43,7 @@ function Get-CubeDatabaseCompatibilityLevel {
 
         # Request a list of databases on the SSAS server
         # Annoyingly, Invoke-ASCmd does not generate an error we can capture with try/catch. But it does write output to the error console,
-        # so we have to redirect the error output to the normal output to stop the error been detected by processes monitoring the error output such as the build pipeline
+        # so we have to redirect the error output to the normal output to stop the error been detected by processes monitoring the error output such as the Azure DevOps build pipeline
         $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>DBSCHEMA_CATALOGS</RequestType><Restrictions /><Properties /></Discover>" 2>&1;
 
         if ([string]::IsNullOrEmpty($returnResult)) {

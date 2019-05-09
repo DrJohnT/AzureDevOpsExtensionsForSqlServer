@@ -1,0 +1,2144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Find-AnalysisServicesDeploymentExeLocations</command:name>
+      <command:verb>Find</command:verb>
+      <command:noun>AnalysisServicesDeploymentExeLocations</command:noun>
+      <maml:description>
+        <maml:para>Lists all locations of Microsoft.AnalysisServices.Deployment.exe files on the machine</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Finds and lists the location path to every version of Microsoft.AnalysisServices.Deployment.exe on the machine</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Find-AnalysisServicesDeploymentExeLocations</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Output is written to standard output.</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Find-AnalysisServicesDeploymentExeLocations</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-AnalysisServicesDeploymentExePath</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AnalysisServicesDeploymentExePath</command:noun>
+      <maml:description>
+        <maml:para>Find path to specific version of Microsoft.AnalysisServices.Deployment.exe</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Finds the path to specific version of Microsoft.AnalysisServices.Deployment.exe</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-AnalysisServicesDeploymentExePath</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Version</maml:name>
+          <maml:Description>
+            <maml:para>The version of Microsoft.AnalysisServices.Deployment.exe to find. Valid values for -Version are: * latest: Latest SQL Server version found on agent</maml:para>
+            <maml:para>* 150: SQL Server 2019</maml:para>
+            <maml:para>* 140: SQL Server 2017</maml:para>
+            <maml:para>* 130: SQL Server 2016</maml:para>
+            <maml:para>* 120: SQL Server 2014</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Version</maml:name>
+        <maml:Description>
+          <maml:para>The version of Microsoft.AnalysisServices.Deployment.exe to find. Valid values for -Version are: * latest: Latest SQL Server version found on agent</maml:para>
+          <maml:para>* 150: SQL Server 2019</maml:para>
+          <maml:para>* 140: SQL Server 2017</maml:para>
+          <maml:para>* 130: SQL Server 2016</maml:para>
+          <maml:para>* 120: SQL Server 2014</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Returns a string containing the full path to the selected version of Microsoft.AnalysisServices.Deployment.exe</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-AnalysisServicesDeploymentExePath -Version latest</dev:code>
+        <dev:remarks>
+          <maml:para>Returns the latest version of Microsoft.AnalysisServices.Deployment.exe</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-CubeDatabaseCompatibilityLevel</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>CubeDatabaseCompatibilityLevel</command:noun>
+      <maml:description>
+        <maml:para>Gets the compatibility level of a deployed cube.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns the compatibility level of a deployed cube as an integer.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-CubeDatabaseCompatibilityLevel</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the cube database to be deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the cube database to be deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Int32</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-CubeDatabaseCompatibilityLevel -Server localhost -CubeDatabase MyTabularCube;</dev:code>
+        <dev:remarks>
+          <maml:para>Finds MyTabularCube on localhost and returns 1400</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-ModuleByName</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>ModuleByName</command:noun>
+      <maml:description>
+        <maml:para>Loads the named PowerShell module, installing it if needed</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Loads the named PowerShell module, installing it if needed.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-ModuleByName</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Name</maml:name>
+          <maml:Description>
+            <maml:para>Name of the PowerShell module to load.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Name</maml:name>
+        <maml:Description>
+          <maml:para>Name of the PowerShell module to load.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-ModuleByName -Name SqlServer;</dev:code>
+        <dev:remarks>
+          <maml:para>Will load the SqlServer module, or install it if not present on the host machine.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-ServerMode</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>ServerMode</command:noun>
+      <maml:description>
+        <maml:para>Returns the mode of the SSAS server: Tabular or Multidimensional</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns the mode of the SSAS server: Tabular or Multidimensional</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-ServerMode</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-ServerMode -Server localhost;</dev:code>
+        <dev:remarks>
+          <maml:para>Returns 'Tabular'</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-SqlAsPath</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SqlAsPath</command:noun>
+      <maml:description>
+        <maml:para>Returns the path to a specific cube database in the form:     SQLSERVER:\SQLAS\YourServer\DEFAULT\Databases\YourCubeDatabase or     SQLSERVER:\SQLAS\YourServer\YourInstance\Databases\YourCubeDatabase Useful, when wishing to use the SqlServer module to navigate a cube structure.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns the path to a specific cube database in the form:     SQLSERVER:\SQLAS\YourServer\DEFAULT\Databases\YourCubeDatabase or     SQLSERVER:\SQLAS\YourServer\YourInstance\Databases\YourCubeDatabase Useful, when wishing to use the SqlServer module to navigate a cube structure.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SqlAsPath</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the cube database to be deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the cube database to be deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SqlAsPath -Server localhost -CubeDatabase MyTabularCube;</dev:code>
+        <dev:remarks>
+          <maml:para>Returns     SQLSERVER:\SQLAS\localhost\DEFAULT\Databases\MyTabularCube</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-SqlConnectionString</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SqlConnectionString</command:noun>
+      <maml:description>
+        <maml:para>Updates a connection strings to source SQL databases with new server and database names.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Helper function to help create valid connection strings to source SQL databases.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SqlConnectionString</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>SourceSqlServer</maml:name>
+          <maml:Description>
+            <maml:para>Name of the SQL server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>SourceSqlDatabase</maml:name>
+          <maml:Description>
+            <maml:para>Name of the source SQL database.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>ExistingConnectionString</maml:name>
+          <maml:Description>
+            <maml:para>The existing SQL connection string obtained from the cube definition or config file.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>SourceSqlServer</maml:name>
+        <maml:Description>
+          <maml:para>Name of the SQL server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>SourceSqlDatabase</maml:name>
+        <maml:Description>
+          <maml:para>Name of the source SQL database.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>ExistingConnectionString</maml:name>
+        <maml:Description>
+          <maml:para>The existing SQL connection string obtained from the cube definition or config file.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SqlConnectionString -SourceSqlServer myserver -SourceSqlDatabase mydatabase -ExistingConnectionString 'Provider=SQLNCLI11;Data Source=localhost;Initial Catalog=DatabaseToPublish;Integrated Security=SSPI;Persist Security Info=false';</dev:code>
+        <dev:remarks>
+          <maml:para>Returns 'Provider=SQLNCLI11;Data Source=myserver;Persist Security Info=False;Integrated Security=SSPI;Initial Catalog=mydatabase'</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-SsasProcessingMessages</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SsasProcessingMessages</command:noun>
+      <maml:description>
+        <maml:para>Examines the XML returned by the Invoke-AsCmd function to find errors.  Writes error message if errors are found.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Examines the XML returned by the Invoke-AsCmd function to find errors.  Writes error message if errors are found.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SsasProcessingMessages</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>ASCmdReturnString</maml:name>
+          <maml:Description>
+            <maml:para>The XML returned by the Invoke-AsCmd function.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>ASCmdReturnString</maml:name>
+        <maml:Description>
+          <maml:para>The XML returned by the Invoke-AsCmd function.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>No return parameters.  Writes to error stream only if an error is detected.</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SsasProcessingMessages -ASCmdReturnString $xmlMessages;</dev:code>
+        <dev:remarks>
+          <maml:para>Analyses the messages within the $xmlMessages for errors.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Invoke-ExternalCommand</command:name>
+      <command:verb>Invoke</command:verb>
+      <command:noun>ExternalCommand</command:noun>
+      <maml:description>
+        <maml:para>Invokes (executes) an external executable via the command-line</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Invokes (executes) an external executable via the command-line</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Invoke-ExternalCommand</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Command</maml:name>
+          <maml:Description>
+            <maml:para>The command-line or windows executable you wish to execute.  Should be a full path to the file if the executable is not in the PATH.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Arguments</maml:name>
+          <maml:Description>
+            <maml:para>An array of parameters to the passed on the command-line</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>PipeOutNull</maml:name>
+          <maml:Description>
+            <maml:para>Windows executables are started in thier own process, so we stop this by piping the output to Out-Null;</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Command</maml:name>
+        <maml:Description>
+          <maml:para>The command-line or windows executable you wish to execute.  Should be a full path to the file if the executable is not in the PATH.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>Arguments</maml:name>
+        <maml:Description>
+          <maml:para>An array of parameters to the passed on the command-line</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>PipeOutNull</maml:name>
+        <maml:Description>
+          <maml:para>Windows executables are started in thier own process, so we stop this by piping the output to Out-Null;</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Invoke-ExternalCommand -Command bcp.exe -Arguments $myStringArray</dev:code>
+        <dev:remarks>
+          <maml:para>Invokes bcp (SQL Bulk Copy) with the parameters stored in $myStringArray. Note that the above will only work if bcp.exe is in your PATH.  Otherwise, use the full path to bcp.exe</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Invoke-ProcessTabularCubeDatabase</command:name>
+      <command:verb>Invoke</command:verb>
+      <command:noun>ProcessTabularCubeDatabase</command:noun>
+      <maml:description>
+        <maml:para>Processes an SSAS database on a SQL Server SSAS instance</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Processes an SSAS database on a SQL Server SSAS instance</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Invoke-ProcessTabularCubeDatabase</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the target SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the tabular cube database on the SSAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>RefreshType</maml:name>
+          <maml:Description>
+            <maml:para>Valid options are: 'Full', 'Automatic', 'ClearValues', 'Calculate'. Default value: 'Full'. 'Full': processes all the objects in the cube database. When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. 'Automatic': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state. 'ClearValues': Clear values in this object and all its dependents. 'Calculate': Recalculate this object and all its dependents, but only if needed. This value does not force recalculation, except for volatile formulas.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Full</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the target SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the tabular cube database on the SSAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>RefreshType</maml:name>
+        <maml:Description>
+          <maml:para>Valid options are: 'Full', 'Automatic', 'ClearValues', 'Calculate'. Default value: 'Full'. 'Full': processes all the objects in the cube database. When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. 'Automatic': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state. 'ClearValues': Clear values in this object and all its dependents. 'Calculate': Recalculate this object and all its dependents, but only if needed. This value does not force recalculation, except for volatile formulas.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Full</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:remarks>
+          <maml:para>{{ Add example description here }}</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Ping-SsasDatabase</command:name>
+      <command:verb>Ping</command:verb>
+      <command:noun>SsasDatabase</command:noun>
+      <maml:description>
+        <maml:para>Checks that the database exists on the specified SQL Server SSAS instance</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Checks that the database exists on the specified SQL Server SSAS instance</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Ping-SsasDatabase</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the cube database to be deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the cube database to be deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Boolean</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Ping-SsasDatabase -Server build02 -CubeDatabase 'MyTabularCube'</dev:code>
+        <dev:remarks>
+          <maml:para>Returns true of the SSAS instance on build02 has a cube called 'MyTabularCube'</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Ping-SsasServer</command:name>
+      <command:verb>Ping</command:verb>
+      <command:noun>SsasServer</command:noun>
+      <maml:description>
+        <maml:para>Checks that the SQL Server SSAS instance exists.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Checks that the SQL Server SSAS instance exists.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Ping-SsasServer</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Boolean</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Ping-SsasServer -Server build02;</dev:code>
+        <dev:remarks>
+          <maml:para>Returns true if server build02 exists and has SSAS installed.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Publish-Cube</command:name>
+      <command:verb>Publish</command:verb>
+      <command:noun>Cube</command:noun>
+      <maml:description>
+        <maml:para>Publish-Cube deploys a tabular or multidimentional cube to a SQL Server Analysis Services instance.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Publish-Cube deploys a tabular or multidimentional cube to a SQL Server Analysis Services instance.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Publish-Cube</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>AsDatabasePath</maml:name>
+          <maml:Description>
+            <maml:para>Full path to your database XMLA or TMSL file which has a .asdatabase file extension.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>OptimizationSettingsDeployment</maml:name>
+          <maml:Description>
+            <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+            <maml:para>* Default value: 'Deploy'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Deploy</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+          <maml:name>WriteBackTableCreation</maml:name>
+          <maml:Description>
+            <maml:para>Determines if a write back table is created * Valid only for multidimensional cubes.  Determines if the deployment should create the writeback table. * Valid options are: 'Create', 'CreateAlways' and 'UseExisting'.</maml:para>
+            <maml:para>* Default value: 'UseExisting'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>UseExisting</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the target SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the cube database to be deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>PreferredVersion</maml:name>
+          <maml:Description>
+            <maml:para>Defines the preferred version of Microsoft.AnalysisServices.Deployment.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter as the default is 'latest'. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
+            <maml:para>* 150: SQL Server 2019</maml:para>
+            <maml:para>* 140: SQL Server 2017</maml:para>
+            <maml:para>*  130: SQL Server 2016</maml:para>
+            <maml:para>* 120: SQL Server 2014</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Latest</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>ProcessingOption</maml:name>
+          <maml:Description>
+            <maml:para>Determines how the newely deployed cube is processed after deployment. Strongly recommend using the default "DoNotProcess" option as the connection to your source database may not be correct and need adjustment post-deployment. * Valid options are: Full, Default and DoNotProcess.</maml:para>
+            <maml:para>* Default value: 'DoNotProcess'.</maml:para>
+            <maml:para>* 'Full': processes all the objects in the cube database.</maml:para>
+            <maml:para>When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. * 'Default': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state.</maml:para>
+            <maml:para>* 'DoNotProcess': means no processing is performed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>DoNotProcess</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>TransactionalDeployment</maml:name>
+          <maml:Description>
+            <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
+            <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>PartitionDeployment</maml:name>
+          <maml:Description>
+            <maml:para>Determines if partitions are deployed. * Valid options are: 'DeployPartitions' and 'RetainPartitions'.</maml:para>
+            <maml:para>* Default value: 'DeployPartitions'.</maml:para>
+            <maml:para>* 'DeployPartitions': New partitions are deployed.</maml:para>
+            <maml:para>Existing partitions are removed. * 'RetainPartitions': Existing partitions are retained.  New partitions are not deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>DeployPartitions</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+          <maml:name>RoleDeployment</maml:name>
+          <maml:Description>
+            <maml:para>Determines if the roles and members are deployed. * Valid options are: 'DeployRolesAndMembers', 'DeployRolesRetainMembers' and 'RetainRoles'.</maml:para>
+            <maml:para>* Default value: 'DeployRolesRetainMembers'.</maml:para>
+            <maml:para>* 'DeployRolesRetainMembers': Existing roles and role members in the destination database are retained, and only new roles and role members are deployed.</maml:para>
+            <maml:para>* 'DeployRolesAndMembers': All existing roles and members in the destination database are replaced by the roles and members being deployed.</maml:para>
+            <maml:para>* 'RetainRoles': Existing roles and role members in the destination database are retained, and no new roles are deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>DeployRolesRetainMembers</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>ConfigurationSettingsDeployment</maml:name>
+          <maml:Description>
+            <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+            <maml:para>* Default value: 'Deploy'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Deploy</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>AsDatabasePath</maml:name>
+        <maml:Description>
+          <maml:para>Full path to your database XMLA or TMSL file which has a .asdatabase file extension.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the target SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the cube database to be deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>PreferredVersion</maml:name>
+        <maml:Description>
+          <maml:para>Defines the preferred version of Microsoft.AnalysisServices.Deployment.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter as the default is 'latest'. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
+          <maml:para>* 150: SQL Server 2019</maml:para>
+          <maml:para>* 140: SQL Server 2017</maml:para>
+          <maml:para>*  130: SQL Server 2016</maml:para>
+          <maml:para>* 120: SQL Server 2014</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Latest</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>ProcessingOption</maml:name>
+        <maml:Description>
+          <maml:para>Determines how the newely deployed cube is processed after deployment. Strongly recommend using the default "DoNotProcess" option as the connection to your source database may not be correct and need adjustment post-deployment. * Valid options are: Full, Default and DoNotProcess.</maml:para>
+          <maml:para>* Default value: 'DoNotProcess'.</maml:para>
+          <maml:para>* 'Full': processes all the objects in the cube database.</maml:para>
+          <maml:para>When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. * 'Default': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state.</maml:para>
+          <maml:para>* 'DoNotProcess': means no processing is performed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>DoNotProcess</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>TransactionalDeployment</maml:name>
+        <maml:Description>
+          <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
+          <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>PartitionDeployment</maml:name>
+        <maml:Description>
+          <maml:para>Determines if partitions are deployed. * Valid options are: 'DeployPartitions' and 'RetainPartitions'.</maml:para>
+          <maml:para>* Default value: 'DeployPartitions'.</maml:para>
+          <maml:para>* 'DeployPartitions': New partitions are deployed.</maml:para>
+          <maml:para>Existing partitions are removed. * 'RetainPartitions': Existing partitions are retained.  New partitions are not deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>DeployPartitions</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <maml:name>RoleDeployment</maml:name>
+        <maml:Description>
+          <maml:para>Determines if the roles and members are deployed. * Valid options are: 'DeployRolesAndMembers', 'DeployRolesRetainMembers' and 'RetainRoles'.</maml:para>
+          <maml:para>* Default value: 'DeployRolesRetainMembers'.</maml:para>
+          <maml:para>* 'DeployRolesRetainMembers': Existing roles and role members in the destination database are retained, and only new roles and role members are deployed.</maml:para>
+          <maml:para>* 'DeployRolesAndMembers': All existing roles and members in the destination database are replaced by the roles and members being deployed.</maml:para>
+          <maml:para>* 'RetainRoles': Existing roles and role members in the destination database are retained, and no new roles are deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>DeployRolesRetainMembers</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <maml:name>ConfigurationSettingsDeployment</maml:name>
+        <maml:Description>
+          <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+          <maml:para>* Default value: 'Deploy'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Deploy</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>OptimizationSettingsDeployment</maml:name>
+        <maml:Description>
+          <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+          <maml:para>* Default value: 'Deploy'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Deploy</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+        <maml:name>WriteBackTableCreation</maml:name>
+        <maml:Description>
+          <maml:para>Determines if a write back table is created * Valid only for multidimensional cubes.  Determines if the deployment should create the writeback table. * Valid options are: 'Create', 'CreateAlways' and 'UseExisting'.</maml:para>
+          <maml:para>* Default value: 'UseExisting'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>UseExisting</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Publish-Cube -AsDatabasePath 'C:\Dev\YourDB\bin\Debug\YourDB.asdatabase' -Server YourDBServer -CubeDatabase MyTabularCube</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Select-AnalysisServicesDeploymentExeVersion</command:name>
+      <command:verb>Select</command:verb>
+      <command:noun>AnalysisServicesDeploymentExeVersion</command:noun>
+      <maml:description>
+        <maml:para>Selects a version of Microsoft.AnalysisServices.Deployment.exe to use</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Selects a version of Microsoft.AnalysisServices.Deployment.exe to use</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Select-AnalysisServicesDeploymentExeVersion</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>PreferredVersion</maml:name>
+          <maml:Description>
+            <maml:para>The preferred version of Microsoft.AnalysisServices.Deployment.exe to attempte to find. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
+            <maml:para>* 150: SQL Server 2019</maml:para>
+            <maml:para>* 140: SQL Server 2017</maml:para>
+            <maml:para>* 130: SQL Server 2016</maml:para>
+            <maml:para>* 120: SQL Server 2014</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>PreferredVersion</maml:name>
+        <maml:Description>
+          <maml:para>The preferred version of Microsoft.AnalysisServices.Deployment.exe to attempte to find. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
+          <maml:para>* 150: SQL Server 2019</maml:para>
+          <maml:para>* 140: SQL Server 2017</maml:para>
+          <maml:para>* 130: SQL Server 2016</maml:para>
+          <maml:para>* 120: SQL Server 2014</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Returns a string containing the version found, if the preferred version could not be found.</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Select-AnalysisServicesDeploymentExeVersion -PreferredVersion 140;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Unpublish-Cube</command:name>
+      <command:verb>Unpublish</command:verb>
+      <command:noun>Cube</command:noun>
+      <maml:description>
+        <maml:para>Unpublish-Cube drops a tabular or multidimenstional cube from a SQL Server Analysis Services instance.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Unpublish-Cube drops a tabular or multidimenstional cube from a SQL Server Analysis Services instance.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Unpublish-Cube</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the cube database to be dropped.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the cube database to be dropped.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Unpublish-Cube -Server $ServerName -CubeDatabase $CubeName;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Update-AnalysisServicesConfig</command:name>
+      <command:verb>Update</command:verb>
+      <command:noun>AnalysisServicesConfig</command:noun>
+      <maml:description>
+        <maml:para>Updates the various config files generated alongside the asdatabase file so they can be deployed to the correct server with the correct processing options.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Updates the various config files generated alongside the asdatabase file so they can be deployed to the correct server with the correct processing options.</maml:para>
+      <maml:para>This PowerShell function updates the various config files (listed below) which are needed to deploy the cube: * [model name].asdatabase which contains the declarative definitions for all SSAS objects.</maml:para>
+      <maml:para>* [model name].deploymenttargets whcih Contains the name of the target SSAS instance and database.</maml:para>
+      <maml:para>* [model name].deploymentoptions which contains options such as whether deployment is transactional and whether objects should be processed.</maml:para>
+      <maml:para>* [model name].configsettings which is for Multidimensional only and contains environment specific settings such as data source connections and object storage locations.</maml:para>
+      <maml:para>These settings override whats in [model name].asdatabase.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Update-AnalysisServicesConfig</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>AsDatabasePath</maml:name>
+          <maml:Description>
+            <maml:para>Full path to your database XMLA or TMSL file which has a .asdatabase file extension (e.g. C:\Dev\YourDB\bin\Debug\YourDB.asdatabase)</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>WriteBackTableCreation</maml:name>
+          <maml:Description>
+            <maml:para>Determines if a write back table is created * Valid only for multidimensional cubes.  Determines if the deployment should create the writeback table. * Valid options are: 'Create', 'CreateAlways' and 'UseExisting'.</maml:para>
+            <maml:para>* Default value: 'UseExisting'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>UseExisting</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the target SSAS server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the cube database to be deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>ProcessingOption</maml:name>
+          <maml:Description>
+            <maml:para>Determines how the newely deployed cube is processed after deployment. Strongly recommend using the default "DoNotProcess" option as the connection to your source database may not be correct and need adjustment post-deployment. * Valid options are: Full, Default and DoNotProcess.</maml:para>
+            <maml:para>* Default value: 'DoNotProcess'.</maml:para>
+            <maml:para>* 'Full': processes all the objects in the cube database.</maml:para>
+            <maml:para>When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. * 'Default': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state.</maml:para>
+            <maml:para>* 'DoNotProcess': means no processing is performed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>DoNotProcess</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>TransactionalDeployment</maml:name>
+          <maml:Description>
+            <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
+            <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>PartitionDeployment</maml:name>
+          <maml:Description>
+            <maml:para>Determines if partitions are deployed. * Valid options are: 'DeployPartitions' and 'RetainPartitions'.</maml:para>
+            <maml:para>* Default value: 'DeployPartitions'.</maml:para>
+            <maml:para>* 'DeployPartitions': New partitions are deployed.</maml:para>
+            <maml:para>Existing partitions are removed. * 'RetainPartitions': Existing partitions are retained.  New partitions are not deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>DeployPartitions</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>RoleDeployment</maml:name>
+          <maml:Description>
+            <maml:para>Determines if the roles and members are deployed. * Valid options are: 'DeployRolesAndMembers', 'DeployRolesRetainMembers' and 'RetainRoles'.</maml:para>
+            <maml:para>* Default value: 'DeployRolesRetainMembers'.</maml:para>
+            <maml:para>* 'DeployRolesRetainMembers': Existing roles and role members in the destination database are retained, and only new roles and role members are deployed.</maml:para>
+            <maml:para>* 'DeployRolesAndMembers': All existing roles and members in the destination database are replaced by the roles and members being deployed.</maml:para>
+            <maml:para>* 'RetainRoles': Existing roles and role members in the destination database are retained, and no new roles are deployed.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>DeployRolesRetainMembers</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+          <maml:name>ConfigurationSettingsDeployment</maml:name>
+          <maml:Description>
+            <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+            <maml:para>* Default value: 'Deploy'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Deploy</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>OptimizationSettingsDeployment</maml:name>
+          <maml:Description>
+            <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+            <maml:para>* Default value: 'Deploy'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Deploy</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>AsDatabasePath</maml:name>
+        <maml:Description>
+          <maml:para>Full path to your database XMLA or TMSL file which has a .asdatabase file extension (e.g. C:\Dev\YourDB\bin\Debug\YourDB.asdatabase)</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the target SSAS server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the cube database to be deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>ProcessingOption</maml:name>
+        <maml:Description>
+          <maml:para>Determines how the newely deployed cube is processed after deployment. Strongly recommend using the default "DoNotProcess" option as the connection to your source database may not be correct and need adjustment post-deployment. * Valid options are: Full, Default and DoNotProcess.</maml:para>
+          <maml:para>* Default value: 'DoNotProcess'.</maml:para>
+          <maml:para>* 'Full': processes all the objects in the cube database.</maml:para>
+          <maml:para>When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. * 'Default': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state.</maml:para>
+          <maml:para>* 'DoNotProcess': means no processing is performed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>DoNotProcess</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>TransactionalDeployment</maml:name>
+        <maml:Description>
+          <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
+          <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>PartitionDeployment</maml:name>
+        <maml:Description>
+          <maml:para>Determines if partitions are deployed. * Valid options are: 'DeployPartitions' and 'RetainPartitions'.</maml:para>
+          <maml:para>* Default value: 'DeployPartitions'.</maml:para>
+          <maml:para>* 'DeployPartitions': New partitions are deployed.</maml:para>
+          <maml:para>Existing partitions are removed. * 'RetainPartitions': Existing partitions are retained.  New partitions are not deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>DeployPartitions</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>RoleDeployment</maml:name>
+        <maml:Description>
+          <maml:para>Determines if the roles and members are deployed. * Valid options are: 'DeployRolesAndMembers', 'DeployRolesRetainMembers' and 'RetainRoles'.</maml:para>
+          <maml:para>* Default value: 'DeployRolesRetainMembers'.</maml:para>
+          <maml:para>* 'DeployRolesRetainMembers': Existing roles and role members in the destination database are retained, and only new roles and role members are deployed.</maml:para>
+          <maml:para>* 'DeployRolesAndMembers': All existing roles and members in the destination database are replaced by the roles and members being deployed.</maml:para>
+          <maml:para>* 'RetainRoles': Existing roles and role members in the destination database are retained, and no new roles are deployed.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>DeployRolesRetainMembers</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <maml:name>ConfigurationSettingsDeployment</maml:name>
+        <maml:Description>
+          <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+          <maml:para>* Default value: 'Deploy'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Deploy</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <maml:name>OptimizationSettingsDeployment</maml:name>
+        <maml:Description>
+          <maml:para>* Valid options are: 'Retain' and 'Deploy'.</maml:para>
+          <maml:para>* Default value: 'Deploy'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Deploy</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>WriteBackTableCreation</maml:name>
+        <maml:Description>
+          <maml:para>Determines if a write back table is created * Valid only for multidimensional cubes.  Determines if the deployment should create the writeback table. * Valid options are: 'Create', 'CreateAlways' and 'UseExisting'.</maml:para>
+          <maml:para>* Default value: 'UseExisting'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>UseExisting</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Update-AnalysisServicesConfig -AsDatabasePath $AsDatabasePath -Server $Server -CubeDatabase $CubeDatabase;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Update-AnalysisServicesConfig -AsDatabasePath $AsDatabasePath -Server $Server -CubeDatabase $CubeDatabase -ProcessingOption $ProcessingOption -TransactionalDeployment $TransactionalDeployment -PartitionDeployment $PartitionDeployment -RoleDeployment $RoleDeployment -ConfigurationSettingsDeployment $ConfigurationSettingsDeployment -OptimizationSettingsDeployment $OptimizationSettingsDeployment -WriteBackTableCreation $WriteBackTableCreation;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Update-TabularCubeDataSource</command:name>
+      <command:verb>Update</command:verb>
+      <command:noun>TabularCubeDataSource</command:noun>
+      <maml:description>
+        <maml:para>Updates the tabular cube's connection to the source SQL database.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Connects to the deployed tabular cube and updates the connection to the source SQL database. Supports the newer PowerQuery style tabular cubes with CompatibilityLevel = 1400.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Update-TabularCubeDataSource</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>SSAS Server Name or IP address.  Include the instance name and port if necessary (e.g. myserver\\myinstance,myport)</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>CubeDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the deployed tabular cube database.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>SourceSqlServer</maml:name>
+          <maml:Description>
+            <maml:para>The name of the source SQL Server server or its IP address.  Include the instance name and port if necessary.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>SourceSqlDatabase</maml:name>
+          <maml:Description>
+            <maml:para>The name of the database which will act as a source of data for the tabular cube database.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>ImpersonationMode</maml:name>
+          <maml:Description>
+            <maml:para>Defines how the cube will connect to the data source. Possible options are 'ImpersonateServiceAccount' which connects to the SQL Server database using , or 'ImpersonateAccount' which uses a specific username/password.  When using 'ImpersonateAccount' it is best to use a domain based service account with a static password.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>ImpersonationAccount</maml:name>
+          <maml:Description>
+            <maml:para>The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>ImpersonationPassword</maml:name>
+          <maml:Description>
+            <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>SSAS Server Name or IP address.  Include the instance name and port if necessary (e.g. myserver\\myinstance,myport)</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>CubeDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the deployed tabular cube database.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>SourceSqlServer</maml:name>
+        <maml:Description>
+          <maml:para>The name of the source SQL Server server or its IP address.  Include the instance name and port if necessary.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>SourceSqlDatabase</maml:name>
+        <maml:Description>
+          <maml:para>The name of the database which will act as a source of data for the tabular cube database.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>ImpersonationMode</maml:name>
+        <maml:Description>
+          <maml:para>Defines how the cube will connect to the data source. Possible options are 'ImpersonateServiceAccount' which connects to the SQL Server database using , or 'ImpersonateAccount' which uses a specific username/password.  When using 'ImpersonateAccount' it is best to use a domain based service account with a static password.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>ImpersonationAccount</maml:name>
+        <maml:Description>
+          <maml:para>The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>ImpersonationPassword</maml:name>
+        <maml:Description>
+          <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Returns true if the cube's data source was updated successfully.</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Update-TabularCubeDataSource -Server localhost -CubeDatabase MyCube -SourceSqlServer localhost -SourceSqlDatabase MyDB -ImpersonationMode ImpersonateServiceAccount;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+</helpItems>

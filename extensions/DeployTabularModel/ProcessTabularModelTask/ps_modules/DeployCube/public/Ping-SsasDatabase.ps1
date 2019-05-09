@@ -1,14 +1,29 @@
 function Ping-SsasDatabase {
-    <#
-        .SYNOPSIS
-        Checks that the database exists on the specified SQL Server SSAS instance
+<#
+    .SYNOPSIS
+    Checks that the database exists on the specified SQL Server SSAS instance
 
-        .DESCRIPTION
-        Checks that the database exists on the specified SQL Server SSAS instance
+    .DESCRIPTION
+    Checks that the database exists on the specified SQL Server SSAS instance
 
-		Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
-		This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
-    #>
+    .PARAMETER Server
+    Name of the SSAS server, including instance and port if required.
+
+    .PARAMETER CubeDatabase
+    The name of the cube database to be deployed.
+
+    .EXAMPLE
+    Ping-SsasDatabase -Server build02 -CubeDatabase 'MyTabularCube'
+
+    Returns true of the SSAS instance on build02 has a cube called 'MyTabularCube'
+
+    .LINK
+    https://github.com/DrJohnT/DeployCube
+
+    .NOTES
+    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
+#>
     [OutputType([Boolean])]
     [CmdletBinding()]
     param

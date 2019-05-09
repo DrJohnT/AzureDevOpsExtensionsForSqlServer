@@ -33,7 +33,7 @@ param()
 
     Trace-VstsEnteringInvocation $MyInvocation;
 
-    Write-Host "Invoking Update-CubeDataSource from [DeployCube](https://github.com/DrJohnT/DeployCube) module with the following parameters:";
+    Write-Host "Invoking Update-TabularCubeDataSource from [DeployCube](https://github.com/DrJohnT/DeployCube) module with the following parameters:";
     Write-Host "AsServer:             $AsServer";
     Write-Host "CubeDatabaseName:     $CubeDatabaseName"
     Write-Host "SourceSqlServer:      $SourceSqlServer"
@@ -45,9 +45,9 @@ param()
     try {
         if ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) {
             if ([string]::IsNullOrEmpty($ImpersonationAccount)) {
-                $result = Update-CubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
+                $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
             } else {
-                $result = Update-CubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPassword $ImpersonationPassword;
+                $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPassword $ImpersonationPassword;
             }
             if ($result) {
                 Write-Output "Tabular cube data source updated sucessfully";

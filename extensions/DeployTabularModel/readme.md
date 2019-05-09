@@ -18,6 +18,18 @@ As part of your CI pipeline you can use these tasks to deploy and populate your 
 
 These tasks can also be used to automate the deployment of tabular cubes using [Release pipelines in Azure Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/what-is-release-management?view=azure-devops) in a continuously delivery scenario.  For those using [Octopus Deploy](https://octopus.com/) or [Chef](https://www.chef.io/), you can use the underlying PowerShell module [DeployCube](https://github.com/DrJohnT/DeployCube) to perform the same deployment tasks.
 
+### Pre-requisites
+
+The following pre-requisites need to be installed on your in-house build agent for the **Deploy SSAS Tabular Cube Model** task to work properly.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ powershell
+Microsoft.AnalysisServices.Deployment.exe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Microsoft.AnalysisServices.Deployment.exe is known as the [Analysis Services Deployment Utility](https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/deploy-model-solutions-with-the-deployment-utility?view=sql-server-2017) and is installed alongside [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017) (SSMS).
+
+The module also requires the Microsoft SQL Server PowerShell module **SqlServer** which is installed automatically by the task.
+
 ## Example Pipeline
 
 The screenshots below show how the components can be used in your CI pipeline.
@@ -33,16 +45,6 @@ Next, we process the cube so that it contains data using the **Process SSAS Tabu
 ## Deploy SSAS Tabular Cube Model
 
 When you perform a **build** in a Visual Studio cube project, it creates an _.asdatabase_ file which defines the entire model including dimensions, attributes, measures, data sources and DAX calculations.  In the above pipeline MsBuild to create the _.asdatabase_ file from the Visual Studio solution.
-
-### Pre-requisites for Deploy SSAS Tabular Cube Model task
-
-The following pre-requisites need to be installed on your in-house build agent for the **Deploy SSAS Tabular Cube Model** task to work properly.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ powershell
-Microsoft.AnalysisServices.Deployment.exe
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Microsoft.AnalysisServices.Deployment.exe is known as the [Analysis Services Deployment Utility](https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/deploy-model-solutions-with-the-deployment-utility?view=sql-server-2017) and is installed alongside [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017) (SSMS).
 
 The basic inputs for the **Deploy SSAS Tabular Cube Model** task are simply the path to the _.asdatabase_ file, the target SSAS server and target cube database name.  Note that the tabular cube is always deployed without processing, as the data source connection settings are likely to be incorrect.  The **Process SSAS Tabular cube model** task can be used to load data into the cube.
 
