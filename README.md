@@ -7,7 +7,7 @@
 
 This repo contains extensions for Azure Pipelines that help with various deployment tasks when dealing with Microsoft SQL Server.
 
-The [associated project wiki](/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Getting-Started) explains the basics of applying DevOps to your Data Warehouse and outlines exactly how to setup your in-house build server, Azure Pipelines and test suites.
+The [associated project wiki](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/Getting-Started) explains the basics of applying DevOps to your Data Warehouse and outlines exactly how to setup your in-house build server, Azure Pipelines and test suites.
 
 ## Azure Pipeline Tasks
 
