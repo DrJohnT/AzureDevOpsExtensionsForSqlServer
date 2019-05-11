@@ -30,6 +30,10 @@ Microsoft.AnalysisServices.Deployment.exe is known as the [Analysis Services Dep
 
 The module also requires the Microsoft SQL Server PowerShell module **SqlServer** which is installed automatically by the task.
 
+### Admin privileges required by the Agent Service Account
+
+In order to successfully deploy a tabular cube, the [Azure Pipelines self-hosted agent](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops) needs to run under a service account that has admin privileges on your target SQL Server Analysis Services instance.  When installed, the agent appears in the _Services Management Console_ (services.msc) as **VSTS Agent (YourDomain.AgentName)**.  Please ensure that this service runs under a AD domain service account with admin privileges on your target SQL Server Analysis Services instance.  As outlined on Microsoft's guide to [Azure Pipelines self-hosted agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops), the agent must have "line of sight" connectivity to the target servers.
+
 ## Example Pipeline
 
 The screenshots below show how the components can be used in your CI pipeline.

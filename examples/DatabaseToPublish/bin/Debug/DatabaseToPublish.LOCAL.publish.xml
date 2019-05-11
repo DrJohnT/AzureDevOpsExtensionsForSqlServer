@@ -3,23 +3,9 @@
   <PropertyGroup>
     <TargetDatabaseName>DatabaseToPublish</TargetDatabaseName>
     <DeployScriptFileName>DatabaseToPublish.sql</DeployScriptFileName>
-    <TargetConnectionString>Data Source=Build02;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
-    <CreateNewDatabase>False</CreateNewDatabase>
-    <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <BlockWhenDriftDetected>False</BlockWhenDriftDetected>
-    <GenerateSmartDefaults>True</GenerateSmartDefaults>
+    <TargetConnectionString>Data Source=localhost;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
+    <CreateNewDatabase>True</CreateNewDatabase>
     <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
-    <ProfileVersionNumber>1</ProfileVersionNumber>
-    <DropObjectsNotInSource>True</DropObjectsNotInSource>
-    <DropExtendedPropertiesNotInSource>False</DropExtendedPropertiesNotInSource>
-    <DoNotDropExtendedProperties>True</DoNotDropExtendedProperties>
-    <DoNotDropLogins>True</DoNotDropLogins>
-    <DoNotDropUsers>True</DoNotDropUsers>
-    <DoNotDropRoleMembership>True</DoNotDropRoleMembership>
-    <DoNotDropApplicationRoles>True</DoNotDropApplicationRoles>
-    <DoNotDropDatabaseRoles>True</DoNotDropDatabaseRoles>
-    <DoNotDropPermissions>True</DoNotDropPermissions>
-    <ScriptFileSize>True</ScriptFileSize>
     <ProfileVersionNumber>1</ProfileVersionNumber>
   </PropertyGroup>
   <ItemGroup>

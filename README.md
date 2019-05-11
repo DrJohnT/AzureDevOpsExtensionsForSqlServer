@@ -3,7 +3,7 @@
 
 ### AzureDevOpsExtensionsForSqlServer
 
-# Microsoft SQL Server deployment extensions for Azure DevOps Pipelines
+# Microsoft SQL Server deployment extensions for Azure Pipelines
 
 This repo contains extensions for Azure Pipelines that help with various deployment tasks when dealing with Microsoft SQL Server.
 

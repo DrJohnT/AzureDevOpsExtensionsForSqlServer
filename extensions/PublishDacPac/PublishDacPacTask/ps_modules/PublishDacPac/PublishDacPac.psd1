@@ -45,7 +45,7 @@ Publish-DacPac can be used to automate the deployment of databases, either as pa
 To automate build and deployment of databases in Azure DevOps, you can use MsBuild to create DACPAC from your Visual Studio solution. You can then add a PowerShell task which uses Publish-DacPac to invoke SQLPackage.exe to deploy each DACPAC using your own custom DAC Publish Profile.
 
 DAC Publish Profiles are created in Visual Studio when you Publish a database.
-For our guide on using DAC Publish Profiles see https://github.com/DrJohnT/PublishDacPac/wiki/DAC-Publish-Profile
+For our guide on using DAC Publish Profiles see https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/wiki/DAC-Publish-Profile
 '@
 
 # Minimum version of the Windows PowerShell engine required by this module

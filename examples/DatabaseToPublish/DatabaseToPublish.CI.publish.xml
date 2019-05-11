@@ -6,6 +6,7 @@
     <TargetConnectionString>Data Source=Build02;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
     <CreateNewDatabase>True</CreateNewDatabase>
     <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
+    <ScriptFileSize>False</ScriptFileSize>
     <ProfileVersionNumber>1</ProfileVersionNumber>
   </PropertyGroup>
   <ItemGroup>

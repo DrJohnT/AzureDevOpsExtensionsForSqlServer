@@ -6,7 +6,6 @@
     <TargetConnectionString>Data Source=Build02;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
     <CreateNewDatabase>False</CreateNewDatabase>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <BlockWhenDriftDetected>False</BlockWhenDriftDetected>
     <GenerateSmartDefaults>True</GenerateSmartDefaults>
     <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
     <ProfileVersionNumber>1</ProfileVersionNumber>
