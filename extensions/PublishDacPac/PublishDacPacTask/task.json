@@ -16,7 +16,7 @@
     "version": {
         "Major": "1",
         "Minor": "2",
-        "Patch": "2"
+        "Patch": "3"
      },
     "minimumAgentVersion": "1.95.0",
     "inputs": [
@@ -56,7 +56,7 @@
             "helpMarkDown": "Choose if you wish to overwrite SQLCMD Variables within the DAC Publish Profile and, if so, in which format.\nWe recommend JSON format as this is easy to validate.",
             "defaultValue": "none",
             "options": {
-                "none": "No SQLCMD Variables need overwriting",
+                "none": "No SQLCMD Variables needed",
                 "json": "JSON format (Recommended)",
                 "text": "Muiti-line text input as name/value pairs"
             }
