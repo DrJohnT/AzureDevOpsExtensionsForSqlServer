@@ -7,7 +7,7 @@ Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
 $RunSqlCmdScriptTask =  Resolve-Path "$CurrentFolder\..\RunSqlCmdScriptTask\RunSqlCmdScript.ps1";
 
 $ServerName = "localhost";
-$DatabaseName = "MyTestDB4";
+$DatabaseName = "DatabaseToPublish";
 $SqlScriptFile = "InsertIntoMyOnlyTable.sql";
 $SqlCmdScriptFile1 = "InsertIntoMyOnlyTableSqlCmd1.sql";
 $SqlCmdScriptFile3 = "InsertIntoMyOnlyTableSqlCmd3.sql";

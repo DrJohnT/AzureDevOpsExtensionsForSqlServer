@@ -1,10 +1,10 @@
 {
     "manifestVersion": 1,
     "id": "RunSqlCmdScripts",
-    "version": "0.0.3",
-    "name": "Run SQL Scripts in SQLCMD mode with multiple SQLCMD variables",
+    "version": "1.0.1",
+    "name": "Run SQL / SQLCMD Scripts passing multiple SQLCMD variables",
     "publisher": "DrJohnExtensions",
-    "description": "Run upgrade or pre/post-deployment scripts against your on-premise SQL Server database",
+    "description": "Run SQLCMD scripts against your on-premise SQL Server database",
     "public": true,
     "categories": [
         "Azure Pipelines"

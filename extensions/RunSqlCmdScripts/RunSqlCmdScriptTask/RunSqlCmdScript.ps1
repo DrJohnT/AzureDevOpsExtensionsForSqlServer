@@ -1,68 +1,51 @@
 [CmdletBinding()]
 param()
-
 <#
 	.SYNOPSIS
-    Run a single SQL Script in SQLCMD mode, passing in an array of SQLCMD variables
+    Run a single SQL Script in SQLCMD mode, passing in an array of SQLCMD variables if surplied.
 
     .DESCRIPTION
-    Run a single SQL Script in SQLCMD mode, passing in an array of SQLCMD variables.
+    Run a single SQL Script in SQLCMD mode, passing in an array of SQLCMD variables if surplied.
+
+    .NOTES
+    Requires the PowerShell module SqlServer, which will be installed for the current user if not present.
 
     Script written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer
 	This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
-
-    .NOTES
-    Depends on PowerShell module SqlServer which it will install for the current user
 #>
-
-    # ensure SqlServer module is installed
-    if (!(Get-Module -ListAvailable -Name SqlServer)) {
-        # if module is not installed
-        Write-Output "Installing PowerShell module SqlServer for current user"
-        Install-PackageProvider -Name NuGet -Force -Scope CurrentUser;
-        Install-Module -Name SqlServer -Force -AllowClobber -Scope CurrentUser -Repository PSGallery -SkipPublisherCheck;
-    }
-    if (-not (Get-Module -Name SqlServer)) {
-        # if module is not loaded
-        Import-Module -Name SqlServer -DisableNameChecking;
-    }
-
-    [string]$SqlCmdSciptPath = Get-VstsInput -Name "SqlCmdSciptPath" -Require;
-    [string]$Server = Get-VstsInput -Name  "Server" -Require;
-    [string]$Database = Get-VstsInput -Name "Database" -Require;
-    [string]$SqlCmdVariables = Get-VstsInput -Name "SqlCmdVariables";
-
-    if (!([string]::IsNullOrEmpty($SqlCmdVariables))) {
-        [string[]]$SqlCmdArray = $SqlCmdVariables -split "`n" | ForEach-Object { $_.trim() }
-    }
-
+    [string]$SqlCmdSciptPath = Get-VstsInput -Name SqlCmdSciptPath -Require;
+    [string]$Server = Get-VstsInput -Name  Server -Require;
+    [string]$Database = Get-VstsInput -Name Database -Require;
+    [string]$SqlCmdVariableType = Get-VstsInput -Name SqlCmdVariableType;
+    [string]$SqlCmdVariablesInJson = Get-VstsInput -Name SqlCmdVariablesInJson;
+    [string]$SqlCmdVariablesInText = Get-VstsInput -Name SqlCmdVariablesInText;
+    [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;
 
     $global:ErrorActionPreference = 'Stop';
 
     Trace-VstsEnteringInvocation $MyInvocation;
 
-    Write-Host "Calling Invoke-SqlCmd with the following parameters:";
-    Write-Host "SqlCmdSciptPath:   $SqlCmdSciptPath";
-    Write-Host "Server:            $Server";
-    Write-Host "Database:          $Database";
-
-    if (!([string]::IsNullOrEmpty($SqlCmdVariables))) {
-        #Write-Host $SqlCmdArray.GetType();
-        foreach ($SqlCmdVariable in $SqlCmdArray) {
-            Write-Host "SqlCmdVariable:    $SqlCmdVariable"
-        }
-    }
-
-    Write-Host "==============================================================================";
-
     try {
-        if ([string]::IsNullOrEmpty($SqlCmdVariables)) {
-            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath;
+        $CurrentFolder = Split-Path -Parent $MyInvocation.MyCommand.Path;
+        $Script = Resolve-Path "$CurrentFolder\Invoke-SqlCmdScript.ps1";
+
+        ########################################################################################################
+        # If PowerShell is running in 32-bit mode on a 64-bit machine, we need to force PowerShell to run in
+        # 64-bit mode to allow the SqlServer module to function correctly.
+        ########################################################################################################
+        if ($env:Processor_Architecture -eq 'x86') {
+            write-host "Invoking script in x64 PowerShell: $Script";
+            &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile -File $Script -Server $Server -Database $Database -SqlCmdSciptPath $SqlCmdSciptPath `
+                -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout;
+            exit $lastexitcode;
         } else {
-            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -Variable $SqlCmdArray;
+            &$Script -Server $Server -Database $Database -SqlCmdSciptPath $SqlCmdSciptPath `
+                -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout;
         }
+    } catch {
+        Write-Error $_;
+        exit 1;
     } finally {
-        Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation
     }
 

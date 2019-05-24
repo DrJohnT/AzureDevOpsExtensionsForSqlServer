@@ -58,7 +58,7 @@
             "options": {
                 "none": "No SQLCMD Variables needed",
                 "json": "JSON format (Recommended)",
-                "text": "Muiti-line text input as name/value pairs"
+                "text": "Multi-line text input as name/value pairs"
             }
         },
         {
