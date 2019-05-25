@@ -38,6 +38,6 @@ Copy-Item -Path "$ScriptPath\PublishDacPac\PublishDacPacTask\PublishDacPacTask.p
 Write-host "Copying Invoke-ExternalCommand.ps1 to DeployCube";
 Copy-Item -Path "$moduleRoot\PublishDacPac\PublishDacPac\public\Invoke-ExternalCommand.ps1" -Destination "$moduleRoot\DeployCube\DeployCube\public\Invoke-ExternalCommand.ps1" -Force
 
-
-
+Write-host "Copying Invoke-SqlCmdScript.ps1 from RunSqlCmdScriptTask to CreateSsisFolderTask";
+Copy-Item -Path "$ScriptPath\RunSqlCmdScripts\RunSqlCmdScriptTask\Invoke-SqlCmdScript.ps1" -Destination "$ScriptPath\DeploySsisProject\CreateSsisFolderTask\Invoke-SqlCmdScript.ps1" -Force
 
