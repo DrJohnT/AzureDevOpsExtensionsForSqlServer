@@ -1,0 +1,80 @@
+{
+    "manifestVersion": 1,
+    "id": "DeploySsisProject",
+    "version": "1.0.0",
+    "name": "SSIS Project Deployment Tools",
+    "publisher": "DrJohnExtensions",
+    "description": "Deploy SSIS projects, create environments and folders to Microsoft SQL Server Integration Services",
+    "public": true,
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        "deploy",
+        "release",
+        "ssas",
+        "tabular",
+        "cube"
+    ],
+    "icons": {
+        "default": "images/microsoft-ssis.png"
+    },
+    "content": {
+        "details": {
+            "path": "readme.md"
+        },
+        "license": {
+            "path": "license.md"
+        }
+    },
+    "screenshots": [
+        {
+            "path": "images/microsoft-ssis.png"
+        }
+    ],
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeploySsisProject"
+        },
+        "issues": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/issues"
+        },
+        "repository": {
+            "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeploySsisProject"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeploySsisProject"
+    },
+    "branding": {
+        "color": "#f6f7fb",
+        "theme": "light"
+    },
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "files": [
+        {
+            "path": "CreateSsisFolderTask"
+        },
+        {
+            "path": "images",
+            "addressable": true
+        }
+    ],
+    "contributions": [
+        {
+            "id": "CreateSsisFolderTask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "CreateSsisFolderTask"
+            }
+        }
+    ]
+}

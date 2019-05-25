@@ -1,0 +1,56 @@
+{
+    "id": "99fd9f38-2e1a-4aa8-b184-c5b6a6ecd5ba",
+    "name": "CreateSsisFolderTask",
+    "friendlyName": "Create a folder in SSIS",
+    "description": "Create a folder in an SSIS instance",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeploySsisProject)",
+    "author": "Dr. John Tunnicliffe",
+    "preview": true,
+    "deprecated": false,
+    "showEnvironmentVariables": false,
+    "category": "Utility",
+    "demands": [],
+    "minimumAgentVersion": "1.95.0",
+    "version": {
+        "Major": "0",
+        "Minor": "0",
+        "Patch": "1"
+    },
+    "instanceNameFormat": "Create SSIS folder $(Folder)",
+    "inputs": [
+		{
+            "name": "Folder",
+            "type": "string",
+            "label": "Name of SSIS folder",
+            "required": true,
+            "helpMarkDown": "Name of the SSIS folder to be created"
+        },
+        {
+            "name": "FolderDescription",
+            "type": "string",
+            "label": "Description of SSIS folder",
+            "required": true,
+            "helpMarkDown": "Description of the SSIS folder to be created"
+        },
+		{
+            "name": "Server",
+            "type": "string",
+            "label": "Server name or IP address",
+            "required": true,
+            "helpMarkDown": "Server name or IP address.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
+        },
+        {
+            "name": "Database",
+            "type": "string",
+            "label": "Name of SSIS database (usually SSISDB)",
+            "default": "SSISDB",
+            "required": true,
+            "helpMarkDown": "Name of SSIS database (usually SSISDB), but can be renamed by pedantic DBAs"
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "$(currentDirectory)\\CreateSsisFolderTask.ps1"
+        }
+    }
+}
