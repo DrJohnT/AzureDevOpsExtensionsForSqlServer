@@ -37,14 +37,18 @@ param(
     $SqlCmdVariablesInText,
 
     [String] [Parameter(Mandatory = $false)]
-    $QueryTimeout = 6000
+    $QueryTimeout = 6000,
+
+    [String] [Parameter(Mandatory = $false)]
+    $Recursive = 'true'
 )
 
     Write-Host "==============================================================================";
     Write-Host "Calling Invoke-SqlCmd with the following parameters:";
     Write-Host "Server:                $Server";
     Write-Host "Database:              $Database";
-    Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
+    Write-Host "Recursive:             $Recursive";
+    #Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
     Write-Host "SqlCmdVariableType:    $SqlCmdVariableType";
 
     [string[]]$SqlCmdVariables = @();
@@ -83,10 +87,15 @@ param(
         Import-Module -Name $Name -DisableNameChecking;
     }
 
-    $SqlCmdFiles = Get-ChildItem $SqlCmdSciptFolderPath -Include *.sql;
+    Write-Host "SQLCMD folder:         $SqlCmdSciptFolderPath";
+    if ($Recursive -eq 'true') {
+        $SqlCmdFiles = Get-ChildItem -Path $SqlCmdSciptFolderPath -Recurse -Include *.sql;
+    } else {
+        $SqlCmdFiles = Get-ChildItem -Path "$SqlCmdSciptFolderPath\*" -Include *.sql;
+    }
     foreach ($SqlCmdFile in $SqlCmdFiles) {
         # Now Invoke-Sqlcmd for each script in the folder
-        Write-Host "Running SQLCMD file:   $SqlCmdFile"
+        Write-Host "Running SQLCMD file:   $(Split-Path -Leaf $SqlCmdFile)"
         if ($SqlCmdVariableType -eq 'none') {
             Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop;
         } else {

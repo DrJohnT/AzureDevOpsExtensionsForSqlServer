@@ -18,6 +18,7 @@ param()
     [string]$SqlCmdVariablesInJson = Get-VstsInput -Name SqlCmdVariablesInJson;
     [string]$SqlCmdVariablesInText = Get-VstsInput -Name SqlCmdVariablesInText;
     [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;
+    [string]$Recursive = Get-VstsInput -Name Recursive;
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -36,11 +37,11 @@ param()
             if ($env:Processor_Architecture -eq 'x86') {
                 write-host "Invoking script in x64 PowerShell: $Script";
                 &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile -File $Script -Server $Server -Database $Database -SqlCmdSciptFolderPath $SqlCmdSciptFolderPath `
-                    -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout;
+                    -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout -Recursive $Recursive;
                 exit $lastexitcode;
             } else {
                 &$Script -Server $Server -Database $Database -SqlCmdSciptFolderPath $SqlCmdSciptFolderPath `
-                    -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout;
+                    -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout -Recursive $Recursive;
             }
         } else {
             Write-Error "SQL Scripts Folder does not exist: $SqlCmdSciptFolderPath";

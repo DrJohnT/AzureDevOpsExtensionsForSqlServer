@@ -65,6 +65,8 @@
   <ItemGroup>
     <Build Include="dbo\Tables\MyOnlyTable.sql" />
     <PostDeploy Include="Scripts\Post-Deploy\PostDeploy.sql" />
+    <Build Include="dbo\Tables\MyOtherTable.sql" />
+    <Build Include="dbo\Tables\MyTable.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseToPublish.CI.publish.xml">

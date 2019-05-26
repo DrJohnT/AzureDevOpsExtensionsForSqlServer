@@ -16,3 +16,6 @@ examples/CubeToPublish/MyTabularProject/obj/Development/MyTabularProject.smproj.
 examples/CubeToPublish/MyTabularProject/bin/Model.deploymenttargets
 examples/CubeToPublish/MyTabularProject/bin/Model.deploymentoptions
 examples/CubeToPublish/MyTabularProject/obj/Development/MyTabularProject.smproj.FileListAbsolute.txt
+examples/DatabaseToPublish/bin/Debug/DatabaseToPublish.publish.sql
+examples/DatabaseToPublish/bin/Debug/DeploymentReport.txt
+examples/SqlCmdScripts/SingleScripts/TruncateMyOtherTable.sql

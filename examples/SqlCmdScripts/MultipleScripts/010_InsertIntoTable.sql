@@ -1,10 +1,10 @@
 declare @myId int;
-select @myId = ISNULL(MAX(MyOnlyTableId),0) + 1 from dbo.MyOnlyTable;
+select @myId = ISNULL(MAX(MyTableId),0) + 1 from dbo.MyTable;
 
-insert into dbo.MyOnlyTable
+insert into dbo.MyTable
 (
-	MyOnlyTableId,
-	MyOnlyColumn
+	MyTableId,
+	MyColumn
 )
 values
 (

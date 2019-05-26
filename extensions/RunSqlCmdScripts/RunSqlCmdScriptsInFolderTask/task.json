@@ -5,7 +5,7 @@
     "description": "Run a multiple SQL Scripts in SQLCMD mode passing multiple parameters via a SqlCmdVariables array",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/RunSqlCmdScripts)",
     "author": "Dr. John Tunnicliffe",
-    "preview": true,
+    "preview": false,
     "deprecated": false,
     "showEnvironmentVariables": false,
     "category": "Utility",
@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "0"
+        "Patch": "2"
     },
     "instanceNameFormat": "Run SQLCMD Scripts in folder $(SqlCmdSciptFolderPath)",
     "inputs": [
@@ -38,6 +38,18 @@
             "label": "Path to folder containing SQLCMD script files",
             "required": true,
             "helpMarkDown": "Path to the folder containing the SQLCMD scripts to be run."
+        },
+        {
+            "name": "Recursive",
+            "type": "pickList",
+            "label": "Recurse sub-folders and run all SQLCMD scipts found",
+            "required": true,
+            "helpMarkDown": "Run SQLCMD scipts in the folder and all sub-folders in alphabetical order.",
+            "defaultValue": "true",
+            "options": {
+                "true": "Recurse folder and sub-folders",
+                "false": "Do not recurse sub-folders"
+            }
         },
         {
             "name": "SqlCmdVariableType",
