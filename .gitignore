@@ -9,7 +9,6 @@ examples/DatabaseToPublish/.vs/DatabaseToPublish/v15/.suo
 *.cache
 examples/DatabaseToPublish/obj/Debug/DatabaseToPublish.sqlproj.FileListAbsolute.txt
 examples/DatabaseToPublish/obj/Debug/Model.xml
-
 *.jfm
 examples/CubeToPublish/MyTabularProject/bin/AnalysisServicesDeploymentExeLog.txt
 examples/CubeToPublish/MyTabularProject/obj/Development/MyTabularProject.smproj.FileListAbsolute.txt
@@ -18,4 +17,13 @@ examples/CubeToPublish/MyTabularProject/bin/Model.deploymentoptions
 examples/CubeToPublish/MyTabularProject/obj/Development/MyTabularProject.smproj.FileListAbsolute.txt
 examples/DatabaseToPublish/bin/Debug/DatabaseToPublish.publish.sql
 examples/DatabaseToPublish/bin/Debug/DeploymentReport.txt
-examples/SqlCmdScripts/SingleScripts/TruncateMyOtherTable.sql
+examples/DatabaseToPublish/obj/Debug/postdeploy.sql
+examples/DatabaseToPublish/bin/Debug/DatabaseToPublish.Upgrade.publish.xml
+examples/DatabaseToPublish/bin/Debug/DatabaseToPublish.LOCAL.publish.xml
+examples/DatabaseToPublish/bin/Debug/DatabaseToPublish.dacpac
+examples/DatabaseToPublish/bin/Debug/DatabaseToPublish.CI.publish.xml
+examples/CubeToPublish/MyTabularProject/obj/Development/Model.deploymenttargets
+examples/CubeToPublish/MyTabularProject/obj/Development/Model.deploymentoptions
+examples/CubeToPublish/MyTabularProject/obj/Development/Model.asdatabase
+examples/CubeToPublish/MyTabularProject/Model.bim.layout
+examples/CubeToPublish/MyTabularProject/bin/Model.asdatabase
