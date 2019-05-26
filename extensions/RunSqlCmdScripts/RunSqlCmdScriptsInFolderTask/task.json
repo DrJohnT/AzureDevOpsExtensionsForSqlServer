@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "2"
+        "Patch": "3"
     },
     "instanceNameFormat": "Run SQLCMD Scripts in folder $(SqlCmdSciptFolderPath)",
     "inputs": [
@@ -93,7 +93,7 @@
     ],
     "execution": {
         "PowerShell3": {
-            "target": "$(currentDirectory)\\RunSqlCmdScript.ps1"
+            "target": "$(currentDirectory)\\RunSqlCmdScriptsInFolder.ps1"
         }
     }
 }
