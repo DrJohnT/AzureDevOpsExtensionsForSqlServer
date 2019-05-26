@@ -9,8 +9,17 @@ SQLCMD variables can be passed as name/value pairs in multiline text format, or 
 
 This extension can be used in a build or deployment pipeline to run pre- and post-deployment SQL scripts.
 
-### Notes on **Run all SQL Scripts in a folder in SQLCMD mode**
+### Run single SQL Script in SQLCMD mode
+
+The screenshot below shows the configuration options for the task.
+![image](images/ConfigureRunSingleSqlCmdScript.png "Configure Run Single SQLCMD Script")
+
+### Run all SQL Scripts in a folder in SQLCMD mode
+
+The screenshot below shows the configuration options for the task.
+
 The SQL scripts are run in alphabetical order.  Simply rename the files with numeric prefixes to control the running order.  Note that only scripts with a .sql file-extension are executed. Other files in the directory will be ignored.
 
 Setting _Recursive_ to true will cause the **Run all SQL Scripts in a folder in SQLCMD mode** task to run all the SQLCMD scripts it finds in the main folder and all sub-folders in alphabetical order.
 
+![image](images/ConfigureRunMultipleSqlCmdScriptsInFolder.png "Configure Run Multiple SQLCMD Scripts in Folder")
