@@ -1,9 +1,9 @@
 <#
 	.SYNOPSIS
-    Run a single SQL Script in SQLCMD mode, passing in an array of SQLCMD variables if supplied.
+    Run all SQL Scripts in folder in SQLCMD mode, passing in an array of SQLCMD variables if supplied.
 
     .DESCRIPTION
-    Run a single SQL Script in SQLCMD mode, passing in an array of SQLCMD variables if supplied.
+    Run all SQL Scripts in folder in SQLCMD mode, passing in an array of SQLCMD variables if supplied.
 
     .NOTES
     Requires the PowerShell module SqlServer, which will be installed for the current user if not present.
@@ -11,6 +11,7 @@
     Script written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/RunSqlCmdScripts
 	This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
+
 [CmdletBinding()]
 param(
     [String] [Parameter(Mandatory = $true)]
@@ -23,7 +24,7 @@ param(
 
     [String] [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    $SqlCmdSciptPath,
+    $SqlCmdSciptFolderPath,
 
     [String] [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
@@ -41,10 +42,10 @@ param(
 
     Write-Host "==============================================================================";
     Write-Host "Calling Invoke-SqlCmd with the following parameters:";
-    Write-Host "Server:             $Server";
-    Write-Host "Database:           $Database";
-    Write-Host "SqlCmdSciptPath:    $SqlCmdSciptPath";
-    Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
+    Write-Host "Server:                $Server";
+    Write-Host "Database:              $Database";
+    Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
+    Write-Host "SqlCmdVariableType:    $SqlCmdVariableType";
 
     [string[]]$SqlCmdVariables = @();
     switch ($SqlCmdVariableType) {
@@ -64,7 +65,7 @@ param(
     if ($SqlCmdVariableType -ne 'none') {
         Write-Host "SqlCmdVariables:";
         foreach ($SqlCmdVariable in $SqlCmdVariables) {
-            Write-Host "                    $SqlCmdVariable";
+            Write-Host "                       $SqlCmdVariable";
         }
     }
 
@@ -82,10 +83,14 @@ param(
         Import-Module -Name $Name -DisableNameChecking;
     }
 
-    # Now Invoke-Sqlcmd
-    if ($SqlCmdVariableType -eq 'none') {
-        Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop;
-    } else {
-        Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+    $SqlCmdFiles = Get-ChildItem $SqlCmdSciptFolderPath -Include *.sql;
+    foreach ($SqlCmdFile in $SqlCmdFiles) {
+        # Now Invoke-Sqlcmd for each script in the folder
+        Write-Host "Running SQLCMD file:   $SqlCmdFile"
+        if ($SqlCmdVariableType -eq 'none') {
+            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop;
+        } else {
+            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+        }
     }
     Write-Host "==============================================================================";

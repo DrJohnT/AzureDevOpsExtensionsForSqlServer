@@ -1,10 +1,10 @@
 {
     "manifestVersion": 1,
     "id": "RunSqlCmdScripts",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "name": "Run SQL / SQLCMD Scripts passing multiple SQLCMD variables",
     "publisher": "DrJohnExtensions",
-    "description": "Run SQLCMD scripts against your on-premise SQL Server database",
+    "description": "Run SQLCMD scripts against your SQL Server database",
     "public": true,
     "categories": [
         "Azure Pipelines"
@@ -17,7 +17,7 @@
         "sqlcmd"
     ],
     "icons": {
-        "default": "images/blue-sql-400.png"
+        "default": "images/sql_script.png"
     },
     "content": {
         "details": {
@@ -29,7 +29,7 @@
     },
     "screenshots": [
         {
-            "path": "images/SqlServerLogo300.png"
+            "path": "images/sql_script.png"
         }
     ],
     "links": {
@@ -58,6 +58,9 @@
             "path": "RunSqlCmdScriptTask"
         },
         {
+            "path": "RunSqlCmdScriptsInFolderTask"
+        },
+        {
             "path": "images",
             "addressable": true
         }
@@ -71,6 +74,16 @@
             ],
             "properties": {
                 "name": "RunSqlCmdScriptTask"
+            }
+        },
+        {
+            "id": "RunSqlCmdScriptsInFolder",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "RunSqlCmdScriptsInFolderTask"
             }
         }
     ]

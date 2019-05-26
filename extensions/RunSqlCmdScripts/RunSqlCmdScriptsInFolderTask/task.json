@@ -1,11 +1,11 @@
 {
-    "id": "d5486d4d-52f1-43ce-93ae-fcd4f2be7428",
-    "name": "RunSqlCmdScriptTask",
-    "friendlyName": "Run SQL Script in SQLCMD mode",
-    "description": "Run a single SQL Script in SQLCMD mode passing multiple parameters via a SqlCmdVariables array",
+    "id": "ac2ee55f-4e52-4dbe-a01b-2b43ed500433",
+    "name": "RunSqlCmdScriptsInFolderTask",
+    "friendlyName": "Run all SQL Scripts in folder in SQLCMD mode",
+    "description": "Run a multiple SQL Scripts in SQLCMD mode passing multiple parameters via a SqlCmdVariables array",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/RunSqlCmdScripts)",
     "author": "Dr. John Tunnicliffe",
-    "preview": false,
+    "preview": true,
     "deprecated": false,
     "showEnvironmentVariables": false,
     "category": "Utility",
@@ -14,9 +14,9 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "1"
+        "Patch": "0"
     },
-    "instanceNameFormat": "Run SQLCMD Script $(SqlCmdSciptPath)",
+    "instanceNameFormat": "Run SQLCMD Scripts in folder $(SqlCmdSciptFolderPath)",
     "inputs": [
 		{
             "name": "Server",
@@ -33,11 +33,11 @@
             "helpMarkDown": "The name of the database against which the script will be run"
         },
         {
-            "name": "SqlCmdSciptPath",
+            "name": "SqlCmdSciptFolderPath",
             "type": "filePath",
-            "label": "Path to .sql file",
+            "label": "Path to folder containing SQLCMD script files",
             "required": true,
-            "helpMarkDown": "Relative path from repo root to the SqlCMD script to run.  Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
+            "helpMarkDown": "Path to the folder containing the SQLCMD scripts to be run."
         },
         {
             "name": "SqlCmdVariableType",
