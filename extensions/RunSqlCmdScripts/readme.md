@@ -27,3 +27,10 @@ The SQL scripts are run in alphabetical order.  Simply rename the files with num
 Setting _Recursive_ to true will cause the **Run all SQL Scripts in a folder in SQLCMD mode** task to run all the SQLCMD scripts it finds in the main folder and all sub-folders in alphabetical order.
 
 ![image](images/ConfigureRunMultipleSqlCmdScriptsInFolder.png "Configure Run Multiple SQLCMD Scripts in Folder")
+
+### Example Pipeline
+
+Below is a sample pipeline including the Run SQLCMD extensions.
+
+![image](images/ExamplePipeLine.png "Example pipeline")
+

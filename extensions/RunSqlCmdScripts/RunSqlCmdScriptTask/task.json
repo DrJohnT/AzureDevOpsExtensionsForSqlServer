@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "5"
+        "Patch": "8"
     },
     "instanceNameFormat": "Run SQLCMD Script $(SqlCmdSciptPath)",
     "inputs": [
@@ -65,10 +65,10 @@
             "name": "SqlCmdVariablesInText",
             "type": "multiLine",
             "label": "SqlCmd Variables and Values (name/value pair format)",
-            "defaultValue": "var1=varvalue1\nvar2=varvalue2\nvar3=varvalue3\nvar4=varvalue4",
+            "defaultValue": "var1='varvalue1'\nvar2='varvalue2'\nvar3='varvalue3'\nvar4='varvalue4'",
             "required": false,
             "visibleRule": "SqlCmdVariableType=text",
-            "helpMarkDown": "A list of SqlCmd variables and their values in the format var=varvalue. e.g. \nvar1=varvalue1\nvar2=varvalue2\nvar3=varvalue3\nvar4=varvalue4"
+            "helpMarkDown": "A list of SqlCmd variables and their values in the format var=varvalue. e.g. \nvar1='varvalue1'\nvar2='varvalue2'\nvar3='varvalue3'\nvar4='varvalue4'"
         },
         {
             "name": "QueryTimeout",

@@ -21,25 +21,64 @@ param()
 
     $global:ErrorActionPreference = 'Stop';
 
+    if ($env:Processor_Architecture -eq 'x86') {
+        Write-Error "The SQLSERVER PowerShell module will not run correctly in when the processor architecture = x86. Please use a 64-bit Azure DevOps agent. See https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops";
+        exit 1;
+    }
+
     Trace-VstsEnteringInvocation $MyInvocation;
 
     try {
-        $CurrentFolder = Split-Path -Parent $MyInvocation.MyCommand.Path;
-        $Script = Resolve-Path "$CurrentFolder\Invoke-SqlCmdScript.ps1";
+        Write-Host "==============================================================================";
+        Write-Host "Calling Invoke-SqlCmd with the following parameters:";
+        Write-Host "Server:             $Server";
+        Write-Host "Database:           $Database";
+        Write-Host "SqlCmdSciptPath:    $SqlCmdSciptPath";
+        Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
 
-        ########################################################################################################
-        # If PowerShell is running in 32-bit mode on a 64-bit machine, we need to force PowerShell to run in
-        # 64-bit mode to allow the SqlServer module to function correctly.
-        ########################################################################################################
-        if ($env:Processor_Architecture -eq 'x86') {
-            write-host "Invoking script in x64 PowerShell: $Script";
-            &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile -File $Script -Server $Server -Database $Database -SqlCmdSciptPath $SqlCmdSciptPath `
-                -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout;
-            exit $lastexitcode;
-        } else {
-            &$Script -Server $Server -Database $Database -SqlCmdSciptPath $SqlCmdSciptPath `
-                -SqlCmdVariableType $SqlCmdVariableType -SqlCmdVariablesInJson $SqlCmdVariablesInJson -SqlCmdVariablesInText $SqlCmdVariablesInText -QueryTimeout $QueryTimeout;
+        [string[]]$SqlCmdVariables = @();
+        switch ($SqlCmdVariableType) {
+            'json' {
+                $jsonVariables = ConvertFrom-Json -InputObject $SqlCmdVariablesInJson;
+                $jsonVariables.PSObject.Properties | ForEach-Object {
+                    $Name = $_.Name;
+                    $Value = $_.Value;
+                    $SqlCmdVariables += "$Name=$Value";
+                }
+            }
+            'text' {
+                $SqlCmdVariables = $SqlCmdVariablesInText -split "`n" | ForEach-Object { $_.trim() }
+            }
         }
+
+        if ($SqlCmdVariableType -ne 'none') {
+            Write-Host "SqlCmdVariables:";
+            foreach ($SqlCmdVariable in $SqlCmdVariables) {
+                Write-Host "                    $SqlCmdVariable";
+            }
+        }
+
+        # ensure SqlServer module is installed
+        $Name = 'SqlServer';
+        if (!(Get-Module -ListAvailable -Name $Name)) {
+            # if module is not installed
+            Write-Output "Installing PowerShell module $Name for current user"
+            Install-PackageProvider -Name NuGet -Force -Scope CurrentUser;
+            Install-Module -Name $Name -Force -AllowClobber -Scope CurrentUser -Repository PSGallery -SkipPublisherCheck;
+        }
+
+        if (-not (Get-Module -Name $Name)) {
+            # if module is not loaded
+            Import-Module -Name $Name -DisableNameChecking;
+        }
+
+        # Now Invoke-Sqlcmd
+        if ($SqlCmdVariableType -eq 'none') {
+            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop;
+        } else {
+            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+        }
+        Write-Host "==============================================================================";
     } catch {
         Write-Error $_;
         exit 1;
