@@ -12,7 +12,6 @@ param()
 	This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
     [string]$Folder = Get-VstsInput -Name Folder -Require;
-    [string]$FolderDescription = Get-VstsInput -Name FolderDescription -Require;
     [string]$Server = Get-VstsInput -Name Server -Require;
     [string]$Database = Get-VstsInput -Name Database -Require;
 
@@ -22,11 +21,10 @@ param()
 
     try {
         $CurrentFolder = Split-Path -Parent $MyInvocation.MyCommand.Path;
-        $SqlCmdSciptPath = Resolve-Path "$CurrentFolder\CreateSsisFolder.sql";
+        $SqlCmdSciptPath = Resolve-Path "$CurrentFolder\DropSsisFolder.sql";
 
         $SqlCmdVariables = @();
         $SqlCmdVariables += "SsisFolder=$Folder";
-        $SqlCmdVariables += "SsisFolderDescription=$FolderDescription";
         $SqlCmdVariables += "SSISDB=$Database";
         $QueryTimeout = 10;
 
@@ -40,7 +38,6 @@ param()
         Write-Host "Server:                  $Server";
         Write-Host "SSIS Database:           $Database";
         Write-Host "SSIS Folder              $Folder";
-        Write-Host "SSIS Folder Description: $FolderDescription";
 
         # ensure SqlServer module is installed
         $Name = 'SqlServer';

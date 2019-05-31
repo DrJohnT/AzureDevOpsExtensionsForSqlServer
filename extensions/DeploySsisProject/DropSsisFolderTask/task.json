@@ -1,8 +1,8 @@
 {
-    "id": "99fd9f38-2e1a-4aa8-b184-c5b6a6ecd5ba",
-    "name": "CreateSsisFolderTask",
-    "friendlyName": "Create a folder in SSIS",
-    "description": "Create a folder in an SSIS instance",
+    "id": "96b766b9-c5b4-40f3-b258-9ab0ed0ada9e",
+    "name": "DropSsisFolderTask",
+    "friendlyName": "Drop SSIS folder and content",
+    "description": "Drop SSIS folder, project and environment",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeploySsisProject)",
     "author": "Dr. John Tunnicliffe",
     "preview": true,
@@ -16,22 +16,14 @@
         "Minor": "0",
         "Patch": "1"
     },
-    "instanceNameFormat": "Create SSIS folder $(Folder)",
+    "instanceNameFormat": "Drop SSIS folder $(Folder)",
     "inputs": [
 		{
             "name": "Folder",
             "type": "string",
             "label": "Name of SSIS folder",
             "required": true,
-            "helpMarkDown": "Name of the SSIS folder to be created"
-        },
-        {
-            "name": "FolderDescription",
-            "type": "string",
-            "label": "Description of SSIS folder",
-            "default": "Updated by $(Build.BuildNumber)",
-            "required": true,
-            "helpMarkDown": "Description of the SSIS folder to be created"
+            "helpMarkDown": "Name of the SSIS folder to be dropped"
         },
 		{
             "name": "Server",
@@ -51,7 +43,7 @@
     ],
     "execution": {
         "PowerShell3": {
-            "target": "$(currentDirectory)\\CreateSsisFolderTask.ps1"
+            "target": "$(currentDirectory)\\DropSsisFolderTask.ps1"
         }
     }
 }
