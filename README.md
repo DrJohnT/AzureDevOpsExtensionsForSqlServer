@@ -1,6 +1,8 @@
 [![Build Status](https://qatar-re.visualstudio.com/QatarRe.BI/_apis/build/status/Build%20%26%20Deploy%20Database%20and%20Cube?branchName=master)](https://qatar-re.visualstudio.com/QatarRe.BI/_build/latest?definitionId=57&branchName=master)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
 
+[![Donate with PayPal to Dr John T](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/images/donate.png)](https://paypal.me/drjohnt)
+
 ### AzureDevOpsExtensionsForSqlServer
 
 # Microsoft SQL Server deployment extensions for Azure Pipelines

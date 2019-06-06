@@ -2,6 +2,8 @@
 [![Deployment tools for SSAS Tabular Cube Models](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.DeployTabularModel.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployTabularModel)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
 
+[![Donate with PayPal to Dr John T](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/images/donate.png)](https://paypal.me/drjohnt)
+
 # Deployment tools for SSAS Tabular Cube Models
 
 This extension adds four tasks to Azure DevOps which are ideal for integrating tabular cube models into your CI pipeline.

@@ -2,6 +2,8 @@
 [![Deploy Database DACPAC using a DAC Publish Profile](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.DeployDatabase.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployDatabase)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
 
+[![Donate with PayPal to Dr John T](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/images/donate.png)](https://paypal.me/drjohnt)
+
 # Deploy database using DACPAC and DAC Publish Profile
 
 The **Deploy Database** task allows you to deploy a SQL Server Database to a SQL Server instance using a DACPAC and a DAC Publish Profile.
