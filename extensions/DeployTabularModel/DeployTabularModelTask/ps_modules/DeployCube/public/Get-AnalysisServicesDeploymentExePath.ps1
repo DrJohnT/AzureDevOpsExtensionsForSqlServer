@@ -43,6 +43,7 @@ function Get-AnalysisServicesDeploymentExePath {
         [string]$ExeName = "Microsoft.AnalysisServices.Deployment.exe";
 
         $AnalysisServicesDeploymentExes = Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\$Version" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+        $AnalysisServicesDeploymentExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server Management Studio 18\Common7\IDE" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
 
         foreach ($AnalysisServicesDeploymentExe in $AnalysisServicesDeploymentExes) {
             $AnalysisServicesDeploymentExePath = $AnalysisServicesDeploymentExe.FullName;
