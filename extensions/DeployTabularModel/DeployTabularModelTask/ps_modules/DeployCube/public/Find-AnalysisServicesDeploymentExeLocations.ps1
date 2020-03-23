@@ -28,6 +28,7 @@ function Find-AnalysisServicesDeploymentExeLocations {
         # Get SQL Server locations
         $AnalysisServicesDeploymentExes = @();
         $AnalysisServicesDeploymentExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn\" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+        $AnalysisServicesDeploymentExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server Management Studio 18\Common7\IDE\" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
 
         # list out the locations found
         foreach ($AnalysisServicesDeploymentExe in $AnalysisServicesDeploymentExes) {
