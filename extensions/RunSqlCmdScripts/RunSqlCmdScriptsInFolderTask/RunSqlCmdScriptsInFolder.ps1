@@ -36,6 +36,12 @@ param()
             Write-Host "Calling Invoke-SqlCmd with the following parameters:";
             Write-Host "Server:                $Server";
             Write-Host "Database:              $Database";
+            if ($Username -eq '') {
+                Write-Host "Username:             $Username";
+            }
+            if ($Password -eq '') {
+                Write-Host "Password:             $Password";
+            }
             Write-Host "Recursive:             $Recursive";
             #Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
             Write-Host "SqlCmdVariableType:    $SqlCmdVariableType";
@@ -86,11 +92,20 @@ param()
             foreach ($SqlCmdFile in $SqlCmdFiles) {
                 # Now Invoke-Sqlcmd for each script in the folder
                 Write-Host "Running SQLCMD file:   $(Split-Path -Leaf $SqlCmdFile)"
-                if ($SqlCmdVariableType -eq 'none') {
-                    Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop;
-                } else {
-                    Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+                if ($Username -eq '' && $Password -eq '') {
+                    if ($SqlCmdVariableType -eq 'none') {
+                        Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop;
+                    } else {
+                        Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+                    }
                 }
+                else {
+                    if ($SqlCmdVariableType -eq 'none') {
+                        Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop;
+                    } else {
+                        Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+                    }
+                }                
             }
             Write-Host "==============================================================================";
         } else {

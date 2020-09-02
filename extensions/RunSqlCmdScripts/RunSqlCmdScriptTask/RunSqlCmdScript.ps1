@@ -14,6 +14,8 @@ param()
     [string]$SqlCmdSciptPath = Get-VstsInput -Name SqlCmdSciptPath -Require;
     [string]$Server = Get-VstsInput -Name  Server -Require;
     [string]$Database = Get-VstsInput -Name Database -Require;
+    [string]$Username = Get-VstsInput -Name  Username;
+    [string]$Password = Get-VstsInput -Name Password;
     [string]$SqlCmdVariableType = Get-VstsInput -Name SqlCmdVariableType;
     [string]$SqlCmdVariablesInJson = Get-VstsInput -Name SqlCmdVariablesInJson;
     [string]$SqlCmdVariablesInText = Get-VstsInput -Name SqlCmdVariablesInText;
@@ -33,6 +35,12 @@ param()
         Write-Host "Calling Invoke-SqlCmd with the following parameters:";
         Write-Host "Server:             $Server";
         Write-Host "Database:           $Database";
+        if ($Username -eq '') {
+            Write-Host "Username:             $Username";
+        }
+        if ($Password -eq '') {
+            Write-Host "Password:             $Password";
+        }
         Write-Host "SqlCmdSciptPath:    $SqlCmdSciptPath";
         Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
 
@@ -73,11 +81,21 @@ param()
         }
 
         # Now Invoke-Sqlcmd
-        if ($SqlCmdVariableType -eq 'none') {
-            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop;
-        } else {
-            Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+        if ($Username -eq '' && $Password -eq '') {
+            if ($SqlCmdVariableType -eq 'none') {
+                Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop;
+            } else {
+                Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+            }
         }
+        else {
+            if ($SqlCmdVariableType -eq 'none') {
+                Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop;
+            } else {
+                Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
+            }
+        }
+       
         Write-Host "==============================================================================";
     } catch {
         Write-Error $_;
