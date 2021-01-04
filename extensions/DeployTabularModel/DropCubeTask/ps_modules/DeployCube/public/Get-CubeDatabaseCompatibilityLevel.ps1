@@ -11,6 +11,9 @@ function Get-CubeDatabaseCompatibilityLevel {
 
     .PARAMETER CubeDatabase
     The name of the cube database to be deployed.
+    
+    .PARAMETER Credential
+    [Optional] A PSCredential object containing the credentials to connect to the AAS server.
 
     .EXAMPLE
     Get-CubeDatabaseCompatibilityLevel -Server localhost -CubeDatabase MyTabularCube;
@@ -21,7 +24,7 @@ function Get-CubeDatabaseCompatibilityLevel {
     https://github.com/DrJohnT/DeployCube
 
     .NOTES
-    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube
     This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
     [OutputType([int])]
@@ -34,17 +37,24 @@ function Get-CubeDatabaseCompatibilityLevel {
 
         [String] [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $CubeDatabase
+        $CubeDatabase,
+
+        [PSCredential] [Parameter(Mandatory = $false)]
+        $Credential = $null
     )
 
-    if (Ping-SsasServer -Server $Server) {
+    try {
         # ensure SqlServer module is installed
         Get-ModuleByName -Name SqlServer;
 
         # Request a list of databases on the SSAS server
         # Annoyingly, Invoke-ASCmd does not generate an error we can capture with try/catch. But it does write output to the error console,
         # so we have to redirect the error output to the normal output to stop the error been detected by processes monitoring the error output such as the Azure DevOps build pipeline
-        $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>DBSCHEMA_CATALOGS</RequestType><Restrictions /><Properties /></Discover>" 2>&1;
+        if ($null -eq $Credential) {
+            $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>DBSCHEMA_CATALOGS</RequestType><Restrictions /><Properties /></Discover>" 2>&1;
+         } else {
+            $returnResult = Invoke-ASCmd -Server $Server -Credential $Credential -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>DBSCHEMA_CATALOGS</RequestType><Restrictions /><Properties /></Discover>" 2>&1;
+        }
 
         if ([string]::IsNullOrEmpty($returnResult)) {
             throw "Invoke-ASCmd failed to return a list of databases on the server $Server";
@@ -57,14 +67,15 @@ function Get-CubeDatabaseCompatibilityLevel {
             $nsmgr.AddNamespace('rootNS', 		'urn:schemas-microsoft-com:xml-analysis:rowset');
 
             $rows = $returnXML.SelectNodes("//xmlAnalysis:return/rootNS:root/rootNS:row", $nsmgr) ;
-            foreach ($row in $rows) {
+            foreach ($row in $rows) {                
                 if ($row.DATABASE_ID -eq $CubeDatabase) {
                     return $row.COMPATIBILITY_LEVEL -as [int];
                 }
             }
             throw "Failed to find cube database $CubeDatabase on server $Server";
         }
-    } else {
-        throw "SSAS Server $Server not found";
+    } 
+    catch {
+        throw "SSAS Server $Server not found $error";
     }
 }

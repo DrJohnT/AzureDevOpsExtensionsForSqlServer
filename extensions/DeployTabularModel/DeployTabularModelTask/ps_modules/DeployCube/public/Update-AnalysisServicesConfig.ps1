@@ -74,7 +74,7 @@ function Update-AnalysisServicesConfig {
     https://github.com/DrJohnT/DeployCube
 
     .NOTES
-    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube
     This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
     [CmdletBinding()]
@@ -96,9 +96,8 @@ function Update-AnalysisServicesConfig {
         [ValidateSet('Full', 'Default', 'DoNotProcess')]
         $ProcessingOption = 'DoNotProcess',
 
-        [String] [Parameter(Mandatory = $false)]
-        [ValidateSet('false','true')]
-        $TransactionalDeployment = 'false',
+        [bool] [Parameter(Mandatory = $false)]
+        $TransactionalDeployment = $false,
 
         [String] [Parameter(Mandatory = $false)]
         [ValidateSet('DeployPartitions','RetainPartitions')]
@@ -118,7 +117,13 @@ function Update-AnalysisServicesConfig {
 
         [String] [Parameter(Mandatory = $false)]
         [ValidateSet('Create','CreateAlways','UseExisting')]
-        $WriteBackTableCreation = 'UseExisting'
+        $WriteBackTableCreation = 'UseExisting',
+
+        [String] [Parameter(Mandatory = $false)]
+        $UserID = $null,
+
+        [String] [Parameter(Mandatory = $false)]
+        $Password = $null
     )
 
     if (Test-Path $AsDatabasePath) {
@@ -133,7 +138,12 @@ function Update-AnalysisServicesConfig {
             [xml]$deploymentTargets = [xml](Get-Content $deploymentTargetsPath);
             $deploymentTargets.DeploymentTarget.Database = $CubeDatabase;
             $deploymentTargets.DeploymentTarget.Server = $Server;
-            $deploymentTargets.DeploymentTarget.ConnectionString="DataSource=$Server;Timeout=0"
+            $ConnectionString = "Data Source=$Server;Timeout=0;";
+            if ("" -ne "$UserID") {                
+                $ConnectionString += "User ID=$UserID;Password=$Password;Persist Security Info=True;Impersonation Level=Impersonate;"
+            }            
+            #$ConnectionString += "Integrated Security=SSPI;ProtectionLevel=Connect;SSPI=Negotiate;";            
+            $deploymentTargets.DeploymentTarget.ConnectionString = $ConnectionString;
             $deploymentTargets.Save($deploymentTargetsPath);
         } else {
             throw "Update-AnalysisServicesConfig: $ModelName.deploymenttargets file does not exist in $configFolder";
@@ -144,10 +154,14 @@ function Update-AnalysisServicesConfig {
         if (Test-Path($deploymentOptionsPath))
         {
             Write-Output "Altering $ModelName.deploymentoptions"
-
+                
             [xml]$deploymentOptions = [xml](Get-Content $deploymentOptionsPath);
             $deploymentOptions.DeploymentOptions.ProcessingOption = $ProcessingOption;
-            $deploymentOptions.DeploymentOptions.TransactionalDeployment = $TransactionalDeployment;
+            if ($TransactionalDeployment) {
+                $deploymentOptions.DeploymentOptions.TransactionalDeployment = "true";
+            } else {
+                $deploymentOptions.DeploymentOptions.TransactionalDeployment = "false";
+            }
             $deploymentOptions.DeploymentOptions.PartitionDeployment = $PartitionDeployment;
             $deploymentOptions.DeploymentOptions.RoleDeployment = $RoleDeployment;
             $deploymentOptions.DeploymentOptions.ConfigurationSettingsDeployment = $ConfigurationSettingsDeployment;

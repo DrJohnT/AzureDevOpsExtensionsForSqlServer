@@ -12,6 +12,9 @@ function Invoke-ProcessTabularCubeDatabase {
     .PARAMETER CubeDatabase
     The name of the tabular cube database on the SSAS server.
 
+    .PARAMETER Credential
+    [Optional] A PSCredential object containing the credentials to connect to the AAS server.
+
     .PARAMETER RefreshType
     Valid options are: 'Full', 'Automatic', 'ClearValues', 'Calculate'.
     Default value: 'Full'.
@@ -20,11 +23,17 @@ function Invoke-ProcessTabularCubeDatabase {
     'ClearValues': Clear values in this object and all its dependents.
     'Calculate': Recalculate this object and all its dependents, but only if needed. This value does not force recalculation, except for volatile formulas.
 
+    .EXAMPLE
+    Invoke-ProcessTabularCubeDatabase -Server "localhost" -CubeDatabase "MyCube" -RefreshType "Full"
+
+    .EXAMPLE
+    Invoke-ProcessTabularCubeDatabase -Server "localhost" -CubeDatabase "MyCube2" -Credential "MyPsCredential" -RefreshType "Automatic"
+
     .LINK
     https://github.com/DrJohnT/DeployCube
 
     .NOTES
-    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube
     This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
     [CmdletBinding()]
@@ -37,13 +46,16 @@ function Invoke-ProcessTabularCubeDatabase {
         [String] [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         $CubeDatabase,
+        
+        [PSCredential] [Parameter(Mandatory = $false)]
+        $Credential = $null,
 
         [String] [Parameter(Mandatory = $false)]
         [ValidateSet('Full', 'Automatic', 'ClearValues', 'Calculate')]
         $RefreshType = 'Full'
     )
 
-    if ( Ping-SsasDatabase -Server $Server -CubeDatabase $CubeDatabase ) {
+    try {
 
         Write-Output "Processing tabular cube $Server.$CubeDatabase using Refresh Type: $RefreshType";
 
@@ -57,9 +69,14 @@ function Invoke-ProcessTabularCubeDatabase {
         $tmsl = $tmslStructure | ConvertTo-Json -Depth 3;
         #Write-Output $tmsl;
 
-        $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query $tmsl;
+        if ($null -eq $Credential) {
+            $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query $tmsl;
+        } else {
+            $returnResult = Invoke-ASCmd -Server $Server -Credential $Credential -ConnectionTimeout 1 -Query $tmsl;
+        }
         Get-SsasProcessingMessages -ASCmdReturnString $returnResult;
-    } else {
-        throw "Cube database $CubeDatabase not found on SSAS Server: $Server";
+    } 
+    catch {
+        throw "Invoke-ProcessTabularCubeDatabase: Error processing $CubeDatabase on SSAS Server: $Server $err";
     }
 }

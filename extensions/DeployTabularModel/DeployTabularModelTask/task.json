@@ -51,15 +51,15 @@
             "type": "pickList",
             "label": "Version of Microsoft.AnalysisServices.Deployment.exe to use for the deployment",
             "required": false,
-            "helpMarkDown": "If the preferred version cannot be found, the latest version will be used instead.",
+            "helpMarkDown": "If the preferred version cannot be found, the deployment will fail. Please use safe option 'Latest' unless sure what is installed on your build server.",
             "defaultValue": "latest",
             "options": {
                 "latest": "Latest",
-                "150": "SQL Server 2019",
-                "140": "SQL Server 2017",
-                "130": "SQL Server 2016",
-                "120": "SQL Server 2014",
-                "110": "SQL Server 2012"
+                "15": "SQL Server 2019",
+                "14": "SQL Server 2017",
+                "13": "SQL Server 2016",
+                "12": "SQL Server 2014",
+                "11": "SQL Server 2012"
             },
             "groupName": "DeploymentOptions"
         },

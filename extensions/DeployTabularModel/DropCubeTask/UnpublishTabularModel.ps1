@@ -23,6 +23,8 @@ param()
 
     [string]$AsServer = Get-VstsInput -Name  "AsServer" -Require;
     [string]$CubeDatabaseName = Get-VstsInput -Name "CubeDatabaseName";
+    [string]$UserID = Get-VstsInput -Name "UserID";
+    [string]$Password = Get-VstsInput -Name "Password";
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -30,13 +32,22 @@ param()
 
     Write-Host "Invoking Unpublish-Cube from [DeployCube](https://github.com/DrJohnT/DeployCube) module with the following parameters:";
     Write-Host "AsServer:           $AsServer";
-    Write-Host "CubeDatabaseName:   $CubeDatabaseName"
+    Write-Host "CubeDatabaseName:   $CubeDatabaseName";
+    Write-Host "UserID:             $UserID";
 
     Write-Host "==============================================================================";
 
     try {
-        if ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) {
-            Unpublish-Cube -Server $AsServer -CubeDatabase $CubeDatabaseName;
+        if ("" -eq "$Password") {
+            if ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) {
+                Unpublish-Cube -Server $AsServer -CubeDatabase $CubeDatabaseName;
+            }
+        } else {
+            [SecureString] $SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force;
+            [PsCredential] $Credential = New-Object System.Management.Automation.PSCredential($UserID, $SecurePassword);
+            if ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName -Credential $Credential) {
+                Unpublish-Cube -Server $AsServer -CubeDatabase $CubeDatabaseName -Credential $Credential;
+            }
         }
     } finally {
         Write-Host "==============================================================================";

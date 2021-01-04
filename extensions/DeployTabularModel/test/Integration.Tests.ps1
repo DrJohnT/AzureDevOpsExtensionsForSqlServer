@@ -1,43 +1,51 @@
-﻿# See https://github.com/Microsoft/azure-pipelines-task-lib/blob/master/powershell/Docs/TestingAndDebugging.md
-$CurrentFolder = Split-Path -Parent $MyInvocation.MyCommand.Path;
-#Write-host $CurrentFolder
-$mediaFolder =  Resolve-Path "$CurrentFolder\..\..\..\examples";
-#Write-host $mediaFolder
-$AsDatabasePath = Resolve-Path "$mediaFolder\CubeToPublish\MyTabularProject\bin\Model.asdatabase";
+﻿BeforeAll {
+    # See https://github.com/Microsoft/azure-pipelines-task-lib/blob/master/powershell/Docs/TestingAndDebugging.md
+    $CurrentFolder = Split-Path -Parent $PSScriptRoot;
 
-$psModules =  Resolve-Path "$CurrentFolder\..\..\PublishDacPac\PublishDacPacTask\ps_modules";
-#Write-host $psModules
-Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
-Import-Module "$psModules\PublishDacPac" -ArgumentList @{ NonInteractive = $true }
+    $psModules =  Resolve-Path "$CurrentFolder\..\..\PublishDacPac\PublishDacPacTask\ps_modules";
+    #Write-host $psModules
+    Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
+    Import-Module "$psModules\PublishDacPac" -ArgumentList @{ NonInteractive = $true }
+    
+    function Get-Config {
+        $data = @{};
+        $CurrentFolder = Split-Path -Parent $PSScriptRoot;
+        
+        $data.MediaFolder =  Resolve-Path "$CurrentFolder\..\..\..\examples";
+        $data.AsDatabasePath = Resolve-Path "$CurrentFolder\..\..\..\examples\CubeToPublish\MyTabularProject\bin\Model.asdatabase";
 
-$PublishDacPacModelTask =  Resolve-Path "$CurrentFolder\..\..\PublishDacPac\PublishDacPacTask\PublishDacPacTask.ps1";
-$PublishTabularModelTask =  Resolve-Path "$CurrentFolder\..\DeployTabularModelTask\PublishTabularModel.ps1";
-$UpdateTabularCubeDataSource =  Resolve-Path "$CurrentFolder\..\UpdateTabularCubeDataSourceTask\UpdateTabularCubeDataSource.ps1";
-$ProcessTabularModelTask =  Resolve-Path "$CurrentFolder\..\ProcessTabularModelTask\ProcessTabularModel.ps1";
-$UnpublishTabularModelTask =  Resolve-Path "$CurrentFolder\..\DropCubeTask\UnpublishTabularModel.ps1";
-#Write-host $PublishTabularModelTask
-$DacPac = "DatabaseToPublish.dacpac";
-$DacPacFolder = Resolve-Path "$mediaFolder\DatabaseToPublish\bin\Debug";
-$DacPacPath = Resolve-Path "$DacPacFolder\$DacPac";
-$DacProfile = "DatabaseToPublish.CI.publish.xml";
-$SqlDatabaseName = 'DatabaseToPublish';
-$AsServer = "localhost";
-$DbServer = "localhost";
+        $data.PublishDacPacTask =  Resolve-Path "$CurrentFolder\..\..\PublishDacPac\PublishDacPacTask\PublishDacPacTask.ps1";
+        $data.PublishTabularTask =  Resolve-Path "$CurrentFolder\..\DeployTabularModelTask\PublishTabularModel.ps1";
+        $data.UpdateTabularCubeDataSource =  Resolve-Path "$CurrentFolder\..\UpdateTabularCubeDataSourceTask\UpdateTabularCubeDataSource.ps1";
+        $data.ProcessTabularModelTask =  Resolve-Path "$CurrentFolder\..\ProcessTabularModelTask\ProcessTabularModel.ps1";
+        $data.UnpublishTabularModelTask =  Resolve-Path "$CurrentFolder\..\DropCubeTask\UnpublishTabularModel.ps1";
+        #Write-host $PublishTabularModelTask
+        $data.DacPac = "DatabaseToPublish.dacpac";
+        $data.DacPacFolder = Resolve-Path "$mediaFolder\DatabaseToPublish\bin\Debug";
+        $data.DacPacPath = Resolve-Path "$DacPacFolder\$DacPac";
+        $data.DacProfile = "DatabaseToPublish.CI.publish.xml";
+        $data.SqlDatabaseName = 'DatabaseToPublish';
+        $data.AsServer = "localhost";
+        $data.DbServer = "localhost";
+        return $data;
+    }
+}
 
 Describe "Integration tests" {
 
     # start by ensuring we have a source database to work with!
     Context "Deploy Database DatabaseToPublish" {
         It "Database should be deployed with CI publish profile" {
-            $env:INPUT_DacPacPath = $DacPacPath;
-            $env:INPUT_DacPublishProfile = $DacProfile;
-            $env:INPUT_TargetServerName = $DbServer;
-            $env:INPUT_TargetDatabaseName = $SqlDatabaseName;;
+            $data = Get-Config;
+            $env:INPUT_DacPacPath = $data.DacPacPath;
+            $env:INPUT_DacPublishProfile = $data.DacProfile;
+            $env:INPUT_TargetServerName = $data.DbServer;
+            $env:INPUT_TargetDatabaseName = $data.SqlDatabaseName;;
             $env:INPUT_PreferredVersion = "latest";
 
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishDacPacTask));
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.PublishDacPacTask));
 
-            ( Ping-SqlDatabase -Server $DbServer -Database $SqlDatabaseName ) | Should -Be $true;
+            ( Ping-SqlDatabase -Server $data.DbServer -Database $data.SqlDatabaseName ) | Should -Be $true;
         }
     }
 
@@ -46,9 +54,10 @@ Describe "Integration tests" {
         $CubeDatabaseName = New-Guid;
 
         It "Tabular model should be deployed" {
-            $env:INPUT_AsDatabasePath = $AsDatabasePath;
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsDatabasePath =  $data.AsDatabasePath;
+            $env:INPUT_AsServer =  $data.AsServer;
+            $env:INPUT_CubeDatabaseName =  $data.CubeDatabaseName;
             $env:INPUT_PreferredVersion = "latest";
             $env:INPUT_ProcessingOption = "DoNotProcess";
             $env:INPUT_TransactionalDeployment = "false";
@@ -56,74 +65,81 @@ Describe "Integration tests" {
             $env:INPUT_RoleDeployment = "DeployRolesRetainMembers";
             $env:INPUT_ConfigurationSettingsDeployment = "Deploy";
             $env:INPUT_OptimizationSettingsDeployment = "Deploy";
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishTabularModelTask));
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create( $data.PublishTabularModelTask));
 
-            ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) | Should -Be $true;
+            ( Ping-SsasDatabase -Server  $data.AsServer -CubeDatabase  $data.CubeDatabaseName ) | Should -Be $true;
         }
 
         It "Update cube connection string to ImpersonateServiceAccount process full" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
-            $env:INPUT_SourceSqlServer = $DbServer;
-            $env:INPUT_SourceSqlDatabase = $SqlDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.$CubeDatabaseName;
+            $env:INPUT_SourceSqlServer = $data.DbServer;
+            $env:INPUT_SourceSqlDatabase = $data.SqlDatabaseName;
             $env:INPUT_ImpersonationMode = 'ImpersonateServiceAccount';
             $env:INPUT_ImpersonationAccount = '';
             $env:INPUT_ImpersonationPassword = '';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($UpdateTabularCubeDataSource))  }  | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.UpdateTabularCubeDataSource))  }  | Should -Not -Throw;
 
             # prove it worked by processing the cube
-            { Invoke-ProcessASDatabase -Server $AsServer -DatabaseName $CubeDatabaseName -RefreshType Full }  | Should Not Throw;
+            { Invoke-ProcessASDatabase -Server $data.AsServer -DatabaseName $data.CubeDatabaseName -RefreshType Full }  | Should -Not -Throw;
         }
 
         It "Process Clear cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_RefreshType = 'ClearValues';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
         It "Process Full cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_RefreshType = 'Full';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
         It "Process Calculate cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.$CubeDatabaseName;
             $env:INPUT_RefreshType = 'Calculate';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
         It "Process Default cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_RefreshType = 'Automatic';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
         It "Unpublish cube should delete cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($UnpublishTabularModelTask));
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.UnpublishTabularModelTask));
 
-            ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) | Should -Be $false;
+            ( Ping-SsasDatabase -Server $data.AsServer -CubeDatabase $data.CubeDatabaseName ) | Should -Be $false;
         }
     }
 
     Context "Deploy Cube Model with New-Guid Name, change connection to ImpersonateAccount, process full and then drop" {
 
-        $CubeDatabaseName = New-Guid;
+        #$CubeDatabaseName = New-Guid;
 
         It "Tabular model should be deployed" {
-            $env:INPUT_AsDatabasePath = $AsDatabasePath;
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsDatabasePath = $data.AsDatabasePath;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_PreferredVersion = "latest";
             $env:INPUT_ProcessingOption = "DoNotProcess";
             $env:INPUT_TransactionalDeployment = "false";
@@ -131,68 +147,76 @@ Describe "Integration tests" {
             $env:INPUT_RoleDeployment = "DeployRolesRetainMembers";
             $env:INPUT_ConfigurationSettingsDeployment = "Deploy";
             $env:INPUT_OptimizationSettingsDeployment = "Deploy";
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($PublishTabularModelTask));
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.PublishTabularModelTask));
 
             ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) | Should -Be $true;
         }
 
         It "Update cube connection string to ImpersonateAccount process full" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
-            $env:INPUT_SourceSqlServer = $DbServer;
-            $env:INPUT_SourceSqlDatabase = $SqlDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
+            $env:INPUT_SourceSqlServer = $data.DbServer;
+            $env:INPUT_SourceSqlDatabase = $data.SqlDatabaseName;
             $env:INPUT_ImpersonationMode = 'ImpersonateAccount';
             $env:INPUT_ImpersonationAccount = 'QREGROUP\QReSvcSWBuild';
             $env:INPUT_ImpersonationPassword = 'OSzkzmvdVC-n9+BT';
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($UpdateTabularCubeDataSource));
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.UpdateTabularCubeDataSource));
 
             # prove it worked by processing the cube
-            { Invoke-ProcessASDatabase -Server $AsServer -DatabaseName $CubeDatabaseName -RefreshType Full }  | Should Not Throw;
+            { Invoke-ProcessASDatabase -Server $AsServer -DatabaseName $CubeDatabaseName -RefreshType Full }  | Should -Not -Throw;
         }
 
         It "Process Clear cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_RefreshType = 'ClearValues';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
         It "Process Full cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_RefreshType = 'Full';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
         It "Process Calculate cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_RefreshType = 'Calculate';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
         It "Process Default cube" {
-            $env:INPUT_AsServer = $AsServer;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.AsServer;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
             $env:INPUT_RefreshType = 'Automatic';
-            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($ProcessTabularModelTask)) } | Should Not Throw;
+            { Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.ProcessTabularModelTask)) } | Should -Not -Throw;
 
         }
 
 
         It "Unpublish cube should delete cube" {
-            $env:INPUT_AsServer = $ServerName;
-            $env:INPUT_CubeDatabaseName = $CubeDatabaseName;
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($UnpublishTabularModelTask));
+            $data = Get-Config;
+            $env:INPUT_AsServer = $data.ServerName;
+            $env:INPUT_CubeDatabaseName = $data.CubeDatabaseName;
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.UnpublishTabularModelTask));
 
-            ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) | Should -Be $false;
+            ( Ping-SsasDatabase -Server $data.AsServer -CubeDatabase $data.CubeDatabaseName ) | Should -Be $false;
         }
     }
 }
 
-Remove-Module VstsTaskSdk;
-Remove-Module PublishDacPac;
+AfterAll {
+    Remove-Module VstsTaskSdk;
+    Remove-Module PublishDacPac;
+}
 

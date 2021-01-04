@@ -5,6 +5,7 @@
 *.user
 examples/DatabaseToPublish/.vs/DatabaseToPublish/v15/.suo
 *.dll
+!VstsTaskSdk.dll
 *.pdb
 *.cache
 examples/DatabaseToPublish/obj/Debug/DatabaseToPublish.sqlproj.FileListAbsolute.txt

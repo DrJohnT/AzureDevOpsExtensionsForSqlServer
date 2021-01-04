@@ -27,11 +27,13 @@ param()
     [string]$CubeDatabaseName = Get-VstsInput -Name "CubeDatabaseName";
     [string]$PreferredVersion = Get-VstsInput -Name "PreferredVersion";
 
-    [string]$TransactionalDeployment = Get-VstsInput -Name "TransactionalDeployment";
+    [bool]$TransactionalDeployment = Get-VstsInput -Name "TransactionalDeployment";
     [string]$PartitionDeployment = Get-VstsInput -Name "PartitionDeployment";
     [string]$RoleDeployment = Get-VstsInput -Name "RoleDeployment";
     [string]$ConfigurationSettingsDeployment = Get-VstsInput -Name "ConfigurationSettingsDeployment";
     [string]$OptimizationSettingsDeployment = Get-VstsInput -Name "OptimizationSettingsDeployment";
+    [string]$UserID = Get-VstsInput -Name "UserID";
+    [string]$Password = Get-VstsInput -Name "Password";
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -42,13 +44,15 @@ param()
     Write-Host "AsServer:           $AsServer";
     Write-Host "CubeDatabaseName:   $CubeDatabaseName"
     Write-Host "PreferredVersion:   $PreferredVersion"
+    Write-Host "UserID:             $UserID";
 
     Write-Host "==============================================================================";
 
     try {
         Publish-Cube -AsDatabasePath $AsDatabasePath -Server $AsServer -CubeDatabase $CubeDatabaseName -PreferredVersion $PreferredVersion `
             -TransactionalDeployment $TransactionalDeployment -PartitionDeployment $PartitionDeployment -RoleDeployment $RoleDeployment `
-            -ConfigurationSettingsDeployment $ConfigurationSettingsDeployment -OptimizationSettingsDeployment $OptimizationSettingsDeployment;
+            -ConfigurationSettingsDeployment $ConfigurationSettingsDeployment -OptimizationSettingsDeployment $OptimizationSettingsDeployment `
+            -UserID $UserID -Password $Password;
     } finally {
         Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation

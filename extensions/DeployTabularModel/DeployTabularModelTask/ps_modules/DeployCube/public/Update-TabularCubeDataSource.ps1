@@ -14,6 +14,9 @@ function Update-TabularCubeDataSource
     .PARAMETER CubeDatabase
     The name of the deployed tabular cube database.
 
+    .PARAMETER Credential
+    [Optional] A PSCredential object containing the credentials to connect to the AAS server.
+
     .PARAMETER SourceSqlServer
     The name of the source SQL Server server or its IP address.  Include the instance name and port if necessary.
 
@@ -27,7 +30,7 @@ function Update-TabularCubeDataSource
     .PARAMETER ImpersonationAccount
     The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.
 
-    .PARAMETER ImpersonationPassword
+    .PARAMETER ImpersonationPwd
     The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.
 
     .EXAMPLE
@@ -40,7 +43,7 @@ function Update-TabularCubeDataSource
     https://github.com/DrJohnT/DeployCube
 
     .NOTES
-    Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube
+    Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube
     This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
     [OutputType([Boolean])]
@@ -55,6 +58,9 @@ function Update-TabularCubeDataSource
         [ValidateNotNullOrEmpty()]
         $CubeDatabase,
 
+        [PSCredential] [Parameter(Mandatory = $false)]
+        $Credential = $null,
+
         [String] [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         $SourceSqlServer,
@@ -62,6 +68,12 @@ function Update-TabularCubeDataSource
         [String] [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         $SourceSqlDatabase,
+
+        [String] [Parameter(Mandatory = $false)]
+        $SqlUserID,
+
+        [String] [Parameter(Mandatory = $false)]
+        $SqlUserPwd,
 
         [String] [Parameter(Mandatory = $true)]
         [ValidateSet('ImpersonateServiceAccount', 'ImpersonateAccount')]
@@ -72,7 +84,8 @@ function Update-TabularCubeDataSource
         $ImpersonationAccount,
 
         [String] [Parameter(Mandatory = $false)]
-        $ImpersonationPassword
+        $ImpersonationPwd
+
     )
 
     # validate inputs
@@ -80,15 +93,19 @@ function Update-TabularCubeDataSource
         if ([string]::IsNullOrEmpty($ImpersonationAccount)) {
             throw "ImpersonationAccount not set but ImpersonationMode=ImpersonateAccount";
         }
-        if ([string]::IsNullOrEmpty($ImpersonationPassword)) {
-            throw "ImpersonationPassword not set but ImpersonationMode=ImpersonateAccount";
+        if ([string]::IsNullOrEmpty($ImpersonationPwd)) {
+            throw "ImpersonationPwd not set but ImpersonationMode=ImpersonateAccount";
         }
     }
 
     #  note that Get-CubeDatabaseCompatibilityLevel will throw and error if the cube of server do not exist, which is exactly what we want!
-    [int]$CompatibilityLevel = Get-CubeDatabaseCompatibilityLevel -Server $Server -CubeDatabase $CubeDatabase;
+    [int]$CompatibilityLevel = Get-CubeDatabaseCompatibilityLevel -Server $Server -CubeDatabase $CubeDatabase -Credential $Credential;
 
-    $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>TMSCHEMA_DATA_SOURCES</RequestType><Restrictions><RestrictionList><DatabaseName>$CubeDatabase</DatabaseName></RestrictionList></Restrictions><Properties/></Discover>";
+    if ($null -eq $Credential) {
+        $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>TMSCHEMA_DATA_SOURCES</RequestType><Restrictions><RestrictionList><DatabaseName>$CubeDatabase</DatabaseName></RestrictionList></Restrictions><Properties/></Discover>";
+    } else {
+        $returnResult = Invoke-ASCmd -Server $Server -Credential $Credential -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>TMSCHEMA_DATA_SOURCES</RequestType><Restrictions><RestrictionList><DatabaseName>$CubeDatabase</DatabaseName></RestrictionList></Restrictions><Properties/></Discover>";
+    }
 
     $returnXml = New-Object -TypeName System.Xml.XmlDocument;
     $returnXml.LoadXml($returnResult);
@@ -100,7 +117,8 @@ function Update-TabularCubeDataSource
     $rows = $returnXML.SelectNodes("//xmlAnalysis:return/rootNS:root/rootNS:row", $nsmgr);
     if ($rows.Count -ge 1) {
         [string]$DataSourceName = $rows[0].Name;
-        [int]$MaxConnections = $rows[0].MaxConnections
+        [int]$MaxConnections = $rows[0].MaxConnections;
+
         if ($CompatibilityLevel -ge 1400) {
             # SQL Server 2017 new style data source connection
 
@@ -129,7 +147,7 @@ function Update-TabularCubeDataSource
                         kind = $kind
                         path = "$SourceSqlServer;$SourceSqlDatabase"
                         Username =  $ImpersonationAccount
-                        Password = $ImpersonationPassword
+                        Password = $ImpersonationPwd
                         EncryptConnection = $EncryptConnection
                     }
                  }
@@ -152,7 +170,7 @@ function Update-TabularCubeDataSource
         } else {
             # $CompatibilityLevel -lt 1400
             $ExistingConnectionString = $rows[0].ConnectionString;
-            $ConnectionString  = Get-SqlConnectionString -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ExistingConnectionString $ExistingConnectionString;
+            $ConnectionString  = Get-SqlConnectionString -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ExistingConnectionString $ExistingConnectionString -SqlUserID $SqlUserID -SqlUserPwd $SqlUserPwd;
 
             if ($ImpersonationMode -eq 'ImpersonateAccount') {
                 $dataSource = [pscustomobject]@{
@@ -161,7 +179,7 @@ function Update-TabularCubeDataSource
                     maxConnections = $MaxConnections
                     impersonationMode = $ImpersonationMode
                     account =  $ImpersonationAccount
-                    password = $ImpersonationPassword
+                    password = $ImpersonationPwd
                 }
             } else {
                 $dataSource = [pscustomobject]@{
@@ -190,7 +208,11 @@ function Update-TabularCubeDataSource
         # now send the createOrReplace command to the cube
         #Write-Output "Updating SQL data source $DataSourceName with a connection to $SourceSqlServer.$SourceSqlDatabase using cube compatibility level $CompatibilityLevel";
 
-        $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query $tmsl;
+        if ($null -eq $Credential) {
+            $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query $tmsl;
+        } else {
+            $returnResult = Invoke-ASCmd -Server $Server -Credential $Credential -ConnectionTimeout 1 -Query $tmsl;
+        }
 
         return ($returnResult -like '*urn:schemas-microsoft-com:xml-analysis:empty*');
     } else {

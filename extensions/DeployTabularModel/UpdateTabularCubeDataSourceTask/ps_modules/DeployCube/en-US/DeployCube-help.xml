@@ -10,7 +10,7 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Finds and lists the location path to every version of Microsoft.AnalysisServices.Deployment.exe on the machine</maml:para>
+      <maml:para>Finds and lists the location path to every version of Microsoft.AnalysisServices.Deployment.exe on the machine. Also checks the custom install location defined by Environment variable CustomAsDwInstallLocation</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -40,7 +40,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -69,7 +69,9 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Finds the path to specific version of Microsoft.AnalysisServices.Deployment.exe</maml:para>
+      <maml:para>Finds the path to specific version of Microsoft.AnalysisServices.Deployment.exe Checks the following locations: </maml:para>
+      <maml:para>    ${env:ProgramFiles(x86)}\Microsoft SQL Server*\Tools\Binn     ${env:ProgramFiles(x86)}\Microsoft SQL Server Management Studio *\Common7\IDE     $env:CustomAsDwInstallLocation</maml:para>
+      <maml:para>The environment variable $env:CustomAsDwInstallLocation allows you to specify your own custom install directory.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -77,11 +79,14 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Version</maml:name>
           <maml:Description>
-            <maml:para>The version of Microsoft.AnalysisServices.Deployment.exe to find. Valid values for -Version are: * latest: Latest SQL Server version found on agent</maml:para>
-            <maml:para>* 150: SQL Server 2019</maml:para>
-            <maml:para>* 140: SQL Server 2017</maml:para>
-            <maml:para>* 130: SQL Server 2016</maml:para>
-            <maml:para>* 120: SQL Server 2014</maml:para>
+            <maml:para>The version of Microsoft.AnalysisServices.Deployment.exe to find. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+            <maml:para>* 15: SQL Server 2019</maml:para>
+            <maml:para>* 14: SQL Server 2017</maml:para>
+            <maml:para>* 13: SQL Server 2016</maml:para>
+            <maml:para>* 12: SQL Server 2014</maml:para>
+            <maml:para>* 11: SQL Server 2012</maml:para>
+            <maml:para></maml:para>
+            <maml:para>If you are unsure which version(s) of Microsoft.AnalysisServices.Deployment.exe you have installed, use the function Find-AnalysisServicesDeploymentExeLocations to obtain a full list.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -96,11 +101,14 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Version</maml:name>
         <maml:Description>
-          <maml:para>The version of Microsoft.AnalysisServices.Deployment.exe to find. Valid values for -Version are: * latest: Latest SQL Server version found on agent</maml:para>
-          <maml:para>* 150: SQL Server 2019</maml:para>
-          <maml:para>* 140: SQL Server 2017</maml:para>
-          <maml:para>* 130: SQL Server 2016</maml:para>
-          <maml:para>* 120: SQL Server 2014</maml:para>
+          <maml:para>The version of Microsoft.AnalysisServices.Deployment.exe to find. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+          <maml:para>* 15: SQL Server 2019</maml:para>
+          <maml:para>* 14: SQL Server 2017</maml:para>
+          <maml:para>* 13: SQL Server 2016</maml:para>
+          <maml:para>* 12: SQL Server 2014</maml:para>
+          <maml:para>* 11: SQL Server 2012</maml:para>
+          <maml:para></maml:para>
+          <maml:para>If you are unsure which version(s) of Microsoft.AnalysisServices.Deployment.exe you have installed, use the function Find-AnalysisServicesDeploymentExeLocations to obtain a full list.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -123,15 +131,22 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-AnalysisServicesDeploymentExePath -Version latest</dev:code>
+        <dev:code>Get-AnalysisServicesDeploymentExePath -Version 15</dev:code>
         <dev:remarks>
-          <maml:para>Returns the latest version of Microsoft.AnalysisServices.Deployment.exe</maml:para>
+          <maml:para>Returns the SQL Server 2019 version of Microsoft.AnalysisServices.Deployment.exe (if present on the machine).</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-AnalysisServicesDeploymentExePath -Version 14</dev:code>
+        <dev:remarks>
+          <maml:para>Returns the SQL Server 2017 version of Microsoft.AnalysisServices.Deployment.exe (if present on the machine).</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -181,6 +196,18 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -208,6 +235,18 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes />
     <command:returnValues>
@@ -222,7 +261,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -288,7 +327,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -363,7 +402,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -462,7 +501,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -532,6 +571,30 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>SqlUserID</maml:name>
+          <maml:Description>
+            <maml:para>$SqlUserID</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>SqlUserPwd</maml:name>
+          <maml:Description>
+            <maml:para>{{ Fill SqlUserPwd Description }}</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -571,6 +634,30 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>SqlUserID</maml:name>
+        <maml:Description>
+          <maml:para>$SqlUserID</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>SqlUserPwd</maml:name>
+        <maml:Description>
+          <maml:para>{{ Fill SqlUserPwd Description }}</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes />
     <command:returnValues>
@@ -585,7 +672,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -660,7 +747,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -774,7 +861,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -833,6 +920,18 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>RefreshType</maml:name>
           <maml:Description>
             <maml:para>Valid options are: 'Full', 'Automatic', 'ClearValues', 'Calculate'. Default value: 'Full'. 'Full': processes all the objects in the cube database. When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. 'Automatic': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state. 'ClearValues': Clear values in this object and all its dependents. 'Calculate': Recalculate this object and all its dependents, but only if needed. This value does not force recalculation, except for volatile formulas.</maml:para>
@@ -872,6 +971,18 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>RefreshType</maml:name>
         <maml:Description>
           <maml:para>Valid options are: 'Full', 'Automatic', 'ClearValues', 'Calculate'. Default value: 'Full'. 'Full': processes all the objects in the cube database. When Full processing is executed against an object that has already been processed, Analysis Services drops all data in the object and then processes the object. 'Automatic': detects the process state of cube database objects, and performs the processing necessary to deliver unprocessed or partially processed objects to a fully processed state. 'ClearValues': Clear values in this object and all its dependents. 'Calculate': Recalculate this object and all its dependents, but only if needed. This value does not force recalculation, except for volatile formulas.</maml:para>
@@ -888,15 +999,22 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Invoke-ProcessTabularCubeDatabase -Server "localhost" -CubeDatabase "MyCube" -RefreshType "Full"</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Invoke-ProcessTabularCubeDatabase -Server "localhost" -CubeDatabase "MyCube2" -Credential "MyPsCredential" -RefreshType "Automatic"</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -946,6 +1064,18 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -973,6 +1103,18 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes />
     <command:returnValues>
@@ -987,7 +1129,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1012,11 +1154,11 @@
       <command:verb>Ping</command:verb>
       <command:noun>SsasServer</command:noun>
       <maml:description>
-        <maml:para>Checks that the SQL Server SSAS instance exists.</maml:para>
+        <maml:para>For on-premise SSAS instances only! Checks that the SQL Server SSAS instance exists.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Checks that the SQL Server SSAS instance exists.</maml:para>
+      <maml:para>For on-premise SSAS instances only! Checks that the SQL Server SSAS instance exists.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1062,7 +1204,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1134,6 +1276,30 @@
           </dev:type>
           <dev:defaultValue>UseExisting</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+          <maml:name>UserID</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] The user name used to connect to the AAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] The password of the above user (in plain text unfortunately).</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
@@ -1161,11 +1327,12 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>PreferredVersion</maml:name>
           <maml:Description>
-            <maml:para>Defines the preferred version of Microsoft.AnalysisServices.Deployment.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter as the default is 'latest'. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
-            <maml:para>* 150: SQL Server 2019</maml:para>
-            <maml:para>* 140: SQL Server 2017</maml:para>
-            <maml:para>*  130: SQL Server 2016</maml:para>
-            <maml:para>* 120: SQL Server 2014</maml:para>
+            <maml:para>Defines the preferred version of Microsoft.AnalysisServices.Deployment.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter as the default is 'latest'. Valid values for -PreferredVersion are: ('15', '14', '13', '12', '11') which translate as follows: * latest: Latest SQL Server version found on agent</maml:para>
+            <maml:para>* 15: SQL Server 2019</maml:para>
+            <maml:para>* 14: SQL Server 2017</maml:para>
+            <maml:para>* 13: SQL Server 2016</maml:para>
+            <maml:para>* 12: SQL Server 2014</maml:para>
+            <maml:para>* 11: SQL Server 2012</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1196,9 +1363,9 @@
             <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
             <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>Boolean</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -1289,11 +1456,12 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>PreferredVersion</maml:name>
         <maml:Description>
-          <maml:para>Defines the preferred version of Microsoft.AnalysisServices.Deployment.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter as the default is 'latest'. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
-          <maml:para>* 150: SQL Server 2019</maml:para>
-          <maml:para>* 140: SQL Server 2017</maml:para>
-          <maml:para>*  130: SQL Server 2016</maml:para>
-          <maml:para>* 120: SQL Server 2014</maml:para>
+          <maml:para>Defines the preferred version of Microsoft.AnalysisServices.Deployment.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter as the default is 'latest'. Valid values for -PreferredVersion are: ('15', '14', '13', '12', '11') which translate as follows: * latest: Latest SQL Server version found on agent</maml:para>
+          <maml:para>* 15: SQL Server 2019</maml:para>
+          <maml:para>* 14: SQL Server 2017</maml:para>
+          <maml:para>* 13: SQL Server 2016</maml:para>
+          <maml:para>* 12: SQL Server 2014</maml:para>
+          <maml:para>* 11: SQL Server 2012</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1324,9 +1492,9 @@
           <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
           <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>Boolean</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
@@ -1401,12 +1569,36 @@
         </dev:type>
         <dev:defaultValue>UseExisting</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+        <maml:name>UserID</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] The user name used to connect to the AAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] The password of the above user (in plain text unfortunately).</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes />
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1443,11 +1635,15 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>PreferredVersion</maml:name>
           <maml:Description>
-            <maml:para>The preferred version of Microsoft.AnalysisServices.Deployment.exe to attempte to find. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
-            <maml:para>* 150: SQL Server 2019</maml:para>
-            <maml:para>* 140: SQL Server 2017</maml:para>
-            <maml:para>* 130: SQL Server 2016</maml:para>
-            <maml:para>* 120: SQL Server 2014</maml:para>
+            <maml:para>The preferred version of Microsoft.AnalysisServices.Deployment.exe to attempt to find. Valid values for -PreferredVersion are: ('15', '14', '13', '12', '11', 'latest') which translate as follows:</maml:para>
+            <maml:para>* latest: Latest SQL Server version found on agent</maml:para>
+            <maml:para>* 15: SQL Server 2019</maml:para>
+            <maml:para>* 14: SQL Server 2017</maml:para>
+            <maml:para>* 13: SQL Server 2016</maml:para>
+            <maml:para>* 12: SQL Server 2014</maml:para>
+            <maml:para>* 11: SQL Server 2012</maml:para>
+            <maml:para></maml:para>
+            <maml:para>If you are unsure which version(s) of Microsoft.AnalysisServices.Deployment.exe you have installed, use the function \ Find-AnalysisServicesDeploymentExeLocations\ (https://github.com/DrJohnT/DeployCube/blob/master/docs/Find-AnalysisServicesDeploymentExeLocations.md)to obtain a full list.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1462,11 +1658,15 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>PreferredVersion</maml:name>
         <maml:Description>
-          <maml:para>The preferred version of Microsoft.AnalysisServices.Deployment.exe to attempte to find. Valid values for -PreferredVersion are: * latest: Latest SQL Server version found on agent</maml:para>
-          <maml:para>* 150: SQL Server 2019</maml:para>
-          <maml:para>* 140: SQL Server 2017</maml:para>
-          <maml:para>* 130: SQL Server 2016</maml:para>
-          <maml:para>* 120: SQL Server 2014</maml:para>
+          <maml:para>The preferred version of Microsoft.AnalysisServices.Deployment.exe to attempt to find. Valid values for -PreferredVersion are: ('15', '14', '13', '12', '11', 'latest') which translate as follows:</maml:para>
+          <maml:para>* latest: Latest SQL Server version found on agent</maml:para>
+          <maml:para>* 15: SQL Server 2019</maml:para>
+          <maml:para>* 14: SQL Server 2017</maml:para>
+          <maml:para>* 13: SQL Server 2016</maml:para>
+          <maml:para>* 12: SQL Server 2014</maml:para>
+          <maml:para>* 11: SQL Server 2012</maml:para>
+          <maml:para></maml:para>
+          <maml:para>If you are unsure which version(s) of Microsoft.AnalysisServices.Deployment.exe you have installed, use the function \ Find-AnalysisServicesDeploymentExeLocations\ (https://github.com/DrJohnT/DeployCube/blob/master/docs/Find-AnalysisServicesDeploymentExeLocations.md)to obtain a full list.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1489,15 +1689,22 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Select-AnalysisServicesDeploymentExeVersion -PreferredVersion 140;</dev:code>
+        <dev:code>Select-AnalysisServicesDeploymentExeVersion -PreferredVersion latest;</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>Returns the latest version of Microsoft.AnalysisServices.Deployment.exe found on the machine.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Select-AnalysisServicesDeploymentExeVersion -PreferredVersion 14;</dev:code>
+        <dev:remarks>
+          <maml:para>Returns the SQL Server 2017 version of Microsoft.AnalysisServices.Deployment.exe (if present on the machine).</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1547,6 +1754,18 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -1574,12 +1793,24 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes />
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1643,6 +1874,30 @@
           </dev:type>
           <dev:defaultValue>UseExisting</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+          <maml:name>UserID</maml:name>
+          <maml:Description>
+            <maml:para>{{ Fill UserID Description }}</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:Description>
+            <maml:para>{{ Fill Password Description }}</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
@@ -1689,9 +1944,9 @@
             <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
             <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>Boolean</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -1814,9 +2069,9 @@
           <maml:para>Determines if the cube is deployed within one transaction for both metadata changes and processing commands. * If this option is True, Analysis Services deploys all metadata changes and all process commands within a single transaction.</maml:para>
           <maml:para>* If this option is False (default), Analysis Services deploys the metadata changes in a single transaction, and deploys each processing command in its own transaction.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>Boolean</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
@@ -1891,12 +2146,36 @@
         </dev:type>
         <dev:defaultValue>UseExisting</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+        <maml:name>UserID</maml:name>
+        <maml:Description>
+          <maml:para>{{ Fill UserID Description }}</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:Description>
+          <maml:para>{{ Fill Password Description }}</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes />
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1949,6 +2228,18 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>ImpersonationPwd</maml:name>
+          <maml:Description>
+            <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>CubeDatabase</maml:name>
           <maml:Description>
@@ -1961,7 +2252,19 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>SourceSqlServer</maml:name>
           <maml:Description>
             <maml:para>The name of the source SQL Server server or its IP address.  Include the instance name and port if necessary.</maml:para>
@@ -1973,7 +2276,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>SourceSqlDatabase</maml:name>
           <maml:Description>
             <maml:para>The name of the database which will act as a source of data for the tabular cube database.</maml:para>
@@ -1985,7 +2288,31 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>SqlUserID</maml:name>
+          <maml:Description>
+            <maml:para>{{ Fill SqlUserID Description }}</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>SqlUserPwd</maml:name>
+          <maml:Description>
+            <maml:para>{{ Fill SqlUserPwd Description }}</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
           <maml:name>ImpersonationMode</maml:name>
           <maml:Description>
             <maml:para>Defines how the cube will connect to the data source. Possible options are 'ImpersonateServiceAccount' which connects to the SQL Server database using , or 'ImpersonateAccount' which uses a specific username/password.  When using 'ImpersonateAccount' it is best to use a domain based service account with a static password.</maml:para>
@@ -1997,22 +2324,10 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
           <maml:name>ImpersonationAccount</maml:name>
           <maml:Description>
             <maml:para>The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-          <maml:name>ImpersonationPassword</maml:name>
-          <maml:Description>
-            <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2048,7 +2363,19 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>SourceSqlServer</maml:name>
         <maml:Description>
           <maml:para>The name of the source SQL Server server or its IP address.  Include the instance name and port if necessary.</maml:para>
@@ -2060,7 +2387,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>SourceSqlDatabase</maml:name>
         <maml:Description>
           <maml:para>The name of the database which will act as a source of data for the tabular cube database.</maml:para>
@@ -2072,7 +2399,31 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>SqlUserID</maml:name>
+        <maml:Description>
+          <maml:para>{{ Fill SqlUserID Description }}</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>SqlUserPwd</maml:name>
+        <maml:Description>
+          <maml:para>{{ Fill SqlUserPwd Description }}</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>ImpersonationMode</maml:name>
         <maml:Description>
           <maml:para>Defines how the cube will connect to the data source. Possible options are 'ImpersonateServiceAccount' which connects to the SQL Server database using , or 'ImpersonateAccount' which uses a specific username/password.  When using 'ImpersonateAccount' it is best to use a domain based service account with a static password.</maml:para>
@@ -2084,7 +2435,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
         <maml:name>ImpersonationAccount</maml:name>
         <maml:Description>
           <maml:para>The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
@@ -2096,8 +2447,8 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-        <maml:name>ImpersonationPassword</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>ImpersonationPwd</maml:name>
         <maml:Description>
           <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
         </maml:Description>
@@ -2122,7 +2473,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>

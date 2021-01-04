@@ -87,10 +87,10 @@ PrivateData = @{
         ProjectUri = 'https://github.com/DrJohnT/PublishDacPac'
 
         # A URL to an icon representing this module.
-        IconUri = 'https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/extensions/PublishDacPac/PublishDacPacTask/icon.png'
+        # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'https://github.com/DrJohnT/PublishDacPac/releases'
+        ReleaseNotes = 'https://github.com/DrJohnT/PublishDacPac/releases/tag/1.0.3'
 
     } # End of PSData hashtable
 
