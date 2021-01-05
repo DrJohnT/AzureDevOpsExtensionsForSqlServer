@@ -35,14 +35,9 @@ param()
         Write-Host "Calling Invoke-SqlCmd with the following parameters:";
         Write-Host "Server:             $Server";
         Write-Host "Database:           $Database";
-        if ($Username -eq '') {
-            Write-Host "Username:             $Username";
-        }
-        if ($Password -eq '') {
-            Write-Host "Password:             $Password";
-        }
         Write-Host "SqlCmdSciptPath:    $SqlCmdSciptPath";
         Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
+        Write-Host "Username:           $Username";
 
         [string[]]$SqlCmdVariables = @();
         switch ($SqlCmdVariableType) {
@@ -81,20 +76,26 @@ param()
         }
 
         # Now Invoke-Sqlcmd
-        if ($Username -eq '' && $Password -eq '') {
-            if ($SqlCmdVariableType -eq 'none') {
-                Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop;
-            } else {
-                Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
-            }
+        $Command = "Invoke-Sqlcmd -Server $Server -Database $Database -InputFile '$SqlCmdSciptPath' -ErrorAction Stop";
+        if ("$QueryTimeout" -ne "") {
+            $Command += " -QueryTimeout $QueryTimeout";
+        }        
+        if ("$Username" -ne "") {
+            $Command += " -Username '$Username' -Password '$Password'";
         }
-        else {
-            if ($SqlCmdVariableType -eq 'none') {
-                Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop;
-            } else {
-                Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdSciptPath -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
-            }
+
+        if ($SqlCmdVariableType -ne 'none') {
+            #$Command += " -Variable '$SqlCmdVariables'";
+            $Command += ' -Variable $SqlCmdVariables';
+            Write-Host $Command;
+            $scriptBlock = [Scriptblock]::Create($Command);
+            Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $SqlCmdVariables;
+        } else {
+            Write-Host $Command;            
+            $scriptBlock = [Scriptblock]::Create($Command);
+            Invoke-Command -ScriptBlock $scriptBlock;
         }
+        
        
         Write-Host "==============================================================================";
     } catch {

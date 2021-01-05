@@ -12,7 +12,7 @@ $moduleMap = @{
     DeployTabularModel = "DeployCube";
 };
 
-foreach ($folder in Get-ChildItem | ?{ $_.PSIsContainer })
+foreach ($folder in Get-ChildItem | Where-Object { $_.PSIsContainer })
 {
     # get the name as a string
     [string] $index = $folder

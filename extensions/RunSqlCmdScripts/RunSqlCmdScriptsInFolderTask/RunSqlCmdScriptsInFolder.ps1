@@ -36,15 +36,10 @@ param()
             Write-Host "Calling Invoke-SqlCmd with the following parameters:";
             Write-Host "Server:                $Server";
             Write-Host "Database:              $Database";
-            if ($Username -eq '') {
-                Write-Host "Username:             $Username";
-            }
-            if ($Password -eq '') {
-                Write-Host "Password:             $Password";
-            }
+            Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
             Write-Host "Recursive:             $Recursive";
-            #Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
             Write-Host "SqlCmdVariableType:    $SqlCmdVariableType";
+            Write-Host "Username:              $Username";
 
             [string[]]$SqlCmdVariables = @();
             switch ($SqlCmdVariableType) {
@@ -89,24 +84,32 @@ param()
             } else {
                 $SqlCmdFiles = Get-ChildItem -Path "$SqlCmdSciptFolderPath\*" -Include *.sql;
             }
+
+            # Now Invoke-Sqlcmd for each script in the folder
             foreach ($SqlCmdFile in $SqlCmdFiles) {
-                # Now Invoke-Sqlcmd for each script in the folder
-                Write-Host "Running SQLCMD file:   $(Split-Path -Leaf $SqlCmdFile)"
-                if ($Username -eq '' && $Password -eq '') {
-                    if ($SqlCmdVariableType -eq 'none') {
-                        Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop;
-                    } else {
-                        Invoke-Sqlcmd -Server $Server -Database $Database -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
-                    }
+                Write-Host "Running SQLCMD file:   $(Split-Path -Leaf $SqlCmdFile)";
+
+                $Command = "Invoke-Sqlcmd -Server $Server -Database $Database -InputFile '$SqlCmdFile' -ErrorAction Stop";
+                if ("$QueryTimeout" -ne "") {
+                    $Command += " -QueryTimeout $QueryTimeout";
                 }
-                else {
-                    if ($SqlCmdVariableType -eq 'none') {
-                        Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop;
-                    } else {
-                        Invoke-Sqlcmd -Server $Server -Database $Database -Username $Username -Password $Password -InputFile $SqlCmdFile -QueryTimeout $QueryTimeout -ErrorAction Stop -Variable $SqlCmdVariables;
-                    }
-                }                
+                if ("$Username" -ne "") {
+                    $Command += " -Username '$Username' -Password '$Password'";
+                }	
+                if ($SqlCmdVariableType -ne 'none') {
+                    #$Command += " -Variable '$SqlCmdVariables'";
+                    $Command += ' -Variable $SqlCmdVariables';
+                    Write-Host $Command;
+                    $scriptBlock = [Scriptblock]::Create($Command);
+                    Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $SqlCmdVariables;
+                } else {
+                    Write-Host $Command;            
+                    $scriptBlock = [Scriptblock]::Create($Command);
+                    Invoke-Command -ScriptBlock $scriptBlock;
+                }
+
             }
+
             Write-Host "==============================================================================";
         } else {
             Write-Error "SQL Scripts Folder does not exist: $SqlCmdSciptFolderPath";

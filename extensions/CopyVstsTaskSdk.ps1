@@ -1,7 +1,7 @@
 
 $ScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path;
 
-foreach ($folder in Get-ChildItem | ?{ $_.PSIsContainer })
+foreach ($folder in Get-ChildItem | Where-Object { $_.PSIsContainer })
 {
     #Write-host "Folder = $folder";
   
