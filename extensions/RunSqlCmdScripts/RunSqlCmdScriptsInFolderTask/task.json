@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "0",
-        "Patch": "8"
+        "Patch": "9"
     },
     "instanceNameFormat": "Run SQLCMD Scripts in folder $(SqlCmdSciptFolderPath)",
     "inputs": [
@@ -31,6 +31,20 @@
             "label": "The name of the SQL database",
             "required": true,
             "helpMarkDown": "The name of the database against which the script will be run"
+        },
+        {
+            "name": "Username",
+            "type": "string",
+            "label": "The SQL Server Authentication Login ID for the SQL database",
+            "required": false,
+            "helpMarkDown": "The login ID for making a SQL Server Authentication connection to an instance of the Database Engine"
+        },
+        {
+            "name": "Password",
+            "type": "string",
+            "label": "The SQL Server Authentication Password for the SQL database Login ID",
+            "required": false,
+            "helpMarkDown": "Specifies the password for the SQL Server Authentication login ID that was specified in the Username parameter. Passwords are case-sensitive. When possible, use Windows Authentication. Do not use a blank password, when possible use a strong password."
         },
         {
             "name": "SqlCmdSciptFolderPath",
