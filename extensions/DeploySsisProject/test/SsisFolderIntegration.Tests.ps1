@@ -21,7 +21,7 @@ BeforeAll {
     }
 }    
     
-Describe "RunSqlCmdScriptTask" {
+Describe "RunSqlCmdScriptTask" -Tag "DeploySsisProject" {
 
     Context "Create and then drop folder" {
         It "Create folder" {

@@ -20,7 +20,7 @@
     }
 }
 
-Describe "RunSqlCmdScriptsInFolder" {
+Describe "RunSqlCmdScriptsInFolder" -Tag "RunSqlCmdScripts" {
 
     Context "Execute Sql Script" {
         BeforeEach {

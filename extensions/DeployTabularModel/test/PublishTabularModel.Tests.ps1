@@ -7,7 +7,7 @@
     Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
 }
 
-Describe "PublishTabularModel" {
+Describe "PublishTabularModel" -Tag "DeployTabularModel" {
 
     Context "Deploy Cube Model with New-Guid as Name" {
 

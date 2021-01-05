@@ -91,7 +91,7 @@
             "label": "Authentication Method",
             "required": true,
             "helpMarkDown": "How to authenticate with the SQL Server database.",
-            "defaultValue": "win",
+            "defaultValue": "windows",
             "options": {
                 "windows": "Windows Authentication (default)",
                 "sqlauth": "SQL Server Authentication"

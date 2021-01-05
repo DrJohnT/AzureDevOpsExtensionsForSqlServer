@@ -37,7 +37,7 @@
     }
 }
 
-Describe "Deploy Cube Integration tests" {
+Describe "Deploy Cube Integration tests" -Tag "DeployTabularModel" {
 
     # start by ensuring we have a source database to work with!    
     Context "Deploy DatabaseToPublish" {

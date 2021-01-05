@@ -8,7 +8,7 @@ BeforeAll {
     Import-Module "$psModules\VstsTaskSdk" -ArgumentList @{ NonInteractive = $true }
 }
 
-Describe "RunSqlCmdScriptTask" {
+Describe "RunSqlCmdScriptTask" -Tag "DeploySsisProject" {
 
     Context "Create folder" {
         It "Create folder" {

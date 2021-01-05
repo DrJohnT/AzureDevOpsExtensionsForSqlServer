@@ -29,7 +29,7 @@
 #Write-Host $SqlCmdFolder
 
 
-Describe "RunSqlCmdScriptTask" {
+Describe "RunSqlCmdScriptTask" -Tag "RunSqlCmdScripts" {
 
     Context "Execute Sql Script" {
         BeforeEach {

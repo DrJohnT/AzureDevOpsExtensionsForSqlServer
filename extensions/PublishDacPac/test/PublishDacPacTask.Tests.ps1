@@ -36,7 +36,7 @@ StagingDBServer=myserver2
     }
 }       
 
-Describe "PublishDacPacTask" {
+Describe "PublishDacPacTask" -Tag "PublishDacPac" {
 
     Context "Deploy Database with New-Guid" {
         It "Database should be deployed with CI publish profile" {
