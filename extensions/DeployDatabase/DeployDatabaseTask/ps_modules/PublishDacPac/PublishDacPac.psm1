@@ -1,9 +1,3 @@
-#handle PS2
-    if(-not $PSScriptRoot)
-    {
-        $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
-    }
-
 #Get public and private function definition files.
     $scripts =  Get-ChildItem "$PSScriptRoot\public" -Recurse -Include *.ps1 -Exclude Tests;
 

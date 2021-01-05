@@ -28,3 +28,4 @@ examples/CubeToPublish/MyTabularProject/obj/Development/Model.deploymentoptions
 examples/CubeToPublish/MyTabularProject/obj/Development/Model.asdatabase
 examples/CubeToPublish/MyTabularProject/Model.bim.layout
 examples/CubeToPublish/MyTabularProject/bin/Model.asdatabase
+examples/DatabaseToPublish/bin/Debug/DatabaseToPublish.deploy.publish.xml

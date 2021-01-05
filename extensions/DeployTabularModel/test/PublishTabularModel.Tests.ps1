@@ -16,7 +16,7 @@ Describe "PublishTabularModel" {
             $ServerName = "localhost";
 
             $CurrentFolder = Split-Path -Parent $PSScriptRoot;
-            Write-Host $CurrentFolder 
+            #Write-Host $CurrentFolder 
             $PublishTabularModelTask =  Resolve-Path "$CurrentFolder\DeployTabularModelTask\PublishTabularModel.ps1";
             $AsDatabasePath = Resolve-Path "$CurrentFolder\..\..\examples\CubeToPublish\MyTabularProject\bin\Model.asdatabase";
 
