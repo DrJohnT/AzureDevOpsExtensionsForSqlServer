@@ -97,6 +97,7 @@ NewDataValue3=ThreeValues3
             $env:INPUT_SqlCmdSciptPath = $data.SqlCmdScriptFile3;
             $env:INPUT_Server = "localhost";
             $env:INPUT_Database = "DatabaseToPublish";
+            $env:INPUT_AuthenticationMethod = "sqlauth";
             $env:INPUT_Username = "ea";
             $env:INPUT_Password = "open";
             $env:INPUT_SqlCmdVariableType = 'text'

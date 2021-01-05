@@ -17,8 +17,11 @@ param()
     [string]$SqlCmdVariableType = Get-VstsInput -Name SqlCmdVariableType;
     [string]$SqlCmdVariablesInJson = Get-VstsInput -Name SqlCmdVariablesInJson;
     [string]$SqlCmdVariablesInText = Get-VstsInput -Name SqlCmdVariablesInText;
-    [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;
     [string]$Recursive = Get-VstsInput -Name Recursive;
+    [string]$AuthenticationMethod = Get-VstsInput -Name AuthenticationMethod;
+    [string]$Username = Get-VstsInput -Name  Username;
+    [string]$Password = Get-VstsInput -Name Password;
+    [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;    
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -39,7 +42,9 @@ param()
             Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
             Write-Host "Recursive:             $Recursive";
             Write-Host "SqlCmdVariableType:    $SqlCmdVariableType";
-            Write-Host "Username:              $Username";
+            if ($AuthenticationMethod -eq "sqlauth") {
+                Write-Host "SQL Login:             $Username";
+            }
 
             [string[]]$SqlCmdVariables = @();
             switch ($SqlCmdVariableType) {
@@ -93,7 +98,7 @@ param()
                 if ("$QueryTimeout" -ne "") {
                     $Command += " -QueryTimeout $QueryTimeout";
                 }
-                if ("$Username" -ne "") {
+                if ($AuthenticationMethod -eq "sqlauth") { 
                     $Command += " -Username '$Username' -Password '$Password'";
                 }	
                 if ($SqlCmdVariableType -ne 'none') {

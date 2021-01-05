@@ -11,6 +11,13 @@
     "category": "Utility",
     "demands": [],
     "minimumAgentVersion": "1.95.0",
+    "groups": [
+        {
+          "name": "authmethod",
+          "displayName": "Authentication Method",
+          "isExpanded": true
+        }
+    ],
     "version": {
         "Major": "1",
         "Minor": "0",
@@ -31,20 +38,6 @@
             "label": "The name of the SQL database",
             "required": true,
             "helpMarkDown": "The name of the database against which the script will be run"
-        },
-        {
-            "name": "Username",
-            "type": "string",
-            "label": "The SQL Server Authentication Login ID for the SQL database",
-            "required": false,
-            "helpMarkDown": "The login ID for making a SQL Server Authentication connection to an instance of the Database Engine"
-        },
-        {
-            "name": "Password",
-            "type": "string",
-            "label": "The SQL Server Authentication Password for the SQL database Login ID",
-            "required": false,
-            "helpMarkDown": "Specifies the password for the SQL Server Authentication login ID that was specified in the Username parameter. Please use a secured variable in this field."
         },
         {
             "name": "SqlCmdSciptPath",
@@ -91,6 +84,37 @@
             "defaultValue": "6000",
             "required": false,
             "helpMarkDown": "The query timeout in seconds"
+        },
+        {
+            "name": "AuthenticationMethod",
+            "type": "pickList",
+            "label": "Authentication Method",
+            "required": true,
+            "helpMarkDown": "How to authenticate with the SQL Server database.",
+            "defaultValue": "win",
+            "options": {
+                "windows": "Windows Authentication (default)",
+                "sqlauth": "SQL Server Authentication"
+            },
+            "groupName": "authmethod"
+        },
+        {
+            "name": "Username",
+            "type": "string",
+            "label": "The SQL Server Authentication Login ID for the SQL database",
+            "required": false,
+            "helpMarkDown": "The login ID for making a SQL Server Authentication connection to an instance of the Database Engine",
+            "groupName": "authmethod",
+            "visibleRule": "AuthenticationMethod = sqlauth"
+        },
+        {
+            "name": "Password",
+            "type": "string",
+            "label": "The SQL Server Authentication Password for the SQL database Login ID",
+            "required": false,
+            "helpMarkDown": "Specifies the password for the SQL Server Authentication login ID that was specified in the Username parameter. Please use a secured variable in this field.",
+            "groupName": "authmethod",
+            "visibleRule": "AuthenticationMethod = sqlauth"
         }
     ],
     "execution": {

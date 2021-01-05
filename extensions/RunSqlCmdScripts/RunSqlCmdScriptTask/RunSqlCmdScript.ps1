@@ -14,11 +14,12 @@ param()
     [string]$SqlCmdSciptPath = Get-VstsInput -Name SqlCmdSciptPath -Require;
     [string]$Server = Get-VstsInput -Name  Server -Require;
     [string]$Database = Get-VstsInput -Name Database -Require;
-    [string]$Username = Get-VstsInput -Name  Username;
-    [string]$Password = Get-VstsInput -Name Password;
     [string]$SqlCmdVariableType = Get-VstsInput -Name SqlCmdVariableType;
     [string]$SqlCmdVariablesInJson = Get-VstsInput -Name SqlCmdVariablesInJson;
     [string]$SqlCmdVariablesInText = Get-VstsInput -Name SqlCmdVariablesInText;
+    [string]$AuthenticationMethod = Get-VstsInput -Name AuthenticationMethod;
+    [string]$Username = Get-VstsInput -Name  Username;
+    [string]$Password = Get-VstsInput -Name Password;
     [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;
 
     $global:ErrorActionPreference = 'Stop';
@@ -37,7 +38,10 @@ param()
         Write-Host "Database:           $Database";
         Write-Host "SqlCmdSciptPath:    $SqlCmdSciptPath";
         Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
-        Write-Host "Username:           $Username";
+        if ($AuthenticationMethod -eq "sqlauth") {
+            Write-Host "SQL Login:          $Username";
+        }
+        
 
         [string[]]$SqlCmdVariables = @();
         switch ($SqlCmdVariableType) {
@@ -79,8 +83,8 @@ param()
         $Command = "Invoke-Sqlcmd -Server $Server -Database $Database -InputFile '$SqlCmdSciptPath' -ErrorAction Stop";
         if ("$QueryTimeout" -ne "") {
             $Command += " -QueryTimeout $QueryTimeout";
-        }        
-        if ("$Username" -ne "") {
+        }       
+        if ($AuthenticationMethod -eq "sqlauth") { 
             $Command += " -Username '$Username' -Password '$Password'";
         }
 

@@ -7,6 +7,7 @@ extensions/node_modules/*
 extensions/node_modules/core-js/*
 *.dll
 !VstsTaskSdk.dll
+!Minimatch.dll
 *.pdb
 *.cache
 *.jfm
