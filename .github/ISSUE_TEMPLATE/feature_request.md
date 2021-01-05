@@ -1,0 +1,27 @@
+---
+name: Feature request
+about: Suggest an idea for this project
+title: "[ENHANCMENT]"
+labels: ''
+assignees: ''
+
+---
+
+**Component**
+This repo covers four extensions for Azure DevOps.  Please be clear which extension you are talking about.  The short extension names are:
+* RunSqlCmdScripts
+* DeployTabularModel
+* PublishDacPac
+* DeployDatabase (technically the same as PublishDacPac but rebranded as people think 'Deploy' rather than 'Publish').
+
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
+
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
+
+**Additional context**
+Add any other context or screenshots about the feature request here.
