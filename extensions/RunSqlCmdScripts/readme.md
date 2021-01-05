@@ -16,7 +16,7 @@ This extension can be used in a build or deployment pipeline to run pre- and pos
 
 ### New in Version 1.1
 
-The extension now supports connection to the SQL database engine using SQL Server Authentication.  Two new fields have allow you to specify the username/password for the SQL Server login.
+The extension now supports connection to the SQL database engine using SQL Server Authentication.  Two new fields have allow you to specify the username/password for the SQL Server login.  For obvious reasons, please use a secured variable in the password field!
 
 ### Run single SQL Script in SQLCMD mode
 
