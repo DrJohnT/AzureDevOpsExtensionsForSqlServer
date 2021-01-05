@@ -99,11 +99,9 @@ param()
                 if ($SqlCmdVariableType -ne 'none') {
                     #$Command += " -Variable '$SqlCmdVariables'";
                     $Command += ' -Variable $SqlCmdVariables';
-                    Write-Host $Command;
                     $scriptBlock = [Scriptblock]::Create($Command);
                     Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $SqlCmdVariables;
                 } else {
-                    Write-Host $Command;            
                     $scriptBlock = [Scriptblock]::Create($Command);
                     Invoke-Command -ScriptBlock $scriptBlock;
                 }

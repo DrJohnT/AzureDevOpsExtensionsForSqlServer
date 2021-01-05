@@ -1,4 +1,7 @@
-
+# These scripts need tfx installing using:
+# npm i core-jsv
+# npm install -g npm
+# npm install -g tfx-cli
 Remove-Item DrJohnExtensions.RunSqlCmdScripts*.vsix;
 
 $CurrentFolder = Split-Path -Parent $MyInvocation.MyCommand.Path;

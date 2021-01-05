@@ -41,7 +41,7 @@
         },
         {
             "name": "Password",
-            "type": "string",
+            "type": "password",
             "label": "The SQL Server Authentication Password for the SQL database Login ID",
             "required": false,
             "helpMarkDown": "Specifies the password for the SQL Server Authentication login ID that was specified in the Username parameter. Passwords are case-sensitive. When possible, use Windows Authentication. Do not use a blank password, when possible use a strong password."

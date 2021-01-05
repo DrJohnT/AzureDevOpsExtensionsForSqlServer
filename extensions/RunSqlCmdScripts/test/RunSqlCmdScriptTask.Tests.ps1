@@ -91,6 +91,30 @@ NewDataValue3=ThreeValues3
             $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
             $results.Item('CountOfRows') | Should -Be 3;
         }
+
+        It "Execute Sql Script with specific username/password" {
+            $data = Get-Config;
+            $env:INPUT_SqlCmdSciptPath = $data.SqlCmdScriptFile3;
+            $env:INPUT_Server = "localhost";
+            $env:INPUT_Database = "DatabaseToPublish";
+            $env:INPUT_Username = "ea";
+            $env:INPUT_Password = "open";
+            $env:INPUT_SqlCmdVariableType = 'text'
+            $env:INPUT_SqlCmdVariablesInJson = ''
+            [string] $sqlCmdValues = @"
+NewDataValue1=ThreeValues1
+NewDataValue2=ThreeValues2
+NewDataValue3=ThreeValues3
+"@;
+            $env:INPUT_SqlCmdVariablesInText = $sqlCmdValues;
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
+
+            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.HasValueQuery -ErrorAction Stop;
+            $results.Item('MyOtherColumn') | Should -Be 'ThreeValues2';
+
+            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
+            $results.Item('CountOfRows') | Should -Be 3;
+        }
     }
 
 }

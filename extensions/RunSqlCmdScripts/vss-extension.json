@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "RunSqlCmdScripts",
-    "version": "1.0.9",
+    "version": "1.1.1",
     "name": "Run SQL / SQLCMD Scripts passing multiple SQLCMD variables",
     "publisher": "DrJohnExtensions",
     "description": "Run SQLCMD scripts against your SQL Server database",

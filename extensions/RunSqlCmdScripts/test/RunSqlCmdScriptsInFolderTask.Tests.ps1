@@ -91,6 +91,40 @@ NewDataValue3=ThreeValues3
             $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
             $results.Item('CountOfRows') | Should -Be 6;
         }
+
+        It "Execute Sql Script with specific username/password" {
+            $data = Get-Config;
+            $env:INPUT_SqlCmdSciptFolderPath = $data.SqlCmdFolder;
+            $env:INPUT_Server = "localhost";
+            $env:INPUT_Database = "DatabaseToPublish";
+            $env:INPUT_Recursive = 'false';
+            $env:INPUT_Username = "ea";
+            $env:INPUT_Password = "open";
+            $env:INPUT_SqlCmdVariableType = 'json'
+            [string] $sqlCmdValues = @"
+            {
+                "MyDataValue1": "JsonValue1",
+                "MyDataValue2": "JsonValue2",
+                "NewDataValue1": "ThreeJsonValues1",
+                "NewDataValue2": "ThreeJsonValues2",
+                "NewDataValue3": "ThreeJsonValues3"
+            }
+"@;
+            $env:INPUT_SqlCmdVariablesInJson = $sqlCmdValues;
+            $env:INPUT_SqlCmdVariablesInText = '';
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
+
+            $query = $data.HasValueQuery;
+            
+            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query "$query 3" -ErrorAction Stop;
+            $results.Item('MyColumn') | Should -Be 'JsonValue2';
+
+            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query "$query 5" -ErrorAction Stop;
+            $results.Item('MyColumn') | Should -Be 'ThreeJsonValues2';
+
+            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
+            $results.Item('CountOfRows') | Should -Be 6;
+        }
     }
 
 }

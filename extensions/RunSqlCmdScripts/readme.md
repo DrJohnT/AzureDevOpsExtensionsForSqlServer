@@ -14,6 +14,10 @@ SQLCMD variables can be passed as name/value pairs in multiline text format, or 
 
 This extension can be used in a build or deployment pipeline to run pre- and post-deployment SQL scripts.
 
+### New in Version 1.1
+
+The extension now supports connection to the SQL database engine using SQL Server Authentication.  Two new fields have allow you to specify the username/password for the SQL Server login.
+
 ### Run single SQL Script in SQLCMD mode
 
 The screenshot below shows the configuration options for the task.
