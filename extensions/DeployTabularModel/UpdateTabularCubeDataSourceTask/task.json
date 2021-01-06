@@ -13,8 +13,8 @@
     "minimumAgentVersion": "1.95.0",
     "version": {
         "Major": "1",
-        "Minor": "0",
-        "Patch": "10"
+        "Minor": "1",
+        "Patch": "8"
     },
     "instanceNameFormat": "Update SSAS tabular cube data source in $(CubeDatabaseName)",
     "inputs": [
