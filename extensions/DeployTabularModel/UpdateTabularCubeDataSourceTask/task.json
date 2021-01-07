@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "1",
-        "Patch": "8"
+        "Patch": "11"
     },
     "instanceNameFormat": "Update SSAS tabular cube data source in $(CubeDatabaseName)",
     "inputs": [
@@ -52,16 +52,16 @@
 			"label": "Impersonation mode to be used by the data source",
 			"defaultValue": "ImpersonateServiceAccount",
 			"options": {
-				"ImpersonateAccount": "Use a specfic Windows user and password",
-                "ImpersonateServiceAccount": "Use the SSAS service account"
+                "ImpersonateServiceAccount": "Use the SSAS service account (default)",
+                "ImpersonateAccount": "Use a specfic Windows user and password"                
 			},
 			"required": true,
-            "helpMarkDown":  "Select an impersonation mode to be used by the connection:\n'Use a specfic Windows user and password' will show input fields to specify the username and password.  Strongly recommended that you use a domain based service account\n'Use the SSAS service account' changes the impersonation to use the SSAS service account"
+            "helpMarkDown":  "Select an impersonation mode to be used by the connection:\n'Use the SSAS service account' changes the impersonation to use the SSAS service account.\n'Use a specfic Windows user and password' will show input fields to specify the username and password.  Strongly recommended that you use a domain based service account."
         },
         {
             "name": "ImpersonationAccount",
             "type": "string",
-            "label": "Account Username",
+            "label": "Windows Account Username",
 			"visibleRule": "ImpersonationMode=ImpersonateAccount",
             "required": false,
             "helpMarkDown": "Account name including the domain name e.g. mydomain\\myserviceaccount"
@@ -69,10 +69,10 @@
         {
             "name": "ImpersonationPassword",
             "type": "string",
-            "label": "Account Password",
+            "label": "Windows Account Password",
 			"visibleRule": "ImpersonationMode=ImpersonateAccount",
             "required": false,
-            "helpMarkDown": "Use a locked variable for the password, values here are stored unsecure."
+            "helpMarkDown": "Use a locked variable for the password. Otherwise the password will be visible to all here!"
         }
     ],
     "execution": {

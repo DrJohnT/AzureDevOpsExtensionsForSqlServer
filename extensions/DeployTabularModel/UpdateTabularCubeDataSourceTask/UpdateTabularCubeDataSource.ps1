@@ -44,10 +44,19 @@ param()
 
     try {
         if ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) {
-            if ([string]::IsNullOrEmpty($ImpersonationAccount)) {
-                $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
-            } else {
-                $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPassword $ImpersonationPassword;
+            # "ImpersonateAccount": "Use a specfic Windows user and password",
+            # "ImpersonateServiceAccount": "Use the SSAS service account"
+            switch ($ImpersonationMode) {
+                "ImpersonateServiceAccount" {
+                    $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
+                }
+                "ImpersonateAccount" {
+                    $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPwd $ImpersonationPassword;
+                }
+                default {
+                    throw "ImpersonationMode $ImpersonationMode is not supported";
+                }
+
             }
             if ($result) {
                 Write-Output "Tabular cube data source updated sucessfully";

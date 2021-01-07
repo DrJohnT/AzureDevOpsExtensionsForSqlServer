@@ -21,7 +21,7 @@
     "version": {
         "Major": "1",
         "Minor": "1",
-        "Patch": "8"
+        "Patch": "10"
     },
     "instanceNameFormat": "Deploy SSAS tabular model $(CubeDatabaseName)",
     "inputs": [
@@ -65,9 +65,13 @@
         },
         {
 			"name": "TransactionalDeployment",
-			"type": "boolean",
+			"type": "pickList",
 			"label": "Transactional deployment",
-			"defaultValue": "false",
+            "defaultValue": "false",
+            "options": {
+                "false": "False",
+                "true": "True"
+            },
 			"helpMarkDown": "Perform the deployment in one transaction",
 			"groupName": "DeploymentOptions"
         },
