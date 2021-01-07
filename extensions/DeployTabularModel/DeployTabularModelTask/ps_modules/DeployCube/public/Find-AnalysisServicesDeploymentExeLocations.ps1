@@ -47,10 +47,11 @@ function Find-AnalysisServicesDeploymentExeLocations {
         # list all the locations found
         foreach ($AnalysisServicesDeploymentExe in $AnalysisServicesDeploymentExes) {
             [string]$ProductVersion = $AnalysisServicesDeploymentExe.VersionInfo.ProductVersion.Substring(0,2);
+            
             Write-Output "$ProductVersion  $AnalysisServicesDeploymentExe";
         }
     }
     catch {
-        Write-Error "Find-AnalysisServicesDeploymentExeLocations failed with error $Error";
+        Write-Error "Find-AnalysisServicesDeploymentExeLocations failed with error: $_";
     }
 }

@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DatabaseToPublish", "DatabaseToPublish\DatabaseToPublish.sqlproj", "{692977CE-0842-4424-B08A-FE676674A66D}"
 EndProject
-Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "MyTabularProject", "CubeToPublish\MyTabularProject\MyTabularProject.smproj", "{8CE414BB-95B2-4C99-9E03-51BA72086E22}"
+Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "CubeAtCompatibility1200", "CubeAtCompatibility1200\CubeAtCompatibility1200.smproj", "{8CE414BB-95B2-4C99-9E03-51BA72086E22}"
+EndProject
+Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "CubeAtCompatibility1500", "CubeAtCompatibility1500\CubeAtCompatibility1500.smproj", "{EF14186E-FA9B-4882-8B18-CD14E2ECD631}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,22 @@ Global
 		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|x86.ActiveCfg = Development|x86
 		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|x86.Build.0 = Development|x86
 		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|x86.Deploy.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Debug|Any CPU.ActiveCfg = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Debug|Any CPU.Build.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Debug|Any CPU.Deploy.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Debug|x86.ActiveCfg = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Debug|x86.Build.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Debug|x86.Deploy.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Development|Any CPU.ActiveCfg = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Development|x86.ActiveCfg = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Development|x86.Build.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Development|x86.Deploy.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|Any CPU.ActiveCfg = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|Any CPU.Build.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|Any CPU.Deploy.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|x86.ActiveCfg = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|x86.Build.0 = Development|x86
+		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|x86.Deploy.0 = Development|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

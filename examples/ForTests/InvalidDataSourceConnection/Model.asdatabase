@@ -1,12 +1,12 @@
 {
-  "name": "SemanticModel",
+  "name": "MyTabularProject",
   "compatibilityLevel": 1200,
   "model": {
     "culture": "en-GB",
     "dataSources": [
       {
         "name": "DatabaseToPublish",
-        "connectionString": "Provider=SQLNCLI11;Data Source=localhost;Initial Catalog=DatabaseToPublish;Integrated Security=SSPI;Persist Security Info=false",
+        "connectionString": "Provider=SQLNCLI11;Data Source=localhost;Initial Catalog=DoesNotExist;Integrated Security=SSPI;Persist Security Info=false",
         "impersonationMode": "impersonateAccount",
         "account": "jtunnicliffe",
         "annotations": [
@@ -100,6 +100,5 @@
         "value": "400"
       }
     ]
-  },
-  "id": "SemanticModel"
+  }
 }

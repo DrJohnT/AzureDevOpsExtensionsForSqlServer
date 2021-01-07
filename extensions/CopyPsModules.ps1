@@ -1,7 +1,12 @@
+<#
+    Copy the updates for the PowerShell modules DeployCube and PublishDacPac to the 
+    relevant DevOps Extensions ps_modules directories.
+#>
 
 $ScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path;
 $moduleRoot = Join-Path  $ScriptPath '..\..';
 $moduleRoot = Resolve-Path $moduleRoot;
+
 
 Write-host "Copying Invoke-ExternalCommand.ps1 to PublishDacPac";
 Copy-Item -Path "$moduleRoot\DeployCube\DeployCube\public\Invoke-ExternalCommand.ps1" -Destination "$moduleRoot\PublishDacPac\PublishDacPac\public\Invoke-ExternalCommand.ps1" -Force;
@@ -37,8 +42,5 @@ foreach ($folder in Get-ChildItem | Where-Object { $_.PSIsContainer })
 
 Write-host "Copying PublishDacPacTask.ps1 to DeployDatabase";
 Copy-Item -Path "$ScriptPath\PublishDacPac\PublishDacPacTask\PublishDacPacTask.ps1" -Destination "$ScriptPath\DeployDatabase\DeployDatabaseTask\PublishDacPacTask.ps1" -Force
-
-#Write-host "Copying Invoke-SqlCmdScript.ps1 from RunSqlCmdScriptTask to CreateSsisFolderTask";
-#Copy-Item -Path "$ScriptPath\RunSqlCmdScripts\RunSqlCmdScriptTask\Invoke-SqlCmdScript.ps1" -Destination "$ScriptPath\DeploySsisProject\CreateSsisFolderTask\Invoke-SqlCmdScript.ps1" -Force
 
 

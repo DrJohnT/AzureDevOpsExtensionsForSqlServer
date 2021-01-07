@@ -18,7 +18,7 @@ param()
         # if module is not loaded
         $ModulePath = Split-Path -Parent $MyInvocation.MyCommand.Path;
         $ModulePath = Resolve-Path "$ModulePath\ps_modules\DeployCube\DeployCube.psd1";
-        import-Module -Name $ModulePath;
+        Import-Module -Name $ModulePath;
     }
 
     [string]$AsServer = Get-VstsInput -Name  AsServer -Require;
@@ -39,31 +39,30 @@ param()
     Write-Host "SourceSqlServer:      $SourceSqlServer"
     Write-Host "SourceSqlDatabase:    $SourceSqlDatabase"
     Write-Host "ImpersonationMode:    $ImpersonationMode"
-    Write-Host "ImpersonationAccount: $ImpersonationAccount"
+    if ($ImpersonationMode -eq "ImpersonateAccount") {
+        Write-Host "ImpersonationAccount: $ImpersonationAccount"
+    }
     Write-Host "==============================================================================";
 
     try {
-        if ( Ping-SsasDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName ) {
-            # "ImpersonateAccount": "Use a specfic Windows user and password",
-            # "ImpersonateServiceAccount": "Use the SSAS service account"
-            switch ($ImpersonationMode) {
-                "ImpersonateServiceAccount" {
-                    $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
-                }
-                "ImpersonateAccount" {
-                    $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPwd $ImpersonationPassword;
-                }
-                default {
-                    throw "ImpersonationMode $ImpersonationMode is not supported";
-                }
-
+        # "ImpersonateAccount": "Use a specfic Windows user and password",
+        # "ImpersonateServiceAccount": "Use the SSAS service account"
+        switch ($ImpersonationMode) {
+            "ImpersonateServiceAccount" {
+                $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode;
             }
-            if ($result) {
-                Write-Output "Tabular cube data source updated sucessfully";
-            } else {
-                Write-Error "Failed to update cube data source correctly";
+            "ImpersonateAccount" {
+                $result = Update-TabularCubeDataSource -Server $AsServer -CubeDatabase $CubeDatabaseName -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ImpersonationMode $ImpersonationMode -ImpersonationAccount $ImpersonationAccount -ImpersonationPwd $ImpersonationPassword;
+            }
+            default {
+                throw "ImpersonationMode $ImpersonationMode is not supported";
             }
         }
+        if ($result) {
+            Write-Output "Tabular cube data source updated sucessfully";
+        } else {
+            Write-Error "Failed to update cube data source correctly";
+        }        
     } finally {
         Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation

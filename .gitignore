@@ -12,9 +12,13 @@ extensions/node_modules/core-js/*
 *.cache
 *.jfm
 *.vs
-examples/CubeToPublish/MyTabularProject/bin/*
-examples/CubeToPublish/MyTabularProject/obj/*
-examples/CubeToPublish/MyTabularProject/Model.bim.layout
+*.settings
+*.layout
+examples/ForTests/ExampleXMLA
 examples/DatabaseToPublish/obj/*
 examples/DatabaseToPublish/bin/*
+examples/CubeAtCompatibility1200/bin/*
+examples/CubeAtCompatibility1200/obj/*
+examples/CubeAtCompatibility1500/bin/*
+examples/CubeAtCompatibility1500/obj/*
 

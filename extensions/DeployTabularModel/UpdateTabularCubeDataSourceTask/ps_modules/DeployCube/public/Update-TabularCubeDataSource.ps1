@@ -15,7 +15,7 @@ function Update-TabularCubeDataSource
     The name of the deployed tabular cube database.
 
     .PARAMETER Credential
-    [Optional] A PSCredential object containing the credentials to connect to the AAS server.
+    A PSCredential object containing the credentials to connect to the AAS server.
 
     .PARAMETER SourceSqlServer
     The name of the source SQL Server server or its IP address.  Include the instance name and port if necessary.
@@ -46,7 +46,7 @@ function Update-TabularCubeDataSource
     Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube
     This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
-    [OutputType([Boolean])]
+    [OutputType([bool])]
     [CmdletBinding()]
     param
     (
@@ -69,20 +69,16 @@ function Update-TabularCubeDataSource
         [ValidateNotNullOrEmpty()]
         $SourceSqlDatabase,
 
-        [String] [Parameter(Mandatory = $false)]
-        $SqlUserID,
-
-        [String] [Parameter(Mandatory = $false)]
-        $SqlUserPwd,
-
+        [Alias("AuthenticationKind")]
         [String] [Parameter(Mandatory = $true)]
-        [ValidateSet('ImpersonateServiceAccount', 'ImpersonateAccount')]
+        [ValidateSet('ImpersonateServiceAccount', 'ImpersonateAccount', 'UsernamePassword')]
         [ValidateNotNullOrEmpty()]
         $ImpersonationMode,
 
         [String] [Parameter(Mandatory = $false)]
         $ImpersonationAccount,
 
+        [Alias("ImpersonationPassword")]
         [String] [Parameter(Mandatory = $false)]
         $ImpersonationPwd
 
@@ -94,16 +90,17 @@ function Update-TabularCubeDataSource
             throw "ImpersonationAccount not set but ImpersonationMode=ImpersonateAccount";
         }
         if ([string]::IsNullOrEmpty($ImpersonationPwd)) {
-            throw "ImpersonationPwd not set but ImpersonationMode=ImpersonateAccount";
+            throw "ImpersonationPassword not set but ImpersonationMode=ImpersonateAccount";
         }
-    }
+    }    
 
-    #  note that Get-CubeDatabaseCompatibilityLevel will throw and error if the cube of server do not exist, which is exactly what we want!
-    [int]$CompatibilityLevel = Get-CubeDatabaseCompatibilityLevel -Server $Server -CubeDatabase $CubeDatabase -Credential $Credential;
-
+    #  note that Get-CubeDatabaseCompatibilityLevel will throw and error if the cube or server do not exist, which is exactly what we want!
+    [int]$CompatibilityLevel;
     if ($null -eq $Credential) {
+        $CompatibilityLevel = Get-CubeDatabaseCompatibilityLevel -Server $Server -CubeDatabase $CubeDatabase;
         $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>TMSCHEMA_DATA_SOURCES</RequestType><Restrictions><RestrictionList><DatabaseName>$CubeDatabase</DatabaseName></RestrictionList></Restrictions><Properties/></Discover>";
     } else {
+        $CompatibilityLevel = Get-CubeDatabaseCompatibilityLevel -Server $Server -CubeDatabase $CubeDatabase -Credential $Credential;
         $returnResult = Invoke-ASCmd -Server $Server -Credential $Credential -ConnectionTimeout 1 -Query "<Discover xmlns='urn:schemas-microsoft-com:xml-analysis'><RequestType>TMSCHEMA_DATA_SOURCES</RequestType><Restrictions><RestrictionList><DatabaseName>$CubeDatabase</DatabaseName></RestrictionList></Restrictions><Properties/></Discover>";
     }
 
@@ -116,35 +113,44 @@ function Update-TabularCubeDataSource
 
     $rows = $returnXML.SelectNodes("//xmlAnalysis:return/rootNS:root/rootNS:row", $nsmgr);
     if ($rows.Count -ge 1) {
-        [string]$DataSourceName = $rows[0].Name;
+        [string]$DataSourceName = $rows[0].name;
+        $type = $rows[0].type;
+        $description = "${rows[0].description}";
+
         [int]$MaxConnections = $rows[0].MaxConnections;
 
-        if ($CompatibilityLevel -ge 1400) {
-            # SQL Server 2017 new style data source connection
-
+        if ($CompatibilityLevel -ge 1400 -and $type -eq '2') {
+            # New style structured (Power Query) connectors
+            $type = "structured"
             $connObj = ConvertFrom-Json -InputObject $rows[0].ConnectionDetails;
             $protocol = $connObj.protocol;
             $authentication = $connObj.authentication;
             $query = $connObj.query;
 
             $CredentialDetails = ConvertFrom-Json -InputObject $rows[0].Credential;
-            $kind = $CredentialDetails.kind;
-
             $EncryptConnection = $CredentialDetails.EncryptConnection;
 
             switch ($ImpersonationMode) {
                 'ImpersonateServiceAccount' {
-                    $credential = [pscustomobject]@{
+                    $credentialNode = [pscustomobject]@{
                         AuthenticationKind = 'ServiceAccount'
-                        kind = $kind
                         path = "$SourceSqlServer;$SourceSqlDatabase"
                         EncryptConnection = $EncryptConnection
                     }
                  }
                 'ImpersonateAccount' {
-                    $credential = [pscustomobject]@{
+                    $credentialNode = [pscustomobject]@{
                         AuthenticationKind = 'Windows'
-                        kind = $kind
+                        path = "$SourceSqlServer;$SourceSqlDatabase"
+                        Username =  $ImpersonationAccount
+                        Password = $ImpersonationPwd
+                        EncryptConnection = $EncryptConnection
+                    }
+                 }
+                 'UsernamePassword' {
+                    $credentialNode = [pscustomobject]@{
+                        AuthenticationKind = 'UsernamePassword'
+                        kind = "SQL"
                         path = "$SourceSqlServer;$SourceSqlDatabase"
                         Username =  $ImpersonationAccount
                         Password = $ImpersonationPwd
@@ -154,8 +160,9 @@ function Update-TabularCubeDataSource
             }
 
             $dataSource = [pscustomobject]@{
-                type = 'structured'
+                type = $type
                 name = $DataSourceName
+                description = $description
                 connectionDetails = [pscustomobject]@{
                     protocol = $protocol
                     address = [pscustomobject]@{
@@ -165,12 +172,13 @@ function Update-TabularCubeDataSource
                     authentication = $authentication
                     query = $query
                 }
-                credential = $credential
+                credential = $credentialNode
             }
         } else {
             # $CompatibilityLevel -lt 1400
+            $type = 'model < 1200';  # only used in the message below
             $ExistingConnectionString = $rows[0].ConnectionString;
-            $ConnectionString  = Get-SqlConnectionString -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ExistingConnectionString $ExistingConnectionString -SqlUserID $SqlUserID -SqlUserPwd $SqlUserPwd;
+            $ConnectionString  = Get-SqlConnectionString -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ExistingConnectionString $ExistingConnectionString 
 
             if ($ImpersonationMode -eq 'ImpersonateAccount') {
                 $dataSource = [pscustomobject]@{
@@ -203,18 +211,36 @@ function Update-TabularCubeDataSource
 
         $tmsl = $tmslStructure | ConvertTo-Json -Depth 5;
 
-        #Write-Output $tmsl
+        #Write-Host $tmsl
 
         # now send the createOrReplace command to the cube
-        #Write-Output "Updating SQL data source $DataSourceName with a connection to $SourceSqlServer.$SourceSqlDatabase using cube compatibility level $CompatibilityLevel";
+        Write-Verbose "Updating cube data source $DataSourceName with a connection to $SourceSqlServer.$SourceSqlDatabase using a $type createOrReplace TMSL statement";
 
         if ($null -eq $Credential) {
-            $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 1 -Query $tmsl;
+            $returnResult = Invoke-ASCmd -Server $Server -ConnectionTimeout 10 -Query $tmsl;
         } else {
-            $returnResult = Invoke-ASCmd -Server $Server -Credential $Credential -ConnectionTimeout 1 -Query $tmsl;
+            $returnResult = Invoke-ASCmd -Server $Server -Credential $Credential -ConnectionTimeout 10 -Query $tmsl;
         }
+        
+        try {
+            $returnXml.LoadXml($returnResult);
+            $nsmgr = $returnXml.NameTable;        
+            $nsmgr.AddNamespace('xmlAnalysis', 	'urn:schemas-microsoft-com:xml-analysis');
+            $nsmgr.AddNamespace('rootNS', 		'urn:schemas-microsoft-com:xml-analysis:empty');
+            $resultNodes = $returnXML.SelectNodes("//xmlAnalysis:return/rootNS:root", $nsmgr);
 
-        return ($returnResult -like '*urn:schemas-microsoft-com:xml-analysis:empty*');
+            $ErrorMsg = $resultNodes[0].Messages.Error.Description;
+            if ("$ErrorMsg" -eq "") {
+                return $true;
+            } else {
+                Write-Error $ErrorMsg;
+                return $false;
+            }
+        }
+        catch
+        {
+            throw "Executing createOrReplace TMSL returned incorrectly formatted XML";
+        }
     } else {
         throw "CubeDatabase $CubeDatabase not found or does not have a data source";
     }

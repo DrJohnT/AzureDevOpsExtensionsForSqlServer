@@ -1,0 +1,77 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1500,
+  "model": {
+    "culture": "en-GB",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/localhost;DatabaseToPublish",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "localhost",
+            "database": "DatabaseToPublish"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "options": {},
+        "credential": {
+          "AuthenticationKind": "ServiceAccount",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "MyOnlyTable",
+        "columns": [
+          {
+            "name": "MyOnlyTableId",
+            "dataType": "int64",
+            "sourceColumn": "MyOnlyTableId"
+          },
+          {
+            "name": "MyOnlyColumn",
+            "dataType": "string",
+            "sourceColumn": "MyOnlyColumn"
+          },
+          {
+            "name": "MyOnlyValue",
+            "dataType": "decimal",
+            "sourceColumn": "MyOnlyValue"
+          },
+          {
+            "name": "InMyCurrency",
+            "dataType": "string",
+            "sourceColumn": "InMyCurrency"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;DatabaseToPublish\",",
+                "    dbo_MyOnlyTable = Source{[Schema=\"dbo\",Item=\"MyOnlyTable\"]}[Data]",
+                "in",
+                "    dbo_MyOnlyTable"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "600"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}

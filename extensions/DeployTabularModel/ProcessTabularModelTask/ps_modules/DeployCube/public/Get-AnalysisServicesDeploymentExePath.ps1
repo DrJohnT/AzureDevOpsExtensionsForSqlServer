@@ -54,45 +54,35 @@ function Get-AnalysisServicesDeploymentExePath {
         [string]$Version
     )
 
-    #try {
-        $AnalysisServicesDeploymentExes = @();
+    [string] $ExeName = "Microsoft.AnalysisServices.Deployment.exe";
+    [string] $AnalysisServicesDeploymentExePath = $null;
+    
+    # Location SQL Server 2017 and prior
+    [System.IO.FileSystemInfo[]]$AnalysisServicesDeploymentExes = Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
 
-	    [string] $ExeName = "Microsoft.AnalysisServices.Deployment.exe";
-        [string] $AnalysisServicesDeploymentExePath = $null;
-        
-	    # Location SQL Server 2017 and prior
-        [System.IO.FileSystemInfo[]]$AnalysisServicesDeploymentExes = Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+    # Location SQL Server 2019 and greater (i.e. installed with SSMS) 
+    $AnalysisServicesDeploymentExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server Management Studio *\Common7\IDE" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
 
-	    # Location SQL Server 2019 and greater (i.e. installed with SSMS) 
-        $AnalysisServicesDeploymentExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server Management Studio *\Common7\IDE" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+    # Custom install location defined by Environment variable CustomAsDwInstallLocation
+    $CustomAsDwInstallLocation = [Environment]::GetEnvironmentVariable('CustomAsDwInstallLocation');
+    if ("$CustomAsDwInstallLocation" -ne "") {
+        if (Test-Path $CustomAsDwInstallLocation) {
+            $AnalysisServicesDeploymentExes += Get-Childitem -Path "$CustomAsDwInstallLocation\" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+        } else {
+            throw "Invalid custom environment variable path: CustomAsDwInstallLocation";
+        }        
+    }
 
-        # Custom install location defined by Environment variable CustomAsDwInstallLocation
-        $CustomAsDwInstallLocation = [Environment]::GetEnvironmentVariable('CustomAsDwInstallLocation');
-        if ("$CustomAsDwInstallLocation" -ne "") {
-            if (Test-Path $CustomAsDwInstallLocation) {
-                $AnalysisServicesDeploymentExes += Get-Childitem -Path "$CustomAsDwInstallLocation\" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
-            } else {
-                throw "Invalid custom environment variable path: CustomAsDwInstallLocation";
-            }        
-        }
-
-        foreach ($AnalysisServicesDeploymentExe in $AnalysisServicesDeploymentExes) {
-            $ExePath = $AnalysisServicesDeploymentExe.FullName;
-            [string] $ProductVersion = $AnalysisServicesDeploymentExe.VersionInfo.ProductVersion;            
-            $ProductVersionNumber = $ProductVersion.SubString(0,2);
-            
-            if ($ProductVersionNumber -eq $Version) {
-                $AnalysisServicesDeploymentExePath = $ExePath;
-                Write-Verbose "$ExeName version $Version found here: $AnalysisServicesDeploymentExePath";       
-                break;
-            }            
-        }
-        
-    #}
-    #catch {
-    #    $ErrMsg = $PSItem.ToString();
-    #    Write-Error "Get-AnalysisServicesDeploymentExePath failed with error $ErrMsg";
-    #}
+    foreach ($AnalysisServicesDeploymentExe in $AnalysisServicesDeploymentExes) {
+        $ExePath = $AnalysisServicesDeploymentExe.FullName;
+        [string] $ProductVersion = $AnalysisServicesDeploymentExe.VersionInfo.ProductVersion.SubString(0,2);
+       
+        if ($ProductVersion -eq $Version) {
+            $AnalysisServicesDeploymentExePath = $ExePath;
+            Write-Verbose "$ExeName version $Version found here: $AnalysisServicesDeploymentExePath";       
+            break;
+        }            
+    }
     return $AnalysisServicesDeploymentExePath;
 }
 
