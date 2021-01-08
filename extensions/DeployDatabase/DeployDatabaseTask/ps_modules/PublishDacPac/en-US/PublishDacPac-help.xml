@@ -10,8 +10,8 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Simply finds and lists the location path to every version of SqlPackage.exe on the machine</maml:para>
-      <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      <maml:para>Simply finds and lists the location path to every version of SqlPackage.exe on the machine.</maml:para>
+      <maml:para>For information on SqlPackage.exe see https://docs.microsoft.com/en-us/sql/tools/sqlpackage</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -19,11 +19,29 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
-    <command:inputTypes />
-    <command:returnValues />
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Output is written to standard output.</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -35,7 +53,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/PublishDacPac</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/PublishDacPac</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -154,7 +177,10 @@
     </command:details>
     <maml:description>
       <maml:para>Finds the path to specific version of SqlPackage.exe</maml:para>
-      <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      <maml:para>Checks the following locations: </maml:para>
+      <maml:para>    ${env:ProgramFiles}\Microsoft SQL Server*\Tools\Binn     ${env:ProgramFiles(x86)}\Microsoft SQL Server*\Tools\Binn     ${env:ProgramFiles(x86)}\Microsoft SQL Server Management Studio *\Common7\IDE     $env:CustomSqlPackageInstallLocation</maml:para>
+      <maml:para>The environment variable $env:CustomSqlPackageInstallLocation allows you to specify your own custom install directory.</maml:para>
+      <maml:para>For information on SqlPackage.exe see https://docs.microsoft.com/en-us/sql/tools/sqlpackage</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -162,7 +188,14 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Version</maml:name>
           <maml:Description>
-            <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path     latest = use the latest version of SqlPackage.exe     150 = SQL Server 2019     140 = SQL Server 2017     130 = SQL Server 2016     120 = SQL Server 2014     110 = SQL Server 2012</maml:para>
+            <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+            <maml:para>* 15: SQL Server 2019</maml:para>
+            <maml:para>* 14: SQL Server 2017</maml:para>
+            <maml:para>* 13: SQL Server 2016</maml:para>
+            <maml:para>* 12: SQL Server 2014</maml:para>
+            <maml:para>* 11: SQL Server 2012</maml:para>
+            <maml:para></maml:para>
+            <maml:para>If you are unsure which version(s) of SqlPackage.exe you have installed, use the function Find-SqlPackageLocations to obtain a full list.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -177,7 +210,14 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Version</maml:name>
         <maml:Description>
-          <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path     latest = use the latest version of SqlPackage.exe     150 = SQL Server 2019     140 = SQL Server 2017     130 = SQL Server 2016     120 = SQL Server 2014     110 = SQL Server 2012</maml:para>
+          <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+          <maml:para>* 15: SQL Server 2019</maml:para>
+          <maml:para>* 14: SQL Server 2017</maml:para>
+          <maml:para>* 13: SQL Server 2016</maml:para>
+          <maml:para>* 12: SQL Server 2014</maml:para>
+          <maml:para>* 11: SQL Server 2012</maml:para>
+          <maml:para></maml:para>
+          <maml:para>If you are unsure which version(s) of SqlPackage.exe you have installed, use the function Find-SqlPackageLocations to obtain a full list.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -200,15 +240,15 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>This module requires SqlPackage.exe to be installed on the host machine. This can be done by installing Microsoft SQL Server Management Studio from https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-SqlPackagePath -Version 130</dev:code>
+        <dev:code>Get-SqlPackagePath -Version 13</dev:code>
         <dev:remarks>
-          <maml:para>Return the full path to a specific version of SqlPackage.exe</maml:para>
+          <maml:para>Returns the path to the SQL Server 2016 version of SqlPackage.exe (if present on the machine).</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -221,7 +261,7 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
+        <maml:linkText>https://github.com/DrJohnT/PublishDacPac</maml:linkText>
         <maml:uri>https://github.com/DrJohnT/PublishDacPac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -321,7 +361,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021  This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -351,7 +391,6 @@
     </command:details>
     <maml:description>
       <maml:para>Checks that the database exists on the SQL Server instance</maml:para>
-      <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -421,7 +460,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -435,7 +474,7 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
+        <maml:linkText>https://github.com/DrJohnT/PublishDacPac</maml:linkText>
         <maml:uri>https://github.com/DrJohnT/PublishDacPac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -451,7 +490,6 @@
     </command:details>
     <maml:description>
       <maml:para>Checks that the SQL Server instance exists</maml:para>
-      <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -497,7 +535,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -511,7 +549,7 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
+        <maml:linkText>https://github.com/DrJohnT/PublishDacPac</maml:linkText>
         <maml:uri>https://github.com/DrJohnT/PublishDacPac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -528,8 +566,7 @@
     <maml:description>
       <maml:para>Publishes a SSDT DacPac using a specified DacPac publish profile from your solution. Basically deploys the DACPAC by invoking SqlPackage.exe using a DacPac Publish profile.</maml:para>
       <maml:para>Note that the XML of the DAC Publish Profile will updated with the Server, Database and SqlCmdVariables variables and a new file written to same folder as the DACPAC called "$Database.deploy.publish.xml" where $Database is the value passed to the -Database parameter.</maml:para>
-      <maml:para>This module requires SqlPackage.exe to be installed on the host machine.  This can be done by installing Microsoft SQL Server Management Studio from https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017</maml:para>
-      <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      <maml:para>This module requires SqlPackage.exe to be installed on the host machine. See https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -585,7 +622,11 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>SqlCmdVariables</maml:name>
           <maml:Description>
-            <maml:para>A string array containing SqlCmd variables to be updated in the DAC Publish Profile. These should be name/value pairs with no delimiters.  For example:     var1=varvalue1     var2=varvalue2     var3=varvalue3 The simplest way of creating this in PowerShell is     [string[]]$SqlCmdVariables = @();     $SqlCmdVariables += "var1=varvalue1";     $SqlCmdVariables += "var2=varvalue2";     $SqlCmdVariables += "var3=varvalue3"; And pass $SqlCmdVariables to the -SqlCmdVariables parameter.</maml:para>
+            <maml:para>A string array containing SqlCmd variables to be updated in the DAC Publish Profile. These should be name/value pairs with no delimiters.  For example:</maml:para>
+            <maml:para>    var1=varvalue1     var2=varvalue2     var3=varvalue3</maml:para>
+            <maml:para>The simplest way of creating this in PowerShell is</maml:para>
+            <maml:para>    [string[]]$SqlCmdVariables = @();     $SqlCmdVariables += "var1=varvalue1";     $SqlCmdVariables += "var2=varvalue2";     $SqlCmdVariables += "var3=varvalue3";</maml:para>
+            <maml:para>And pass $SqlCmdVariables to the -SqlCmdVariables parameter.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
@@ -598,7 +639,7 @@
           <maml:name>PreferredVersion</maml:name>
           <maml:Description>
             <maml:para>Defines the preferred version of SqlPackage.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter at all. Recommed you use the latest version of SqlPackage.exe as this will deploy to all previous version of SQL Server.</maml:para>
-            <maml:para>    latest = use the latest version of SqlPackage.exe     150 = SQL Server 2019     140 = SQL Server 2017     130 = SQL Server 2016     120 = SQL Server 2014     110 = SQL Server 2012</maml:para>
+            <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -661,7 +702,11 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>SqlCmdVariables</maml:name>
         <maml:Description>
-          <maml:para>A string array containing SqlCmd variables to be updated in the DAC Publish Profile. These should be name/value pairs with no delimiters.  For example:     var1=varvalue1     var2=varvalue2     var3=varvalue3 The simplest way of creating this in PowerShell is     [string[]]$SqlCmdVariables = @();     $SqlCmdVariables += "var1=varvalue1";     $SqlCmdVariables += "var2=varvalue2";     $SqlCmdVariables += "var3=varvalue3"; And pass $SqlCmdVariables to the -SqlCmdVariables parameter.</maml:para>
+          <maml:para>A string array containing SqlCmd variables to be updated in the DAC Publish Profile. These should be name/value pairs with no delimiters.  For example:</maml:para>
+          <maml:para>    var1=varvalue1     var2=varvalue2     var3=varvalue3</maml:para>
+          <maml:para>The simplest way of creating this in PowerShell is</maml:para>
+          <maml:para>    [string[]]$SqlCmdVariables = @();     $SqlCmdVariables += "var1=varvalue1";     $SqlCmdVariables += "var2=varvalue2";     $SqlCmdVariables += "var3=varvalue3";</maml:para>
+          <maml:para>And pass $SqlCmdVariables to the -SqlCmdVariables parameter.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
@@ -674,7 +719,7 @@
         <maml:name>PreferredVersion</maml:name>
         <maml:Description>
           <maml:para>Defines the preferred version of SqlPackage.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter at all. Recommed you use the latest version of SqlPackage.exe as this will deploy to all previous version of SQL Server.</maml:para>
-          <maml:para>    latest = use the latest version of SqlPackage.exe     150 = SQL Server 2019     140 = SQL Server 2017     130 = SQL Server 2016     120 = SQL Server 2014     110 = SQL Server 2012</maml:para>
+          <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -688,7 +733,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>This module requires SqlPackage.exe to be installed on the host machine. This can be done by installing Microsoft SQL Server Management Studio from https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -724,7 +769,128 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
+        <maml:linkText>https://github.com/DrJohnT/PublishDacPac</maml:linkText>
+        <maml:uri>https://github.com/DrJohnT/PublishDacPac</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Remove-Database</command:name>
+      <command:verb>Remove</command:verb>
+      <command:noun>Database</command:noun>
+      <maml:description>
+        <maml:para>Removes (Drops) the specified SQL database</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Removes / Drops the specified SQL database from the SQL Server instance</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Remove-Database</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Name of the target server, including instance and port if required.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Database</maml:name>
+          <maml:Description>
+            <maml:para>The name of the database to be deleted.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Name of the target server, including instance and port if required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>Database</maml:name>
+        <maml:Description>
+          <maml:para>The name of the database to be deleted.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Remove-Database -Server 'localhost' -Database 'MyTestDB'</dev:code>
+        <dev:remarks>
+          <maml:para>Connects to the server localhost to remove the database MyTestDB</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Remove-Database -Server 'localhost' -Database 'MyTestDB' -Credential myCred</dev:code>
+        <dev:remarks>
+          <maml:para>Connects to the server localhost using the credential supplied in myCred to remove the database MyTestDB</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/DrJohnT/PublishDacPac</maml:linkText>
         <maml:uri>https://github.com/DrJohnT/PublishDacPac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -740,7 +906,7 @@
     </command:details>
     <maml:description>
       <maml:para>Selects (finds) a specific version of SqlPackage.exe to use in subsequent commands.</maml:para>
-      <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+      <maml:para>For information on SqlPackage.exe see https://docs.microsoft.com/en-us/sql/tools/sqlpackage</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -748,8 +914,9 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>PreferredVersion</maml:name>
           <maml:Description>
-            <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter.</maml:para>
-            <maml:para>    latest = use the latest version of SqlPackage.exe     150 = SQL Server 2019     140 = SQL Server 2017     130 = SQL Server 2016     120 = SQL Server 2014     110 = SQL Server 2012</maml:para>
+            <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+            <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
+            <maml:para>If you are unsure which version(s) of SqlPackage.exe you have installed, use the function Find-SqlPackageLocations to obtain a full list.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -764,8 +931,9 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>PreferredVersion</maml:name>
         <maml:Description>
-          <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter.</maml:para>
-          <maml:para>    latest = use the latest version of SqlPackage.exe     150 = SQL Server 2019     140 = SQL Server 2017     130 = SQL Server 2016     120 = SQL Server 2014     110 = SQL Server 2012</maml:para>
+          <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+          <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
+          <maml:para>If you are unsure which version(s) of SqlPackage.exe you have installed, use the function Find-SqlPackageLocations to obtain a full list.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -788,7 +956,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>This module requires SqlPackage.exe to be installed on the host machine. This can be done by installing Microsoft SQL Server Management Studio from https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -801,7 +969,7 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Select-SqlPackageVersion -PreferredVersion 130</dev:code>
+        <dev:code>Select-SqlPackageVersion -PreferredVersion 13</dev:code>
         <dev:remarks>
           <maml:para>Return the SQL Server 2016 version of SqlPackage.exe if it exists, otherwise return latest</maml:para>
         </dev:remarks>
@@ -809,7 +977,7 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
+        <maml:linkText>https://github.com/DrJohnT/PublishDacPac</maml:linkText>
         <maml:uri>https://github.com/DrJohnT/PublishDacPac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>

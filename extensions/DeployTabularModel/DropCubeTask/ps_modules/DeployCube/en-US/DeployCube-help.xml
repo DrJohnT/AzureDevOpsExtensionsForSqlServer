@@ -861,7 +861,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/DeployCube This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021  This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -875,7 +875,7 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/DrJohnT/DeployCube</maml:linkText>
+        <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://github.com/DrJohnT/DeployCube</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -2228,18 +2228,6 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
-          <maml:name>ImpersonationPwd</maml:name>
-          <maml:Description>
-            <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>CubeDatabase</maml:name>
           <maml:Description>
@@ -2255,7 +2243,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>Credential</maml:name>
           <maml:Description>
-            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+            <maml:para>A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
@@ -2288,31 +2276,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-          <maml:name>SqlUserID</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill SqlUserID Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-          <maml:name>SqlUserPwd</maml:name>
-          <maml:Description>
-            <maml:para>{{ Fill SqlUserPwd Description }}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="AuthenticationKind">
           <maml:name>ImpersonationMode</maml:name>
           <maml:Description>
             <maml:para>Defines how the cube will connect to the data source. Possible options are 'ImpersonateServiceAccount' which connects to the SQL Server database using , or 'ImpersonateAccount' which uses a specific username/password.  When using 'ImpersonateAccount' it is best to use a domain based service account with a static password.</maml:para>
@@ -2324,10 +2288,22 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
           <maml:name>ImpersonationAccount</maml:name>
           <maml:Description>
             <maml:para>The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="ImpersonationPassword">
+          <maml:name>ImpersonationPwd</maml:name>
+          <maml:Description>
+            <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2366,7 +2342,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>Credential</maml:name>
         <maml:Description>
-          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          <maml:para>A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
@@ -2399,31 +2375,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-        <maml:name>SqlUserID</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill SqlUserID Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-        <maml:name>SqlUserPwd</maml:name>
-        <maml:Description>
-          <maml:para>{{ Fill SqlUserPwd Description }}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="AuthenticationKind">
         <maml:name>ImpersonationMode</maml:name>
         <maml:Description>
           <maml:para>Defines how the cube will connect to the data source. Possible options are 'ImpersonateServiceAccount' which connects to the SQL Server database using , or 'ImpersonateAccount' which uses a specific username/password.  When using 'ImpersonateAccount' it is best to use a domain based service account with a static password.</maml:para>
@@ -2435,7 +2387,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
         <maml:name>ImpersonationAccount</maml:name>
         <maml:Description>
           <maml:para>The username of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>
@@ -2447,7 +2399,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="ImpersonationPassword">
         <maml:name>ImpersonationPwd</maml:name>
         <maml:Description>
           <maml:para>The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.</maml:para>

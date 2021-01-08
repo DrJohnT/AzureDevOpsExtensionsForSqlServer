@@ -2,7 +2,7 @@
 [![Publish DACPAC using a DAC Publish Profile](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.RunSqlCmdScripts.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.RunSqlCmdScripts)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
 
-[![Donate with PayPal to Dr John T](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/images/donate.png)](https://paypal.me/drjohnt)
+[![Donate with PayPal to Dr John T](images/donate.png)](https://paypal.me/drjohnt)
 
 ## Run SQL / SQLCMD Scripts against your database passing multiple SQLCMD variables
 
