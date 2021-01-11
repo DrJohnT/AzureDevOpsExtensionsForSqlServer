@@ -65,6 +65,10 @@ function Get-SqlPackagePath {
 
     $SqlPackageExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
 
+    $SqlPackageExes += Get-Childitem -Path "${env:ProgramFiles}\Microsoft SQL Server\*\DAC\bin" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+
+    $SqlPackageExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\DAC\bin" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+
     $VsPaths = Resolve-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\" -ErrorAction SilentlyContinue;
     foreach ($VsPath in $VsPaths) {
         $SqlPackageExes += Get-Childitem -Path $VsPath -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
