@@ -12,7 +12,7 @@
         $CurrentFolder = Split-Path -Parent $PSScriptRoot;
         #Write-Host $CurrentFolder
         
-        $data.AsDatabasePath = Resolve-Path "$CurrentFolder\..\..\examples\CubeToPublish\MyTabularProject\bin\Model.asdatabase";
+        $data.AsDatabasePath = Resolve-Path "$CurrentFolder\..\..\examples\CubeAtCompatibility1200\bin\Model.asdatabase";
         $data.PublishDacPacTask =  Resolve-Path "$CurrentFolder\..\PublishDacPac\PublishDacPacTask\PublishDacPacTask.ps1";
 
         $data.CubeDatabaseName1 = "DeployCubeIntegrationTest1";

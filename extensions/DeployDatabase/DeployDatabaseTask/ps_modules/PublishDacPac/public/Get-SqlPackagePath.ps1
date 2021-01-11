@@ -8,9 +8,12 @@ function Get-SqlPackagePath {
 
     Checks the following locations: 
     
+        ${env:ProgramFiles}\Microsoft SQL Server\*\DAC\bin
         ${env:ProgramFiles}\Microsoft SQL Server\*\Tools\Binn
         ${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn
-        ${env:ProgramFiles(x86)}\Microsoft SQL Server Management Studio *\Common7\IDE
+        ${env:ProgramFiles(x86)}\Microsoft SQL Server\*\DAC\bin
+        ${env:ProgramFiles(x86)}\Microsoft Visual Studio *\Common7\IDE\Extensions\Microsoft\SQLDB\DAC
+        ${env:ProgramFiles(x86)}\Microsoft Visual Studio\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\
         $env:CustomSqlPackageInstallLocation
     
     The environment variable $env:CustomSqlPackageInstallLocation allows you to specify your own custom install directory.
@@ -60,25 +63,24 @@ function Get-SqlPackagePath {
     [string] $ExeName = "SqlPackage.exe";
     [string] $SqlPackageExePath = $null;
     $Version = $Version.Substring(0,2);
-    # always return x64 version if present
-    [System.IO.FileSystemInfo[]]$SqlPackageExes = Get-Childitem -Path "${env:ProgramFiles}\Microsoft SQL Server\*\Tools\Binn" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
+    [System.Management.Automation.PathInfo[]]$PathsToSearch = Resolve-Path -Path "${env:ProgramFiles}\Microsoft SQL Server\*\DAC\bin" -ErrorAction SilentlyContinue;
+    $PathsToSearch += Resolve-Path -Path "${env:ProgramFiles}\Microsoft SQL Server\*\Tools\Binn" -ErrorAction SilentlyContinue;
+    $PathsToSearch += Resolve-Path -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn" -ErrorAction SilentlyContinue;
+    $PathsToSearch += Resolve-Path -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\DAC\bin" -ErrorAction SilentlyContinue;
+    $PathsToSearch += Resolve-Path -Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio *\Common7\IDE\Extensions\Microsoft\SQLDB\DAC" -ErrorAction SilentlyContinue;
+    $PathsToSearch += Resolve-Path -Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\" -ErrorAction SilentlyContinue;    
 
-    $SqlPackageExes += Get-Childitem -Path "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
-
-    $VsPaths = Resolve-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\";
-    foreach ($VsPath in $VsPaths) {
-        $SqlPackageExes += Get-Childitem -Path $VsPath -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
-    }
-    
-    # Custom install location defined by Environment variable CustomSqlPackageInstallLocation
+    # For those that install SQLPackage.exe in a completely different location, set environment variable CustomSqlPackageInstallLocation
     $CustomInstallLocation = [Environment]::GetEnvironmentVariable('CustomSqlPackageInstallLocation');
     if ("$CustomInstallLocation" -ne "") {
         if (Test-Path $CustomInstallLocation) {
-            $SqlPackageExes += Get-Childitem -Path "$CustomInstallLocation\" -Recurse -Include $ExeName -ErrorAction SilentlyContinue;
-        } else {
-            throw "Invalid custom environment variable path: CustomSqlPackageInstallLocation";
+            $PathsToSearch += Resolve-Path -Path "$CustomInstallLocation\" -ErrorAction SilentlyContinue;
         }        
-    }        
+    }
+
+    foreach ($PathToSearch in $PathsToSearch) {
+        [System.IO.FileSystemInfo[]]$SqlPackageExes += Get-Childitem -Path $PathToSearch  -Recurse -Include $ExeName -ErrorAction SilentlyContinue;           
+    }
 
     foreach ($SqlPackageExe in $SqlPackageExes) {
         $ExePath = $SqlPackageExe.FullName;

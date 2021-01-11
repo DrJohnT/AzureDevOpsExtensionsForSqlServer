@@ -12,7 +12,7 @@
 RootModule = 'PublishDacPac.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.0'
+ModuleVersion = '1.1.1'
 
 # ID used to uniquely identify this module
 GUID = '12957ebe-7de8-4bf6-9b19-c07596b04f9f'
