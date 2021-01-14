@@ -9,6 +9,8 @@ Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "CubeAtCompatibility1200", "
 EndProject
 Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "CubeAtCompatibility1500", "CubeAtCompatibility1500\CubeAtCompatibility1500.smproj", "{EF14186E-FA9B-4882-8B18-CD14E2ECD631}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DatabaseToPublishToAzureSqlDB", "DatabaseToPublishToAzureSqlDB\DatabaseToPublishToAzureSqlDB.sqlproj", "{D36C464D-DAB9-4C92-991C-C8953F2B12C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,24 @@ Global
 		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|x86.ActiveCfg = Development|x86
 		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|x86.Build.0 = Development|x86
 		{EF14186E-FA9B-4882-8B18-CD14E2ECD631}.Release|x86.Deploy.0 = Development|x86
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|x86.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|Any CPU.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|x86.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|x86.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|x86.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.Build.0 = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

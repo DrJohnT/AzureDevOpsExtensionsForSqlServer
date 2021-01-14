@@ -2,9 +2,9 @@
     "manifestVersion": 1,
     "id": "DeploySsisProject",
     "version": "1.0.0",
-    "name": "SSIS Project Deployment Tools",
+    "name": "SSIS Build and Deployment Tools",
     "publisher": "DrJohnExtensions",
-    "description": "Deploy SSIS projects, create environments and folders to Microsoft SQL Server Integration Services",
+    "description": "Build and Deploy SSIS projects with SSIS DevOps Tools",
     "public": true,
     "categories": [
         "Azure Pipelines"
@@ -12,9 +12,8 @@
     "tags": [
         "deploy",
         "release",
-        "ssas",
-        "tabular",
-        "cube"
+        "ssis",
+        "ssisdb"
     ],
     "icons": {
         "default": "images/microsoft-ssis.png"
@@ -58,7 +57,16 @@
     ],
     "files": [
         {
+            "path": "BuildSsisProjectTask"
+        },
+        {
             "path": "CreateSsisFolderTask"
+        },
+        {
+            "path": "DeploySsisProjectTask"
+        },
+        {
+            "path": "DropSsisFolderTask"
         },
         {
             "path": "images",
@@ -67,13 +75,43 @@
     ],
     "contributions": [
         {
-            "id": "CreateSsisFolderTask",
+            "id": "BuildSsisProject",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "BuildSsisProjectTask"
+            }
+        },        
+        {
+            "id": "CreateSsisFolder",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
                 "name": "CreateSsisFolderTask"
+            }
+        },
+        {
+            "id": "DeploySsisProject",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "DeploySsisProjectTask"
+            }
+        },
+        {
+            "id": "DropSsisFolder",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "DropSsisFolderTask"
             }
         }
     ]

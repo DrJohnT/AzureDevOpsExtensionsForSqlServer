@@ -7,7 +7,7 @@
     <CreateNewDatabase>False</CreateNewDatabase>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <GenerateSmartDefaults>True</GenerateSmartDefaults>
-    <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
+    <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <DropObjectsNotInSource>True</DropObjectsNotInSource>
     <DropExtendedPropertiesNotInSource>False</DropExtendedPropertiesNotInSource>

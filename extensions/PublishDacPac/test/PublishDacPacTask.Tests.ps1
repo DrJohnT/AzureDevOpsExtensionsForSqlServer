@@ -42,6 +42,7 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
         It "Database should be deployed with CI publish profile" {
             $data = Get-Config;
             $DatabaseName = New-Guid;
+            $DatabaseName = "Test-$DatabaseName";
             $env:INPUT_DacPacPath = $data.DacPacPath;
             $env:INPUT_DacPublishProfile = $data.DacProfile;
             $env:INPUT_TargetServerName = $data.ServerName;
@@ -51,11 +52,14 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.PublishDacPacTask));
 
             ( Ping-SqlDatabase -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
+
+            ( Remove-Database -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
         }
 
         It "Database should be deployed with LOCAL publish profile" {
             $data = Get-Config;
             $DatabaseName = New-Guid;
+            $DatabaseName = "Test-$DatabaseName";
             $env:INPUT_DacPacPath = $data.DacPacPath;
             $env:INPUT_DacPublishProfile = $data.AltDacProfilePath;
             $env:INPUT_TargetServerName = $data.ServerName;
@@ -65,6 +69,8 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.PublishDacPacTask));
 
             ( Ping-SqlDatabase -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
+
+            ( Remove-Database -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
         }
     }
 
@@ -73,6 +79,7 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
         It "Deploy Database with JSON SqlCmdVariables with LOCAL publish profile" {
             $data = Get-Config;
             $DatabaseName = New-Guid;
+            $DatabaseName = "Test-$DatabaseName";
             $env:INPUT_DacPacPath = $data.DacPacPath;
             $env:INPUT_DacPublishProfile = $data.AltDacProfilePath;
             $env:INPUT_TargetServerName = $data.ServerName;
@@ -83,11 +90,14 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.PublishDacPacTask));
 
             ( Ping-SqlDatabase -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
+
+            ( Remove-Database -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
         }
 
         It "Deploy Database with TEXT SqlCmdVariables with LOCAL publish profile" {
             $data = Get-Config;
             $DatabaseName = New-Guid;
+            $DatabaseName = "Test-$DatabaseName";
             $env:INPUT_DacPacPath = $data.DacPacPath;
             $env:INPUT_DacPublishProfile = $data.AltDacProfilePath;
             $env:INPUT_TargetServerName = $data.ServerName;
@@ -98,6 +108,8 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.PublishDacPacTask));
 
             ( Ping-SqlDatabase -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
+
+            ( Remove-Database -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
         }
     }
 }

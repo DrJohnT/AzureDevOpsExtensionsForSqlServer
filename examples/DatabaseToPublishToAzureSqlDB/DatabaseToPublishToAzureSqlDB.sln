@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DatabaseToPublishToAzureSqlDB", "DatabaseToPublishToAzureSqlDB.sqlproj", "{D36C464D-DAB9-4C92-991C-C8953F2B12C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Development|Any CPU = Development|Any CPU
+		Development|x86 = Development|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|x86.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|Any CPU.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|x86.ActiveCfg = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|x86.Build.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Development|x86.Deploy.0 = Debug|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.Build.0 = Release|Any CPU
+		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {764A69E5-0727-40CF-9610-3B18B82484E7}
+	EndGlobalSection
+EndGlobal

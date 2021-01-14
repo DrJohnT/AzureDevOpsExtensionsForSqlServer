@@ -13,14 +13,14 @@ $PublishDacExamples = Resolve-Path "$moduleRoot\PublishDacPac\examples";
 
 write-host "Copying $AzureDevOpsExtensionsForSqlServerExamples to:" -ForegroundColor Yellow; 
 
-write-host "DeployCube: $DeployCubeExamples" -ForegroundColor Yellow; 
+write-host "DeployCube: $DeployCubeRoot" -ForegroundColor Yellow; 
 # copy everything and delete the one thing we don't want
 Copy-Item -Path $AzureDevOpsExtensionsForSqlServerExamples -Destination $DeployCubeRoot -Recurse -Force;
 Remove-Item -Path "$DeployCubeRoot\examples\ForTests\CustomSqlPackageInstallLocation" -Recurse -Force;
-Remove-Item -Path "$DeployCubeRoot\examples\ForTests\SqlCmdScripts" -Recurse -Force;
+Remove-Item -Path "$DeployCubeRoot\examples\SqlCmdScripts" -Recurse -Force;
 
-write-host "PublishDacPac: $PublishDacPacExamples" -ForegroundColor Yellow; 
+write-host "PublishDacPac: $PublishDacExamples" -ForegroundColor Yellow; 
 # copy specific folders
-Copy-Item -Path "$AzureDevOpsExtensionsForSqlServerExamples\DatabaseToPublish"       -Destination $PublishDacExamples -Recurse -Force;
-Copy-Item -Path "$AzureDevOpsExtensionsForSqlServerExamples\SolutionToPublish.sln"   -Destination $PublishDacExamples -Recurse -Force;
-Copy-Item -Path "$AzureDevOpsExtensionsForSqlServerExamples\ForTests\CustomSqlPackageInstallLocation"  -Destination "$PublishDacExamples\ForTests" -Recurse -Force;
+Copy-Item -Path "$AzureDevOpsExtensionsForSqlServerExamples\DatabaseToPublish"                          -Destination $PublishDacExamples -Recurse -Force;
+Copy-Item -Path "$AzureDevOpsExtensionsForSqlServerExamples\DatabaseToPublishToAzureSqlDB"              -Destination $PublishDacExamples -Recurse -Force;
+Copy-Item -Path "$AzureDevOpsExtensionsForSqlServerExamples\ForTests\CustomSqlPackageInstallLocation"   -Destination "$PublishDacExamples\ForTests" -Recurse -Force;

@@ -1,23 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>DatabaseToPublish</Name>
+    <Name>DatabaseToPublishToAzure</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{692977ce-0842-4424-b08a-fe676674a66d}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
+    <ProjectGuid>{d36c464d-dab9-4c92-991c-c8953f2b12c3}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>DatabaseToPublish</RootNamespace>
-    <AssemblyName>DatabaseToPublish</AssemblyName>
+    <RootNamespace>DatabaseToPublishToAzure</RootNamespace>
+    <AssemblyName>DatabaseToPublishToAzure</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -57,39 +56,20 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="dbo\Tables" />
     <Folder Include="dbo" />
-    <Folder Include="Scripts\Post-Deploy" />
+    <Folder Include="dbo\Tables" />
     <Folder Include="Scripts" />
+    <Folder Include="Scripts\Post-Deploy" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\MyOnlyTable.sql" />
-    <PostDeploy Include="Scripts\Post-Deploy\PostDeploy.sql" />
     <Build Include="dbo\Tables\MyOtherTable.sql" />
     <Build Include="dbo\Tables\MyTable.sql" />
+    <PostDeploy Include="Scripts\Post-Deploy\PostDeploy.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DatabaseToPublish.CI.publish.xml">
+    <None Include="DatabaseToPublishToAzure.Upgrade.publish.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DatabaseToPublish.Upgrade.publish.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DatabaseToPublish.LOCAL.publish.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DatabaseToPublish.NoVars.publish.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <SqlCmdVariable Include="StagingDBName">
-      <DefaultValue>StagingDB</DefaultValue>
-      <Value>$(SqlCmdVar__1)</Value>
-    </SqlCmdVariable>
-    <SqlCmdVariable Include="StagingDBServer">
-      <DefaultValue>localhost</DefaultValue>
-      <Value>$(SqlCmdVar__2)</Value>
-    </SqlCmdVariable>
   </ItemGroup>
 </Project>

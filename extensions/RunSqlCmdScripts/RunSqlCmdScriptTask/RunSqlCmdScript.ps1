@@ -18,8 +18,8 @@ param()
     [string]$SqlCmdVariablesInJson = Get-VstsInput -Name SqlCmdVariablesInJson;
     [string]$SqlCmdVariablesInText = Get-VstsInput -Name SqlCmdVariablesInText;
     [string]$AuthenticationMethod = Get-VstsInput -Name AuthenticationMethod;
-    [string]$Username = Get-VstsInput -Name  Username;
-    [string]$Password = Get-VstsInput -Name Password;
+    [string]$AuthenticationUser = Get-VstsInput -Name AuthenticationUser;
+    [string]$AuthenticationPassword = Get-VstsInput -Name AuthenticationPassword;
     [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;
 
     $global:ErrorActionPreference = 'Stop';
@@ -39,7 +39,7 @@ param()
         Write-Host "SqlCmdSciptPath:    $SqlCmdSciptPath";
         Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
         if ($AuthenticationMethod -eq "sqlauth") {
-            Write-Host "SQL Login:          $Username";
+            Write-Host "AuthenticationUser: $AuthenticationUser";
         }
         
 
@@ -80,21 +80,31 @@ param()
         }
 
         # Now Invoke-Sqlcmd
-        $Command = "Invoke-Sqlcmd -Server $Server -Database $Database -InputFile '$SqlCmdSciptPath' -ErrorAction Stop";
+        $Command = "Invoke-Sqlcmd -ServerInstance $Server -Database $Database -InputFile ""$SqlCmdSciptPath"" -ErrorAction Stop";
+
         if ("$QueryTimeout" -ne "") {
             $Command += " -QueryTimeout $QueryTimeout";
         }       
+        
         if ($AuthenticationMethod -eq "sqlauth") { 
-            $Command += " -Username '$Username' -Password '$Password'";
+            [SecureString] $SecurePassword = ConvertTo-SecureString $AuthenticationPassword -AsPlainText -Force;
+            [PsCredential] $Credential = New-Object System.Management.Automation.PSCredential($AuthenticationUser, $SecurePassword);
+            $Command += ' -Credential $Credential';
         }
 
         if ($SqlCmdVariableType -ne 'none') {
-            #$Command += " -Variable '$SqlCmdVariables'";
             $Command += ' -Variable $SqlCmdVariables';
-            $scriptBlock = [Scriptblock]::Create($Command);
+        }     
+
+        $scriptBlock = [Scriptblock]::Create($Command);          
+        
+        if ($SqlCmdVariableType -ne 'none' -and $AuthenticationMethod -eq "sqlauth") {
+            Invoke-Command -ScriptBlock $scriptBlock -ArgumentList { $SqlCmdVariables, $Credential };
+        } elseif ($SqlCmdVariableType -ne 'none') {
             Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $SqlCmdVariables;
-        } else {                     
-            $scriptBlock = [Scriptblock]::Create($Command);
+        } elseif ($AuthenticationMethod -eq "sqlauth") {            
+            Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $Credential;
+        } else {            
             Invoke-Command -ScriptBlock $scriptBlock;
         }
         
@@ -102,7 +112,6 @@ param()
         Write-Host "==============================================================================";
     } catch {
         Write-Error $_;
-        exit 1;
     } finally {
         Trace-VstsLeavingInvocation $MyInvocation
     }

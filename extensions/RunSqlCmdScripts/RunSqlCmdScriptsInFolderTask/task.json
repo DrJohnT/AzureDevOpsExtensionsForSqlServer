@@ -1,8 +1,8 @@
 {
     "id": "ac2ee55f-4e52-4dbe-a01b-2b43ed500433",
     "name": "RunSqlCmdScriptsInFolderTask",
-    "friendlyName": "Run all SQL Scripts in folder in SQLCMD mode",
-    "description": "Run a multiple SQL Scripts in SQLCMD mode passing multiple parameters via a SqlCmdVariables array",
+    "friendlyName": "Run all SQL Scripts in a folder in SqlCmd mode",
+    "description": "Run multiple SQL Scripts in a folder in SqlCmd mode and passing in parameters via a SqlCmdVariables array",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/RunSqlCmdScripts)",
     "author": "Dr. John Tunnicliffe",
     "preview": false,
@@ -21,7 +21,7 @@
     "version": {
         "Major": "1",
         "Minor": "1",
-        "Patch": "5"
+        "Patch": "6"
     },
     "instanceNameFormat": "Run SQLCMD Scripts in folder $(SqlCmdSciptFolderPath)",
     "inputs": [
@@ -106,12 +106,12 @@
             "defaultValue": "windows",
             "options": {
                 "windows": "Windows Authentication (default)",
-                "sqlauth": "SQL Server Authentication"
+                "sqlauth": "SQL Server or Azure SQL Authentication"
             },
             "groupName": "authmethod"
         },
         {
-            "name": "Username",
+            "name": "AuthenticationUser",
             "type": "string",
             "label": "The SQL Server Authentication Login ID for the SQL database",
             "required": false,
@@ -120,7 +120,7 @@
             "visibleRule": "AuthenticationMethod = sqlauth"
         },
         {
-            "name": "Password",
+            "name": "AuthenticationPassword",
             "type": "string",
             "label": "The SQL Server Authentication Password for the SQL database Login ID",
             "required": false,

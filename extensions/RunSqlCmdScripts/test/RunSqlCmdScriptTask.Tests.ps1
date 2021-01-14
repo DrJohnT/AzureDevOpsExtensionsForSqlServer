@@ -10,71 +10,83 @@
         $data = @{};
         $CurrentFolder = Split-Path -Parent $PSScriptRoot;
         
+        $data.ServerInstance = $Env:ServerInstance;
+        $data.Database = $Env:Database;
+        $data.AuthenticationUser = $Env:AuthenticationUser; 
+        $data.AuthenticationPassword = $Env:AuthenticationPassword;
+        [SecureString] $SecurePassword = ConvertTo-SecureString $data.AuthenticationPassword -AsPlainText -Force;
+        [PsCredential] $data.Credential = New-Object System.Management.Automation.PSCredential($data.AuthenticationUser, $SecurePassword);
+
         $data.RunSqlCmdScriptTask = Resolve-Path "$CurrentFolder\RunSqlCmdScriptTask\RunSqlCmdScript.ps1";
         $SqlCmdFolder = Resolve-Path "$CurrentFolder\..\..\examples\SqlCmdScripts\SingleScripts";
 
         $data.SqlCmdScriptFile1 =  Resolve-Path "$SqlCmdFolder\InsertIntoMyOtherTableSqlCmd1.sql";
         $data.SqlCmdScriptFile2 =  Resolve-Path "$SqlCmdFolder\InsertIntoMyOtherTableSqlCmd2.sql";
         $data.SqlCmdScriptFile3 =  Resolve-Path "$SqlCmdFolder\InsertIntoMyOtherTableSqlCmd3.sql";
-        $data.RowCountQuery = "select COUNT(*) as CountOfRows from dbo.MyOtherTable;"
-        $data.HasValueQuery = "select MyOtherColumn from dbo.MyOtherTable where MyOtherTableId = 2"
+        $data.RowCountQuery = "select COUNT(*) as CountOfRows from dbo.MyOtherTable;";
+        $data.HasValueQuery = "select MyOtherColumn from dbo.MyOtherTable where MyOtherTableId = 2";
                 
         return $data;
     }
 }
 
-
-
-
-#Write-Host $SqlCmdFolder
-
-
-Describe "RunSqlCmdScriptTask" -Tag "RunSqlCmdScripts" {
+Describe "RunSqlCmdScriptTask" -Tag Azure,OnPrem {
 
     Context "Execute Sql Script" {
+        
         BeforeEach {
-            Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query "truncate table dbo.MyOtherTable;" -ErrorAction Stop;
+            $data = Get-Config;
+            Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query "truncate table dbo.MyOtherTable;" -Credential $data.Credential -ErrorAction Stop;
         }
 
         It "Execute plain SQL Script" {
             $data = Get-Config;
             $env:INPUT_SqlCmdSciptPath = $data.SqlCmdScriptFile1;
-            $env:INPUT_Server = "localhost";
-            $env:INPUT_Database = "DatabaseToPublish";
+            $env:INPUT_Server = $data.ServerInstance;
+            $env:INPUT_Database = $data.Database;
+            $env:INPUT_AuthenticationMethod = "sqlauth";
+            $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;             
             $env:INPUT_SqlCmdVariableType = 'none'
             $env:INPUT_SqlCmdVariablesInJson = ''
             $env:INPUT_SqlCmdVariablesInText = '';
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
 
-            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('CountOfRows') | Should -Be 1;
         }
 
         It "Execute SQL Script with two SqlCmdVariables" {
             $data = Get-Config;
             $env:INPUT_SqlCmdSciptPath = $data.SqlCmdScriptFile2;
-            $env:INPUT_Server = "localhost";
-            $env:INPUT_Database = "DatabaseToPublish";
-            $env:INPUT_SqlCmdVariableType = 'text'
-            $env:INPUT_SqlCmdVariablesInJson = ''
+            $env:INPUT_Server = $data.ServerInstance;
+            $env:INPUT_Database = $data.Database;
+            $env:INPUT_AuthenticationMethod = "sqlauth";
+            $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;                
+            $env:INPUT_SqlCmdVariableType = 'text';
+            $env:INPUT_SqlCmdVariablesInJson = '';
             $env:INPUT_SqlCmdVariablesInText = @"
 MyDataValue=Value1
 MyDataValue2=Value2
 "@
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
 
-            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.HasValueQuery -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.HasValueQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('MyOtherColumn') | Should -Be 'Value2';
 
-            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('CountOfRows') | Should -Be 2;
         }
 
         It "Execute Sql Script with three SqlCmdVariables" {
             $data = Get-Config;
             $env:INPUT_SqlCmdSciptPath = $data.SqlCmdScriptFile3;
-            $env:INPUT_Server = "localhost";
-            $env:INPUT_Database = "DatabaseToPublish";
+            $env:INPUT_Server = $data.ServerInstance;
+            $env:INPUT_Database = $data.Database;
+            $env:INPUT_AuthenticationMethod = "sqlauth";
+            $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;                
             $env:INPUT_SqlCmdVariableType = 'text'
             $env:INPUT_SqlCmdVariablesInJson = ''
             [string] $sqlCmdValues = @"
@@ -85,21 +97,21 @@ NewDataValue3=ThreeValues3
             $env:INPUT_SqlCmdVariablesInText = $sqlCmdValues;
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
 
-            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.HasValueQuery -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.HasValueQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('MyOtherColumn') | Should -Be 'ThreeValues2';
 
-            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('CountOfRows') | Should -Be 3;
         }
 
         It "Execute Sql Script with specific username/password" {
             $data = Get-Config;
             $env:INPUT_SqlCmdSciptPath = $data.SqlCmdScriptFile3;
-            $env:INPUT_Server = "localhost";
-            $env:INPUT_Database = "DatabaseToPublish";
+            $env:INPUT_Server = $data.ServerInstance;
+            $env:INPUT_Database = $data.Database;
             $env:INPUT_AuthenticationMethod = "sqlauth";
-            $env:INPUT_Username = "ea";
-            $env:INPUT_Password = "open";
+            $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;      
             $env:INPUT_SqlCmdVariableType = 'text'
             $env:INPUT_SqlCmdVariablesInJson = ''
             [string] $sqlCmdValues = @"
@@ -110,13 +122,15 @@ NewDataValue3=ThreeValues3
             $env:INPUT_SqlCmdVariablesInText = $sqlCmdValues;
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
 
-            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.HasValueQuery -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.HasValueQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('MyOtherColumn') | Should -Be 'ThreeValues2';
 
-            $results = Invoke-Sqlcmd -Server "localhost" -Database "DatabaseToPublish" -Query $data.RowCountQuery -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('CountOfRows') | Should -Be 3;
         }
+        
     }
+    
 
 }
 

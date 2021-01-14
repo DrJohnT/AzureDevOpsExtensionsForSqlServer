@@ -1,0 +1,74 @@
+{
+    "id": "91bb60a1-a8a3-43ca-91c4-3ddc19e234c0",
+    "name": "BuildSsisProjectTask",
+    "friendlyName": "Build SSIS Project",
+    "description": "Build SSIS Project using Microsoft SSIS DevOps Tools",
+    "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/DeploySsisProject)",
+    "author": "Dr. John Tunnicliffe",
+    "preview": true,
+    "deprecated": false,
+    "showEnvironmentVariables": false,
+    "category": "Utility",
+    "demands": [],
+    "minimumAgentVersion": "1.95.0",
+    "version": {
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "0"
+    },
+    "instanceNameFormat": "Build SSIS Project $(SsisProjectPath)",
+    "inputs": [
+		{
+            "name": "project",
+            "type": "filePath",
+            "label": "File path of the dtproj file to be built.",
+            "required": true,
+            "helpMarkDown": "File path of the dtproj file to be built."
+        },
+        {
+            "name": "output",
+            "type": "filePath",
+            "label": "Output path of the build artifact",
+            "required": false,
+            "helpMarkDown": "Output path of the build artifact. The value of this argument will overwrite the default output path in the project configuration."
+        },
+		{
+            "name": "configuration",
+            "type": "string",
+            "label": "Build configuration",
+            "required": false,
+            "helpMarkDown": "Name of the project configuration to be used for build. If not supplied, it defaults to the first defined project configuration in the dtproj file."
+        },        {
+            "name": "projectPassword",
+            "type": "string",
+            "label": "Password for the SSIS project when encrypted",
+            "required": false,
+            "helpMarkDown": "Password of the SSIS project and its packages. This argument is only valid when the protection level of the SSIS project and packages is EncryptSensitiveWithPassword or EncryptAllWithPassword. For package deployment model, all packages must share the same password specified by this argument."
+        },
+        {
+            "name": "stripSensitive",
+            "type": "bool",
+            "label": "Protection Level",
+            "required": false,
+            "helpMarkDown": "Convert the protection level of the SSIS project to DontSaveSensitve. When protection level is EncryptSensitiveWithPassword or EncryptAllWithPassword, the argument -projectPassword must be correctly set. This option is only valid for project deployment model."
+        },
+        {
+            "name": "logLevel",
+            "type": "pickList",
+            "options": {
+                "DIAG": "Diagnostic",
+                "INFO": "Information",
+                "WRN": "Warning",
+                "ERR": "Error"
+            },
+            "label": "Level of logging to be written to the output",
+            "required": false,
+            "helpMarkDown": "Only logs with equal or higher logging level will be written to the log file."
+        },
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "$(currentDirectory)\\BuildSsisProjectTask.ps1"
+        }
+    }
+}
