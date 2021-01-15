@@ -11,6 +11,7 @@
         $CurrentFolder = Split-Path -Parent $PSScriptRoot;
         
         $data.ServerInstance = $Env:ServerInstance;
+
         $data.Database = $Env:Database;
         $data.AuthenticationUser = $Env:AuthenticationUser; 
         $data.AuthenticationPassword = $Env:AuthenticationPassword;

@@ -4,27 +4,27 @@
 
 [![Donate with PayPal to Dr John T](images/donate.png)](https://paypal.me/drjohnt)
 
-## Run SQL / SQLCMD Scripts against your database passing multiple SQLCMD variables
+## Run SQL / SQLCMD scripts against your Azure or On-Premise database passing multiple SQLCMD variables
 
 SQLCMD mode is a convenient way to parameterize your deployment SQL scripts.  This extension provides two pipeline tasks:
 
 * Run single SQL Script in SQLCMD mode
-* Run all SQL Scripts in a folder in SQLCMD mode
+* Run all SQL Scripts in a folder in SQLCMD mode 
 
 SQLCMD variables can be passed as name/value pairs in multiline text format, or as a basic JSON file.  We recommend the JSON format as the content is easier to validate in Visual Studio Code.
 
-This extension can be used in a build or deployment pipeline to run pre- and post-deployment SQL scripts.
+This extension can be used in a build or deployment pipeline to run pre- and post-deployment SQL scripts.  We strongly recommend that you design and build your database model using SQL Server Data Tools (SSDT) as this automates the generation of change scripts.  SSDT models can then be conveniently deployed using our other component [Publish DACPAC using a DAC Publish Profile](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac).
 
-### New in Version 1.1
+### New in Version 1.1.8
 
-The extension now supports connection to the SQL database engine using SQL Server Authentication.  Two new fields have allow you to specify the username/password for the SQL Server login.  For obvious reasons, please use a secured variable in the password field!
+Supports SQL Server Authentication for both Azure and on-premise SQL servers.  Two new fields have allow you to specify the authentication user/password for the SQL Server login.  For obvious reasons, please use a secured variable in the password field!
 
-### Run single SQL Script in SQLCMD mode
+# Run single SQL Script in SQLCMD mode
 
 The screenshot below shows the configuration options for the task.
 ![image](images/ConfigureRunSingleSqlCmdScript.png "Configure Run Single SQLCMD Script")
 
-### Run all SQL Scripts in a folder in SQLCMD mode
+# Run all SQL Scripts in a folder in SQLCMD mode
 
 The screenshot below shows the configuration options for the task.
 
@@ -34,7 +34,7 @@ Setting _Recursive_ to true will cause the **Run all SQL Scripts in a folder in 
 
 ![image](images/ConfigureRunMultipleSqlCmdScriptsInFolder.png "Configure Run Multiple SQLCMD Scripts in Folder")
 
-### Example Pipeline
+# Example Pipeline
 
 Below is a sample pipeline including the Run SQLCMD extensions.
 

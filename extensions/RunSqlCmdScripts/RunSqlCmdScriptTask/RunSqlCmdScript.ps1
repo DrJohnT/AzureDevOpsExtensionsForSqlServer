@@ -80,7 +80,7 @@ param()
         }
 
         # Now Invoke-Sqlcmd
-        $Command = "Invoke-Sqlcmd -ServerInstance $Server -Database $Database -InputFile ""$SqlCmdSciptPath"" -ErrorAction Stop";
+        $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database $Database -InputFile '$SqlCmdSciptPath' -ErrorAction Stop";
 
         if ("$QueryTimeout" -ne "") {
             $Command += " -QueryTimeout $QueryTimeout";

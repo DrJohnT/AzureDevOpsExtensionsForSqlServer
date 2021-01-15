@@ -94,7 +94,7 @@ param()
             foreach ($SqlCmdFile in $SqlCmdFiles) {
                 Write-Host "Running SQLCMD file:   $(Split-Path -Leaf $SqlCmdFile)";
 
-                $Command = "Invoke-Sqlcmd -ServerInstance  $Server -Database $Database -InputFile ""$SqlCmdFile"" -ErrorAction Stop";
+                $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database $Database -InputFile '$SqlCmdFile' -ErrorAction Stop";
                 if ("$QueryTimeout" -ne "") {
                     $Command += " -QueryTimeout $QueryTimeout";
                 }
