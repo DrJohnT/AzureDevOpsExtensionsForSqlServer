@@ -1,13 +1,13 @@
-[![Build status](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_apis/build/status/AzureDevOpsExtensionsForSqlServer-CI)](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_build/latest?definitionId=6)
-[![Deployment tools for SSAS Tabular Cube Models](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.DeployTabularModel.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployTabularModel)
+[![Deployment tools for SSAS Tabular Cube Models](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.DeployTabularModel.svg?label=Azure%20DevOps%20Extension)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployTabularModel)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
+[![Build status](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_apis/build/status/AzureDevOpsExtensionsForSqlServer-CI)](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_build/latest?definitionId=6)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/DeployCube.svg)](https://www.powershellgallery.com/packages/DeployCube)
 
 [![Donate with PayPal to Dr John T](images/donate.png)](https://paypal.me/drjohnt)
 
-# Deployment tools for SSAS Tabular Cube Models
+# Deployment tools for Azure Analysis Services and on-premise SSAS Tabular Cube Models
 
-This extension adds four tasks to Azure DevOps which are ideal for integrating tabular cube models into your CI pipeline.
-With these tasks you can deploy, update, process and drop tabular cube models on an on-premise Microsoft SQL Server Analysis Services (SSAS) server.
+This extension adds four tasks to Azure DevOps which are ideal for integrating tabular cube models into your CI pipeline. With these tasks you can deploy, update, process and drop tabular cube models on an on-premise Microsoft SQL Server Analysis Services (SSAS) server.
 
 | Task     | Description                                                             |
 |---------------|--------------------------------------------------------------------------|
@@ -16,7 +16,7 @@ With these tasks you can deploy, update, process and drop tabular cube models on
 | Process SSAS Tabular cube model | Load a SSAS tabular cube model with data from an an on-premise SQL Server database by processing the cube |
 | Drop SSAS tabular cube model | Delete tabular cube model from an SSAS instance (if it exists) |
 
-As part of your CI pipeline you can use these tasks to deploy and populate your cube with data so you can run a suite of automated tests against your cube.
+As part of your CI pipeline you can use these tasks to deploy and populate your cube with data so you can run a suite of automated tests against your tabular model.
 
 These tasks can also be used to automate the deployment of tabular cubes using [Release pipelines in Azure Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/what-is-release-management?view=azure-devops) in a continuously delivery scenario.  For those using [Octopus Deploy](https://octopus.com/) or [Chef](https://www.chef.io/), you can use the underlying PowerShell module [DeployCube](https://github.com/DrJohnT/DeployCube) to perform the same deployment tasks.
 
@@ -40,7 +40,7 @@ In order to successfully deploy a tabular cube, the [Azure Pipelines self-hosted
 
 The screenshots below show how the components can be used in your CI pipeline.
 
-First the pipeline builds the solution using MsBuild.  The solution contains a SQL Server database project and a SSAS tabular cube project, so the build produces a DACPAC for the SQL database and an _.asdatabase_ file for the tabular cube model.  Next, we deploy the SQL Database using our sister component [Publish DACPAC using a DAC Publish Profile](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac)
+First the pipeline builds the solution using VsBuild.  The solution contains a SQL Server database project and a SSAS tabular cube project, so the build produces a DACPAC for the SQL database and an _.asdatabase_ file for the tabular cube model.  Next, we deploy the SQL Database using our sister component [Publish DACPAC using a DAC Publish Profile](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac)
 
 We ensure the build server has no remnants of the previous build by dropping the tabular model if it exists using the **Drop SSAS tabular cube model** task.  We use the **Deploy SSAS Tabular Cube Model** task to publish the tabular cube to the build server.
 We then update the connection string inside the cube so that it points to the previously deployed SQL Server database using the **Update SSAS tabular cube data source** task.
@@ -50,7 +50,7 @@ Next, we process the cube so that it contains data using the **Process SSAS Tabu
 
 ## Deploy SSAS Tabular Cube Model
 
-When you perform a **build** in a Visual Studio cube project, it creates an _.asdatabase_ file which defines the entire model including dimensions, attributes, measures, data sources and DAX calculations.  In the above pipeline MsBuild to create the _.asdatabase_ file from the Visual Studio solution.
+When you perform a **build** in a Visual Studio cube project, it creates an _.asdatabase_ file which defines the entire model including dimensions, attributes, measures, data sources and DAX calculations.  In the above pipeline VsBuild to create the _.asdatabase_ file from the Visual Studio solution.
 
 The basic inputs for the **Deploy SSAS Tabular Cube Model** task are simply the path to the _.asdatabase_ file, the target SSAS server and target cube database name.  Note that the tabular cube is always deployed without processing, as the data source connection settings are likely to be incorrect.  The **Process SSAS Tabular cube model** task can be used to load data into the cube.
 
@@ -78,11 +78,11 @@ The **Drop SSAS tabular cube model** task is usually used at the beginning of yo
 
 ![image](images/Inputs-DropCubeTask.png "Drop SSAS Tabular Cube Inputs")
 
-## MsBuild Task
+## VsBuild Task
 
-MsBuild is used to build the Visual Studio solution that contains a SQL Server database project and the SSAS tabular cube project.  This produces a DACPAC for the SQL database and an _.asdatabase_ file for the tabular cube model.
+VsBuild is used to build the Visual Studio solution that contains a SQL Server database project and the SSAS tabular cube project.  This produces a DACPAC for the SQL database and an _.asdatabase_ file for the tabular cube model.
 
-![image](images/Inputs-MsBuildTask.png "MsBuild task inputs")
+![image](images/Inputs-MsBuildTask.png "VsBuild task inputs")
 
 ## Publish DACPAC using a DAC Publish Profile Task
 

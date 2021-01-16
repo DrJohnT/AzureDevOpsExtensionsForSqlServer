@@ -9,7 +9,7 @@ param()
     Publishes a SSDT DacPac using a specified DAC publish profile from your solution.
     Basically deploys the DACPAC by invoking SqlPackage.exe using a DacPac Publish profile
 
-    Script written by (c) Dr. John Tunnicliffe, 2019 for Azure DevOps extension PublishDacPac available here: https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac
+    Script written by (c) Dr. John Tunnicliffe, 2019-2021 for Azure DevOps extension PublishDacPac available here: https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac
     Source code and documentation: https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/PublishDacPac
 	This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 
@@ -29,6 +29,10 @@ param()
     [string]$SqlCmdVariablesInJson = Get-VstsInput -Name "SqlCmdVariablesInJson";
     [string]$SqlCmdVariablesInText = Get-VstsInput -Name "SqlCmdVariablesInText";
     [string]$PreferredVersion = Get-VstsInput -Name "PreferredVersion";
+    [string]$AuthenticationMethod = Get-VstsInput -Name "AuthenticationMethod";
+    [string]$AuthenticationUser = Get-VstsInput -Name "AuthenticationUser";
+    [string]$AuthenticationPassword = Get-VstsInput -Name "AuthenticationPassword";
+    [string]$EncryptConnection = Get-VstsInput -Name "EncryptConnection";
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -40,6 +44,9 @@ param()
     Write-Host "TargetServerName:   $TargetServerName";
     Write-Host "TargetDatabaseName: $TargetDatabaseName";
     Write-Host "PreferredVersion:   $PreferredVersion";
+    if ($AuthenticationMethod -eq "sqlauth") {
+        Write-Host "SQL Auth User:      $AuthenticationUser";
+    }
 
     [string[]]$SqlCmdVariables = @();
     switch ($SqlCmdVariableType) {
@@ -67,10 +74,26 @@ param()
     Write-Host "==============================================================================";
 
     try {
-        if ($SqlCmdVariableType -eq 'none') {
-            Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -Server $TargetServerName -Database $TargetDatabaseName -PreferredVersion $PreferredVersion;
-        } else {
-            Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -Server $TargetServerName -Database $TargetDatabaseName -SqlCmdVariables $SqlCmdVariables -PreferredVersion $PreferredVersion;
+        $Command = "Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -Server $TargetServerName -Database $TargetDatabaseName -PreferredVersion $PreferredVersion";
+        if ($AuthenticationMethod -eq "sqlauth") { 
+            $Command += " -Username $AuthenticationUser -Password $AuthenticationPassword";
+        }        
+        if ($EncryptConnection -eq "true") {
+            $Command += " -EncryptConnection $true";
+        }
+        if ("$DeployScriptPath" -ne "") {
+            $Command += " -DeployScriptPath $DeployScriptPath";
+        }
+        if ("$DeployReportPath" -ne "") {
+            $Command += " -DeployReportPath $DeployReportPath";
+        }        
+        if ($SqlCmdVariableType -ne 'none') {
+            $Command += ' -Variable $SqlCmdVariables';
+            $scriptBlock = [Scriptblock]::Create($Command);
+            Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $SqlCmdVariables;
+        } else {                     
+            $scriptBlock = [Scriptblock]::Create($Command);
+            Invoke-Command -ScriptBlock $scriptBlock;
         }
     } finally {
         Write-Host "==============================================================================";

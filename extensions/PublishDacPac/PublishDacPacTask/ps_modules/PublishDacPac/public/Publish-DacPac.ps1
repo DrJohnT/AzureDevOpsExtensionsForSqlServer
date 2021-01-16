@@ -1,15 +1,17 @@
 ﻿function Publish-DacPac {
 <#
     .SYNOPSIS
-    Publish-DacPac allows you to deploy a SQL Server Database using a DACPAC to a SQL Server instance.
+    Publish-DacPac allows you to deploy a SQL Server Database using a DacPac to a SQL Server instance.
 
     .DESCRIPTION
     Publishes a SSDT DacPac using a specified DacPac publish profile from your solution.
-    Basically deploys the DACPAC by invoking SqlPackage.exe using a DacPac Publish profile.
+    Basically deploys the DacPac by invoking SqlPackage.exe using a DacPac Publish profile.
+    The SqlPackage.exe publish operation incrementally updates the schema of a target database to match the structure of a source database. 
 
     Note that the XML of the DAC Publish Profile will updated with the Server, Database and SqlCmdVariables variables and a new file written to same folder as the DACPAC called
     "$Database.deploy.publish.xml" where $Database is the value passed to the -Database parameter.
 
+    More information on SqlPackage.exe can be found here: https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage
     This module requires SqlPackage.exe to be installed on the host machine. See https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download
 
     .PARAMETER DacPacPath
@@ -53,6 +55,31 @@
         13 = SQL Server 2016
         12 = SQL Server 2014
         11 = SQL Server 2012
+
+    .PARAMETER DeployScriptPath
+    Specifies an optional file path to output the deployment script. For Azure deployments, if there are T-SQL commands to create or modify the master database, a script will be written to the same path but with "Filename_Master.sql" as the output file name.
+    Note that providing the DeployScriptPath parameter will cause SqlPackage.exe to be called with the /Action:Script parameter and the database will NOT be deployed but scripted out.
+
+    .PARAMETER DeployReportPath
+    Specifies an optional file path to output the deployment report xml file.
+
+    .PARAMETER AuthenticationMethod
+    Indicates which method to use to connect to the target SQL Server instance in order to deploy the database DacPac.
+    Valid options are:
+
+        windows - Windows authentication (default) will be used to deploy the DacPac to the target SQL Server instance
+        sqlauth - SQL Server authentication will be used to deploy the DacPac to the target SQL Server instance either on-premise or in Azure
+
+    .PARAMETER AuthenticationUser
+    UserID for the AuthenticationUser
+    Only required if AuthenticationMethod = sqlauth
+    
+    .PARAMETER AuthenticationPassword
+    Password for the AuthenticationUser
+    Only required if AuthenticationMethod = sqlauth
+
+    .PARAMETER EncryptConnection
+    Specifies if SQL encryption should be used for the target database connection.
 
     .EXAMPLE
     Publish-DacPac -Server 'YourDBServer' -Database 'NewDatabaseName' -DacPacPath 'C:\Dev\YourDB\bin\Debug\YourDB.dacpac' -DacPublishProfile 'YourDB.CI.publish.xml'
@@ -110,7 +137,26 @@
 
         [String] [Parameter(Mandatory = $false)]
         [ValidateSet('150', '140', '130', '120', '110', '15', '14', '13', '12', '11', 'latest')]
-        $PreferredVersion = 'latest'
+        $PreferredVersion = 'latest',
+
+        [String] [Parameter(Mandatory = $false)]        
+        $DeployScriptPath,
+
+        [String] [Parameter(Mandatory = $false)]
+        $DeployReportPath,
+
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('windows', 'sqlauth')]
+        $AuthenticationMethod = 'windows',
+
+        [String] [Parameter(Mandatory = $false)]
+        $AuthenticationUser,
+
+        [String] [Parameter(Mandatory = $false)]
+        $AuthenticationPassword,
+
+        [bool] [Parameter(Mandatory = $false)]
+        $EncryptConnection = $false
 	)
 
 	$global:ErrorActionPreference = 'Stop';
@@ -125,7 +171,7 @@
 
 	    if (!(Test-Path -Path $SqlPackageExePath)) {
 		    Write-Error "Could not find SqlPackage.exe in order to deploy the database DacPac!";
-            Write-Warning "For install instructions, see https://www.microsoft.com/en-us/download/details.aspx?id=57784/";
+            Write-Warning "For install instructions, see https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download/";
             throw "Could not find SqlPackage.exe in order to deploy the database DacPac!";
 	    }
 
@@ -228,16 +274,34 @@
 
 		$global:lastexitcode = 0;
 
-        Write-Verbose "Publish-DacPac: Deploying database '$Database' to server '$Server' using DacPac '$DacPacName'"
-
         $ArgList = @(
-            "/Action:Publish",
             "/SourceFile:$DacPacPath",
-            "/Profile:$DacPacUpdatedProfilePath"
+            "/Profile:$DacPacUpdatedProfilePath",
+            "/Diagnostics:true"
         );
+        if ("$DeployScriptPath" -eq "") {
+            $ArgList += "/Action:Publish";
+            Write-Verbose "Publish-DacPac: Deploying database '$Database' to server '$Server' using DacPac '$DacPacName'"
+        } else {
+            $ArgList += "/Action:Script";
+            $ArgList += "/DeployScriptPath:$DeployScriptPath";
+            Write-Verbose "Publish-DacPac: Scripting database '$Database' for deployment to server '$Server' using DacPac '$DacPacName'"
+        }
+        if ("$DeployReportPath" -ne "") {
+            $ArgList += "/DeployReportPath:$DeployReportPath";
+        }
+        if ($AuthenticationMethod -eq "sqlauth") { 
+            # For SQL Server Auth scenarios, defines the SQL Server user/password to use to access the target database instance.
+            $ArgList += "/TargetUser:$AuthenticationUser";
+            $ArgList += "/TargetPassword:$AuthenticationPassword";            
+        }
+        if ($EncryptConnection) {
+            $ArgList += "/TargetEncryptConnection:true";
+        }
+
         Invoke-ExternalCommand -Command "$SqlPackageExePath" -Arguments $ArgList;
         
     } catch {
-        Write-Error "Error: $_";
+        Write-Error "Publish-DacPac Error: $_";
     }
 }

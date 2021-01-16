@@ -560,13 +560,13 @@
       <command:verb>Publish</command:verb>
       <command:noun>DacPac</command:noun>
       <maml:description>
-        <maml:para>Publish-DacPac allows you to deploy a SQL Server Database using a DACPAC to a SQL Server instance.</maml:para>
+        <maml:para>Publish-DacPac allows you to deploy a SQL Server Database using a DacPac to a SQL Server instance.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Publishes a SSDT DacPac using a specified DacPac publish profile from your solution. Basically deploys the DACPAC by invoking SqlPackage.exe using a DacPac Publish profile.</maml:para>
+      <maml:para>Publishes a SSDT DacPac using a specified DacPac publish profile from your solution. Basically deploys the DacPac by invoking SqlPackage.exe using a DacPac Publish profile. The SqlPackage.exe publish operation incrementally updates the schema of a target database to match the structure of a source database. </maml:para>
       <maml:para>Note that the XML of the DAC Publish Profile will updated with the Server, Database and SqlCmdVariables variables and a new file written to same folder as the DACPAC called "$Database.deploy.publish.xml" where $Database is the value passed to the -Database parameter.</maml:para>
-      <maml:para>This module requires SqlPackage.exe to be installed on the host machine. See https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download</maml:para>
+      <maml:para>More information on SqlPackage.exe can be found here: https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage This module requires SqlPackage.exe to be installed on the host machine. See https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -582,6 +582,42 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>AuthenticationUser</maml:name>
+          <maml:Description>
+            <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+          <maml:name>AuthenticationPassword</maml:name>
+          <maml:Description>
+            <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+          <maml:name>EncryptConnection</maml:name>
+          <maml:Description>
+            <maml:para>Specifies if SQL encryption should be used for the target database connection.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>DacPublishProfile</maml:name>
@@ -647,6 +683,43 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>Latest</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>DeployScriptPath</maml:name>
+          <maml:Description>
+            <maml:para>Specifies an optional file path to output the deployment script. For Azure deployments, if there are T-SQL commands to create or modify the master database, a script will be written to the same path but with "Filename_Master.sql" as the output file name. Note that providing the DeployScriptPath parameter will cause SqlPackage.exe to be called with the /Action:Script parameter and the database will NOT be deployed but scripted out.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+          <maml:name>DeployReportPath</maml:name>
+          <maml:Description>
+            <maml:para>Specifies an optional file path to output the deployment report xml file.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>AuthenticationMethod</maml:name>
+          <maml:Description>
+            <maml:para>Indicates which method to use to connect to the target SQL Server instance in order to deploy the database DacPac. Valid options are:</maml:para>
+            <maml:para>    windows - Windows authentication (default) will be used to deploy the DacPac to the target SQL Server instance     sqlauth - SQL Server authentication will be used to deploy the DacPac to the target SQL Server instance either on-premise or in Azure</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Windows</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -727,6 +800,79 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>Latest</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>DeployScriptPath</maml:name>
+        <maml:Description>
+          <maml:para>Specifies an optional file path to output the deployment script. For Azure deployments, if there are T-SQL commands to create or modify the master database, a script will be written to the same path but with "Filename_Master.sql" as the output file name. Note that providing the DeployScriptPath parameter will cause SqlPackage.exe to be called with the /Action:Script parameter and the database will NOT be deployed but scripted out.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <maml:name>DeployReportPath</maml:name>
+        <maml:Description>
+          <maml:para>Specifies an optional file path to output the deployment report xml file.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <maml:name>AuthenticationMethod</maml:name>
+        <maml:Description>
+          <maml:para>Indicates which method to use to connect to the target SQL Server instance in order to deploy the database DacPac. Valid options are:</maml:para>
+          <maml:para>    windows - Windows authentication (default) will be used to deploy the DacPac to the target SQL Server instance     sqlauth - SQL Server authentication will be used to deploy the DacPac to the target SQL Server instance either on-premise or in Azure</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Windows</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>AuthenticationUser</maml:name>
+        <maml:Description>
+          <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+        <maml:name>AuthenticationPassword</maml:name>
+        <maml:Description>
+          <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+        <maml:name>EncryptConnection</maml:name>
+        <maml:Description>
+          <maml:para>Specifies if SQL encryption should be used for the target database connection.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -814,9 +960,46 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-          <maml:name>Credential</maml:name>
+          <maml:name>AuthenticationMethod</maml:name>
           <maml:Description>
-            <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+            <maml:para>Indicates which method to use to connect to the target SQL Server instance in order to deploy the database DacPac. Valid options are:</maml:para>
+            <maml:para>    windows    - Windows authentication (default) will be used to deploy the DacPac to the target SQL Server instance     sqlauth    - SQL Server authentication will be used to deploy the DacPac to the target SQL Server instance     credential - Use a PSCredential to connect to the SQL Server instance</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Windows</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>AuthenticationUser</maml:name>
+          <maml:Description>
+            <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>AuthenticationPassword</maml:name>
+          <maml:Description>
+            <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>AuthenticationCredential</maml:name>
+          <maml:Description>
+            <maml:para>A PSCredential object containing the credentials to connect to the SQL Server instance Only required if AuthenticationMethod = credential</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
@@ -853,9 +1036,46 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>Credential</maml:name>
+        <maml:name>AuthenticationMethod</maml:name>
         <maml:Description>
-          <maml:para>[Optional] A PSCredential object containing the credentials to connect to the AAS server.</maml:para>
+          <maml:para>Indicates which method to use to connect to the target SQL Server instance in order to deploy the database DacPac. Valid options are:</maml:para>
+          <maml:para>    windows    - Windows authentication (default) will be used to deploy the DacPac to the target SQL Server instance     sqlauth    - SQL Server authentication will be used to deploy the DacPac to the target SQL Server instance     credential - Use a PSCredential to connect to the SQL Server instance</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Windows</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>AuthenticationUser</maml:name>
+        <maml:Description>
+          <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>AuthenticationPassword</maml:name>
+        <maml:Description>
+          <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>AuthenticationCredential</maml:name>
+        <maml:Description>
+          <maml:para>A PSCredential object containing the credentials to connect to the SQL Server instance Only required if AuthenticationMethod = credential</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
@@ -882,7 +1102,7 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Remove-Database -Server 'localhost' -Database 'MyTestDB' -Credential myCred</dev:code>
+        <dev:code>Remove-Database -Server 'localhost' -Database 'MyTestDB' -AuthenticationCredential myCred</dev:code>
         <dev:remarks>
           <maml:para>Connects to the server localhost using the credential supplied in myCred to remove the database MyTestDB</maml:para>
         </dev:remarks>

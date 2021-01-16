@@ -1,6 +1,7 @@
-[![Build status](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_apis/build/status/AzureDevOpsExtensionsForSqlServer-CI)](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_build/latest?definitionId=6)
-[![Publish DACPAC using a DAC Publish Profile](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.PublishDacPac.svg)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac)
+[![Publish DACPAC using a DAC Publish Profile](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.PublishDacPac.svg?label=Azure%20DevOps%20Extension)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.PublishDacPac)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
+[![Build status](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_apis/build/status/AzureDevOpsExtensionsForSqlServer-CI)](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_build/latest?definitionId=6)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/PublishDacPac.svg)](https://www.powershellgallery.com/packages/PublishDacPac)
 
 [![Donate with PayPal to Dr John T](images/donate.png)](https://paypal.me/drjohnt)
 

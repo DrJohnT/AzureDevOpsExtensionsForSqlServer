@@ -12,8 +12,25 @@ function Remove-Database {
     .PARAMETER Database
     The name of the database to be deleted.
 
-    .PARAMETER Credential
-    [Optional] A PSCredential object containing the credentials to connect to the AAS server.
+    .PARAMETER AuthenticationMethod
+    Indicates which method to use to connect to the target SQL Server instance in order to deploy the database DacPac.
+    Valid options are:
+
+        windows    - Windows authentication (default) will be used to deploy the DacPac to the target SQL Server instance
+        sqlauth    - SQL Server authentication will be used to deploy the DacPac to the target SQL Server instance
+        credential - Use a PSCredential to connect to the SQL Server instance
+
+    .PARAMETER AuthenticationUser
+    UserID for the AuthenticationUser
+    Only required if AuthenticationMethod = sqlauth
+    
+    .PARAMETER AuthenticationPassword
+    Password for the AuthenticationUser
+    Only required if AuthenticationMethod = sqlauth
+    
+    .PARAMETER AuthenticationCredential
+    A PSCredential object containing the credentials to connect to the SQL Server instance
+    Only required if AuthenticationMethod = credential
 
     .EXAMPLE
     Remove-Database -Server 'localhost' -Database 'MyTestDB'
@@ -21,7 +38,7 @@ function Remove-Database {
     Connects to the server localhost to remove the database MyTestDB
 
     .EXAMPLE
-    Remove-Database -Server 'localhost' -Database 'MyTestDB' -Credential myCred
+    Remove-Database -Server 'localhost' -Database 'MyTestDB' -AuthenticationCredential myCred
 
     Connects to the server localhost using the credential supplied in myCred to remove the database MyTestDB
 
@@ -42,17 +59,36 @@ function Remove-Database {
         [String] [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         $Database,
+        
+        [String] [Parameter(Mandatory = $false)]
+        [ValidateSet('windows', 'sqlauth', 'credential')]
+        $AuthenticationMethod = 'windows',
+
+        [String] [Parameter(Mandatory = $false)]
+        $AuthenticationUser,
+
+        [String] [Parameter(Mandatory = $false)]
+        $AuthenticationPassword,
 
         [PSCredential] [Parameter(Mandatory = $false)]
-        $Credential = $null
+        $AuthenticationCredential
     )
 
-    $sqlCmd = "drop database [$Database]";
-    if ($null -eq $Credential) {
-        Invoke-Sqlcmd -Server $Server -Database 'master' -Query $sqlCmd -ErrorAction Stop;
-    } else {
-        Invoke-Sqlcmd -Server $Server -Database 'master' -Query $sqlCmd -ErrorAction Stop -Credential $Credential;
+    # Now Invoke-Sqlcmd
+    $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database 'master' -Query 'drop database [$Database]' -OutputSqlErrors 1 -ErrorAction Stop";
+   
+    if ($AuthenticationMethod -eq 'sqlauth') { 
+        [SecureString] $SecurePassword = ConvertTo-SecureString $AuthenticationPassword -AsPlainText -Force;
+        [PsCredential] $AuthenticationCredential = New-Object System.Management.Automation.PSCredential($AuthenticationUser, $SecurePassword);
+        $Command += ' -Credential $AuthenticationCredential';
     }
-    
+
+    $scriptBlock = [Scriptblock]::Create($Command);  
+
+    if ($AuthenticationMethod -eq 'sqlauth' -or $AuthenticationMethod -eq 'credential') {            
+        Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $AuthenticationCredential;
+    } else {            
+        Invoke-Command -ScriptBlock $scriptBlock;
+    }            
 }
 New-Alias -Name Remove-Database -Value Unpublish-Database;
