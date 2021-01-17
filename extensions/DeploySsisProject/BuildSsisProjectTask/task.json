@@ -64,7 +64,7 @@
             "label": "Level of logging to be written to the output",
             "required": false,
             "helpMarkDown": "Only logs with equal or higher logging level will be written to the log file."
-        },
+        }
     ],
     "execution": {
         "PowerShell3": {

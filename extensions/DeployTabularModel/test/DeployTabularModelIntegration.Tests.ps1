@@ -192,5 +192,6 @@ Describe "Deploy Cube Integration tests" -Tag "DeployTabularModel" {
 AfterAll {
     Remove-Module VstsTaskSdk;
     Remove-Module PublishDacPac;
+    Remove-Module DeployCube;
 }
 

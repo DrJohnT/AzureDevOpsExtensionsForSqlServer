@@ -44,7 +44,9 @@ param()
     Write-Host "AsServer:           $AsServer";
     Write-Host "CubeDatabaseName:   $CubeDatabaseName"
     Write-Host "PreferredVersion:   $PreferredVersion"
-    Write-Host "UserID:             $UserID";
+    if ("$UserID" -ne "") {
+        Write-Host "UserID:             $UserID";
+    }
 
     Write-Host "==============================================================================";
 
@@ -52,10 +54,10 @@ param()
         [bool]$TransactionalDeployment = $false;
         if($TransactionalDeploymentStr -eq "true") { $TransactionalDeployment = $true } 
 
-        Publish-Cube -AsDatabasePath $AsDatabasePath -Server $AsServer -CubeDatabase $CubeDatabaseName -PreferredVersion $PreferredVersion `
+        Publish-Cube -AsDatabasePath "$AsDatabasePath" -Server "$AsServer" -CubeDatabase "$CubeDatabaseName" -PreferredVersion $PreferredVersion `
             -TransactionalDeployment $TransactionalDeployment -PartitionDeployment $PartitionDeployment -RoleDeployment $RoleDeployment `
             -ConfigurationSettingsDeployment $ConfigurationSettingsDeployment -OptimizationSettingsDeployment $OptimizationSettingsDeployment `
-            -UserID $UserID -Password $Password;
+            -UserID "$UserID" -Password "$Password";
     } finally {
         Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation

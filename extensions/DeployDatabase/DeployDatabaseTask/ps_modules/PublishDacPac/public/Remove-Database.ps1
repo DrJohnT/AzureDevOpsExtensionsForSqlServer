@@ -31,6 +31,9 @@ function Remove-Database {
     .PARAMETER AuthenticationCredential
     A PSCredential object containing the credentials to connect to the SQL Server instance
     Only required if AuthenticationMethod = credential
+    
+    .OUTPUTS
+    Returns $true if the database is deleted, $false otherwise.
 
     .EXAMPLE
     Remove-Database -Server 'localhost' -Database 'MyTestDB'
@@ -49,6 +52,7 @@ function Remove-Database {
     Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac
     This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
+    [OutputType([Boolean])]
     [CmdletBinding()]
 	param
 	(
@@ -74,21 +78,28 @@ function Remove-Database {
         $AuthenticationCredential
     )
 
-    # Now Invoke-Sqlcmd
-    $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database 'master' -Query 'drop database [$Database]' -OutputSqlErrors 1 -ErrorAction Stop";
-   
-    if ($AuthenticationMethod -eq 'sqlauth') { 
-        [SecureString] $SecurePassword = ConvertTo-SecureString $AuthenticationPassword -AsPlainText -Force;
-        [PsCredential] $AuthenticationCredential = New-Object System.Management.Automation.PSCredential($AuthenticationUser, $SecurePassword);
-        $Command += ' -Credential $AuthenticationCredential';
+    try {
+        # Now Invoke-Sqlcmd
+        $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database 'master' -Query 'drop database [$Database]' -OutputSqlErrors 1 -ErrorAction Stop";
+    
+        if ($AuthenticationMethod -eq 'sqlauth') { 
+            [SecureString] $SecurePassword = ConvertTo-SecureString $AuthenticationPassword -AsPlainText -Force;
+            [PsCredential] $AuthenticationCredential = New-Object System.Management.Automation.PSCredential($AuthenticationUser, $SecurePassword);
+            $Command += ' -Credential $AuthenticationCredential';
+        }
+
+        $scriptBlock = [Scriptblock]::Create($Command);  
+
+        if ($AuthenticationMethod -eq 'sqlauth' -or $AuthenticationMethod -eq 'credential') {            
+            Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $AuthenticationCredential;
+        } else {            
+            Invoke-Command -ScriptBlock $scriptBlock;
+        }            
+        return $true;           
     }
-
-    $scriptBlock = [Scriptblock]::Create($Command);  
-
-    if ($AuthenticationMethod -eq 'sqlauth' -or $AuthenticationMethod -eq 'credential') {            
-        Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $AuthenticationCredential;
-    } else {            
-        Invoke-Command -ScriptBlock $scriptBlock;
-    }            
+    catch {
+        Write-Warning "Error: $_";
+        return $false;
+    }        
 }
 New-Alias -Name Remove-Database -Value Unpublish-Database;

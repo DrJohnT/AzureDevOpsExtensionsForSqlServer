@@ -64,6 +64,7 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
             $env:INPUT_DacPublishProfile = $data.AltDacProfilePath;
             $env:INPUT_TargetServerName = $data.ServerName;
             $env:INPUT_TargetDatabaseName = $DatabaseName;
+            $env:INPUT_SqlCmdVariableType = "none";
             $env:INPUT_PreferredVersion = "latest";
 
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.PublishDacPacTask));
@@ -72,6 +73,7 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
 
             ( Remove-Database -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
         }
+        
     }
 
     Context "Deploy Database with SqlCmdVariables" {
@@ -112,10 +114,12 @@ Describe "PublishDacPacTask" -Tag "PublishDacPac" {
             ( Remove-Database -Server $data.ServerName -Database $DatabaseName ) | Should -Be $true;
         }
     }
+    
 }
 
 AfterAll {
     Remove-Module VstsTaskSdk;
+    Remove-Module PublishDacPac;
 }
 
 

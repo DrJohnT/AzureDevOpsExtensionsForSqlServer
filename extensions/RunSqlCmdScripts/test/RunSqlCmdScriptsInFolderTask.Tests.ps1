@@ -10,10 +10,19 @@
         $data = @{};
         $CurrentFolder = Split-Path -Parent $PSScriptRoot;
         
+        $ServerInstance = $Env:ServerInstance;
+        if ("$ServerInstance" -eq "") {
+            Write-Host "Setting local env variables";
+            $Env:ServerInstance   = "localhost"; 
+            $Env:Database = "DatabaseToPublish";
+            $Env:AuthenticationUser   = "ea"; 
+            $Env:AuthenticationPassword = "open";
+        }
         $data.ServerInstance = $Env:ServerInstance;
         $data.Database = $Env:Database;
         $data.AuthenticationUser = $Env:AuthenticationUser; 
         $data.AuthenticationPassword = $Env:AuthenticationPassword;
+
         [SecureString] $SecurePassword = ConvertTo-SecureString $data.AuthenticationPassword -AsPlainText -Force;
         [PsCredential] $data.Credential = New-Object System.Management.Automation.PSCredential($data.AuthenticationUser, $SecurePassword);
 

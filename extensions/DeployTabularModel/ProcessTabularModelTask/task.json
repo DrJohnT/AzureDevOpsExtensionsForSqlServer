@@ -10,6 +10,13 @@
     "showEnvironmentVariables": false,
     "category": "Utility",
     "demands": [],
+    "groups": [
+        {
+          "name": "authmethod",
+          "displayName": "Authentication Method",
+          "isExpanded": true
+        }
+    ],
     "minimumAgentVersion": "1.95.0",
     "version": {
         "Major": "1",
@@ -45,6 +52,37 @@
                 "ClearValues": "Clear Values",
                 "Calculate": "Calculate"
             }
+        },
+        {
+            "name": "AuthenticationMethod",
+            "type": "pickList",
+            "label": "Authentication Method",
+            "required": true,
+            "helpMarkDown": "How to authenticate with the SSAS/AAS server instance.",
+            "defaultValue": "WIN",
+            "options": {
+                "WIN": "Windows Authentication (default)",
+                "SQL": "SQL Server or Azure SQL Authentication"
+            },
+            "groupName": "authmethod"
+        },        
+        {
+            "name": "AuthenticationUser",
+            "type": "string",
+            "label": "Authentication User ID for the SSAS/AAS server",
+            "required": false,
+            "helpMarkDown": "The login ID for authenticating the connection to the Analysis Services instance",
+            "groupName": "authmethod",
+            "visibleRule": "AuthenticationMethod = SQL"
+        },
+        {
+            "name": "AuthenticationPassword",
+            "type": "string",
+            "label": "The Password for the Authentication User ID",
+            "required": false,
+            "helpMarkDown": "Specifies the password for the Authentication login ID that was specified in the Authentication User ID parameter. Please use a secured variable in this field.",
+            "groupName": "authmethod",
+            "visibleRule": "AuthenticationMethod = SQL"
         }
     ],
     "execution": {

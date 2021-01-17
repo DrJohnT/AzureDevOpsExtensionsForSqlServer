@@ -44,6 +44,7 @@ param()
     Write-Host "TargetServerName:   $TargetServerName";
     Write-Host "TargetDatabaseName: $TargetDatabaseName";
     Write-Host "PreferredVersion:   $PreferredVersion";
+    Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
     if ($AuthenticationMethod -eq "sqlauth") {
         Write-Host "SQL Auth User:      $AuthenticationUser";
     }
@@ -74,21 +75,21 @@ param()
     Write-Host "==============================================================================";
 
     try {
-        $Command = "Publish-DacPac -DacPacPath $DacPacPath -DacPublishProfile $DacPublishProfile -Server $TargetServerName -Database $TargetDatabaseName -PreferredVersion $PreferredVersion";
+        $Command = "Publish-DacPac -DacPacPath '$DacPacPath' -DacPublishProfile '$DacPublishProfile' -Server '$TargetServerName' -Database '$TargetDatabaseName' -PreferredVersion '$PreferredVersion'";
         if ($AuthenticationMethod -eq "sqlauth") { 
-            $Command += " -Username $AuthenticationUser -Password $AuthenticationPassword";
+            $Command += " -Username '$AuthenticationUser' -Password '$AuthenticationPassword'";
         }        
         if ($EncryptConnection -eq "true") {
             $Command += " -EncryptConnection $true";
         }
         if ("$DeployScriptPath" -ne "") {
-            $Command += " -DeployScriptPath $DeployScriptPath";
+            $Command += " -DeployScriptPath '$DeployScriptPath'";
         }
         if ("$DeployReportPath" -ne "") {
-            $Command += " -DeployReportPath $DeployReportPath";
+            $Command += " -DeployReportPath '$DeployReportPath'";
         }        
         if ($SqlCmdVariableType -ne 'none') {
-            $Command += ' -Variable $SqlCmdVariables';
+            $Command += ' -SqlCmdVariables $SqlCmdVariables';
             $scriptBlock = [Scriptblock]::Create($Command);
             Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $SqlCmdVariables;
         } else {                     

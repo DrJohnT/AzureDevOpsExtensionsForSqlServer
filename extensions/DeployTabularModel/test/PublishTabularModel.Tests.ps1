@@ -73,5 +73,6 @@ Describe "PublishTabularModel" -Tag "DeployTabularModel" {
 
 AfterAll {
     Remove-Module VstsTaskSdk;
+    Remove-Module DeployCube;
 }
 

@@ -9,7 +9,16 @@
     function Get-Config {
         $data = @{};
         $CurrentFolder = Split-Path -Parent $PSScriptRoot;
-        
+
+        $ServerInstance = $Env:ServerInstance;
+        if ("$ServerInstance" -eq "") {
+            Write-Host "Setting local env variables";
+            $Env:ServerInstance   = "localhost"; 
+            $Env:Database = "DatabaseToPublish";
+            $Env:AuthenticationUser   = "ea"; 
+            $Env:AuthenticationPassword = "open";
+        }
+
         $data.ServerInstance = $Env:ServerInstance;
 
         $data.Database = $Env:Database;

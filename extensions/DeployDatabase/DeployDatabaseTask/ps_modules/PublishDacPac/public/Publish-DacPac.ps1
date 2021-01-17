@@ -276,8 +276,7 @@
 
         $ArgList = @(
             "/SourceFile:$DacPacPath",
-            "/Profile:$DacPacUpdatedProfilePath",
-            "/Diagnostics:true"
+            "/Profile:$DacPacUpdatedProfilePath"
         );
         if ("$DeployScriptPath" -eq "") {
             $ArgList += "/Action:Publish";

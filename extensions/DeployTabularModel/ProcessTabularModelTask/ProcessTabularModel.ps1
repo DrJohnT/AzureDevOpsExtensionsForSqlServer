@@ -23,8 +23,8 @@ param()
     [string]$AsServer = Get-VstsInput -Name AsServer -Require;
     [string]$CubeDatabaseName = Get-VstsInput -Name CubeDatabaseName;
     [string]$RefreshType = Get-VstsInput -Name RefreshType;
-    [string]$UserID = Get-VstsInput -Name "UserID";
-    [string]$Password = Get-VstsInput -Name "Password";
+    [string]$AuthenticationUser = Get-VstsInput -Name AuthenticationUser;
+    [string]$AuthenticationPassword = Get-VstsInput -Name AuthenticationPassword;
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -33,17 +33,21 @@ param()
     Write-Host "AsServer:           $AsServer";
     Write-Host "CubeDatabaseName:   $CubeDatabaseName";
     Write-Host "RefreshType:        $RefreshType";
-    Write-Host "UserID:             $UserID";
+    if ("$AuthenticationUser" -ne "") {
+        Write-Host "AuthenticationUser: $AuthenticationUser";
+    }
 
     Write-Host "==============================================================================";
 
     try {
-        if ("" -eq "$Password") {
-            Invoke-ProcessTabularCubeDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName -RefreshType $RefreshType;
+        if ("" -eq "$AuthenticationPassword") {
+            Invoke-ProcessTabularCubeDatabase -Server "$AsServer" -CubeDatabase "$CubeDatabaseName" -RefreshType $RefreshType;
+
         } else {
-            [SecureString] $SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force;
-            [PsCredential] $Credential = New-Object System.Management.Automation.PSCredential($UserID, $SecurePassword);
-            Invoke-ProcessTabularCubeDatabase -Server $AsServer -CubeDatabase $CubeDatabaseName -RefreshType $RefreshType -Credential $Credential;
+            [SecureString] $SecurePassword = ConvertTo-SecureString $AuthenticationPassword -AsPlainText -Force;
+            [PsCredential] $AuthenticationCredential = New-Object System.Management.Automation.PSCredential($AuthenticationUser, $SecurePassword);
+
+            Invoke-ProcessTabularCubeDatabase -Server "$AsServer" -CubeDatabase "$CubeDatabaseName" -RefreshType $RefreshType -Credential $AuthenticationCredential;
         }
     } finally {
         Write-Host "==============================================================================";
