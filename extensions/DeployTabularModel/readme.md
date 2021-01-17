@@ -1,7 +1,8 @@
 [![Deployment tools for SSAS Tabular Cube Models](https://img.shields.io/visual-studio-marketplace/v/DrJohnExtensions.DeployTabularModel.svg?label=Azure%20DevOps%20Extension)](https://marketplace.visualstudio.com/items?itemName=DrJohnExtensions.DeployTabularModel)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/DeployCube.svg?label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/DeployCube)
+[![Build status](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_apis/build/status/DeployTabularModel-CI)](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_build/latest?definitionId=10)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
-[![Build status](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_apis/build/status/AzureDevOpsExtensionsForSqlServer-CI)](https://dev.azure.com/drjohnt/AzureDevOpsExtensionsForSqlServer/_build/latest?definitionId=6)
-[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/DeployCube.svg)](https://www.powershellgallery.com/packages/DeployCube)
+
 
 [![Donate with PayPal to Dr John T](images/donate.png)](https://paypal.me/drjohnt)
 
