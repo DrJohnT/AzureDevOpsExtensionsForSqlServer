@@ -68,9 +68,11 @@ function Remove-Database {
         [ValidateSet('windows', 'sqlauth', 'credential')]
         $AuthenticationMethod = 'windows',
 
+        [Alias("Username","UserID")]
         [String] [Parameter(Mandatory = $false)]
         $AuthenticationUser,
 
+        [Alias("Password")]
         [String] [Parameter(Mandatory = $false)]
         $AuthenticationPassword,
 

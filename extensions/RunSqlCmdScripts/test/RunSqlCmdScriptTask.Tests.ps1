@@ -114,30 +114,7 @@ NewDataValue3=ThreeValues3
             $results.Item('CountOfRows') | Should -Be 3;
         }
 
-        It "Execute Sql Script with specific username/password" {
-            $data = Get-Config;
-            $env:INPUT_SqlCmdSciptPath = $data.SqlCmdScriptFile3;
-            $env:INPUT_Server = $data.ServerInstance;
-            $env:INPUT_Database = $data.Database;
-            $env:INPUT_AuthenticationMethod = "sqlauth";
-            $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
-            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;      
-            $env:INPUT_SqlCmdVariableType = 'text'
-            $env:INPUT_SqlCmdVariablesInJson = ''
-            [string] $sqlCmdValues = @"
-NewDataValue1=ThreeValues1
-NewDataValue2=ThreeValues2
-NewDataValue3=ThreeValues3
-"@;
-            $env:INPUT_SqlCmdVariablesInText = $sqlCmdValues;
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
-
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.HasValueQuery -Credential $data.Credential -ErrorAction Stop;
-            $results.Item('MyOtherColumn') | Should -Be 'ThreeValues2';
-
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
-            $results.Item('CountOfRows') | Should -Be 3;
-        }
+       
         
     }
     

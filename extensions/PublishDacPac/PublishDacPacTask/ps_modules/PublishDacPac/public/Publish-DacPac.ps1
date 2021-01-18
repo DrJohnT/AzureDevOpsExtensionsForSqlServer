@@ -149,9 +149,11 @@
         [ValidateSet('windows', 'sqlauth')]
         $AuthenticationMethod = 'windows',
 
+        [Alias("Username","UserID")]
         [String] [Parameter(Mandatory = $false)]
         $AuthenticationUser,
 
+        [Alias("Password")]
         [String] [Parameter(Mandatory = $false)]
         $AuthenticationPassword,
 
@@ -174,9 +176,6 @@
             Write-Warning "For install instructions, see https://docs.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download/";
             throw "Could not find SqlPackage.exe in order to deploy the database DacPac!";
 	    }
-
-
-        [String]$ProductVersion = (Get-Item $SqlPackageExePath).VersionInfo.ProductVersion;
 
 	    if (!(Test-Path -Path $DacPacPath)) {
 		    throw "DacPac path does not exist in $DacPacPath";
@@ -207,7 +206,8 @@
         Write-Output "DacPublishProfile           : $ProfileName from $DacPacPublishProfilePath";
         Write-Output "Server                      : $Server";
         Write-Output "Database                    : $Database";
-        Write-Output "SqlPackage.exe              : $Version (v$ProductVersion) from $SqlPackageExePath";
+        Write-Output "SqlPackage.exe              : v$Version from $SqlPackageExePath";
+        Write-Output "AuthenticationMethod        : $AuthenticationMethod";
 
         [xml]$DacPacDacPublishProfile = [xml](Get-Content $DacPacPublishProfilePath);
 

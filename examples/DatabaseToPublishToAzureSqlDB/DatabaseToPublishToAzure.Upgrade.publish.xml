@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetDatabaseName>DatabaseToPublish</TargetDatabaseName>
     <DeployScriptFileName>DatabaseToPublish.sql</DeployScriptFileName>
-    <TargetConnectionString>Data Source=bovi1kenobi.database.windows.net,1433;Persist Security Info=True;User ID=bovi;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
+    <TargetConnectionString>Data Source=localhost;Persist Security Info=True;User ID=x;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
     <CreateNewDatabase>False</CreateNewDatabase>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <GenerateSmartDefaults>True</GenerateSmartDefaults>

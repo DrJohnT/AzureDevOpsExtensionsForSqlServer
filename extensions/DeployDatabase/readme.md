@@ -6,7 +6,17 @@
 
 # Deploy database using DACPAC and DAC Publish Profile
 
-The **Deploy Database** task allows you to deploy a SQL Server Database to a SQL Server instance using a DACPAC and a DAC Publish Profile.
+Designed for use on an [Azure Pipelines self-hosted agent](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops), the **Deploy Database** task allows you to deploy a SQL Server Database to a SQL Server instance using a DACPAC and a DAC Publish Profile.  The target can be a on-premise SQL Server instance, an Azure SQL Managed Instance or an Azure SQL Database.
+
+# What's New
+
+**Azure SQL Managed Instance** and **Azure SQL Database** deployment is now supported.  Such deployments require a username/password combination to connect to the Azure SQL service.  Simply select *SQL Server or Azure SQL Authentication* in the *Authentication Method* dropdown and enter your Azure username and password.  Remember to use a secured variable for your password!
+
+**Encrypted Connections** for database deployment are now supported.
+
+**Deployment Script** generation is now supported.  This means you can generate a SqlCmd deployment script to run against your target server instead of performing actual the deployment.  This script could be the artifact that gets approved for deployment.  The danger of this approach of course is that database model on your production server could 'drift' between generation of the deployment script and the actual deployment.  Performing an incremental deploy of a DacPac is a much safer idea, but this was a feature request.
+
+**Deployment Report** are created if you provide a file path in the Deploy Report Path parameter.
 
 SQL Server Data Tools (SSDT) is Microsoft's design tool to declare the entire database model including tables, views, stored procedures, functions, schemas, etc. etc. covering **all** aspects of the database design.  When you perform a **build** of a SSDT Visual Studio project, it creates a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx) which defines all of the SQL Server objects associated with a database.  Once you have a [DACPAC](https://msdn.microsoft.com/en-IN/library/ee210546.aspx), it can be deployed using the **Publish** function in Visual Studio, or by using the [SqlPackage.exe](https://docs.microsoft.com/en-us/sql/tools/sqlpackage) command-line interface.
 

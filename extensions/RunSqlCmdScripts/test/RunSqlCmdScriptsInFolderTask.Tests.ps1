@@ -45,7 +45,7 @@ Describe "RunSqlCmdScriptsInFolder" -Tag Azure,OnPrem {
             Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query "truncate table dbo.MyTable" -Credential $data.Credential -ErrorAction Stop;
         }
 
-        It "Execute plain SQL Script" {
+        It "Execute plain SQL Script in folder" {
             $data = Get-Config;
             $env:INPUT_SqlCmdSciptFolderPath = $data.PlainScripts;
             $env:INPUT_Server = $data.ServerInstance;

@@ -38,12 +38,18 @@ param()
 
     Trace-VstsEnteringInvocation $MyInvocation;
 
+    if (!(Test-Path($DacPublishProfile))) {
+        # DevOps passes the path to the root source folder, so just get filename if file does not exist
+        $DacPublishProfile = Split-Path $DacPublishProfile -Leaf;
+    }
+
     Write-Host "Invoking Publish-DacPac (https://github.com/DrJohnT/PublishDacPac) with the following parameters:";
     Write-Host "DacPacPath:         $DacPacPath";
     Write-Host "DacPublishProfile:  $DacPublishProfile";
     Write-Host "TargetServerName:   $TargetServerName";
     Write-Host "TargetDatabaseName: $TargetDatabaseName";
     Write-Host "PreferredVersion:   $PreferredVersion";
+    Write-Host "EncryptConnection:  $EncryptConnection";
     Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
     if ($AuthenticationMethod -eq "sqlauth") {
         Write-Host "SQL Auth User:      $AuthenticationUser";
@@ -76,11 +82,11 @@ param()
 
     try {
         $Command = "Publish-DacPac -DacPacPath '$DacPacPath' -DacPublishProfile '$DacPublishProfile' -Server '$TargetServerName' -Database '$TargetDatabaseName' -PreferredVersion '$PreferredVersion'";
-        if ($AuthenticationMethod -eq "sqlauth") { 
-            $Command += " -Username '$AuthenticationUser' -Password '$AuthenticationPassword'";
+        if ("$AuthenticationMethod" -eq "sqlauth") { 
+            $Command += " -AuthenticationMethod 'sqlauth' -AuthenticationUser '$AuthenticationUser' -AuthenticationPassword '$AuthenticationPassword'";
         }        
-        if ($EncryptConnection -eq "true") {
-            $Command += " -EncryptConnection $true";
+        if ("$EncryptConnection" -eq "true") {
+            $Command += " -EncryptConnection 1";
         }
         if ("$DeployScriptPath" -ne "") {
             $Command += " -DeployScriptPath '$DeployScriptPath'";
@@ -96,6 +102,7 @@ param()
             $scriptBlock = [Scriptblock]::Create($Command);
             Invoke-Command -ScriptBlock $scriptBlock;
         }
+
     } finally {
         Write-Host "==============================================================================";
         Trace-VstsLeavingInvocation $MyInvocation

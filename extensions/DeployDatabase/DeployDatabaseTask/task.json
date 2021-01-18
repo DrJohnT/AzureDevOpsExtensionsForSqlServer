@@ -13,10 +13,22 @@
 	"demands": [
         "SqlPackage"
     ],
+    "groups": [
+        {
+          "name": "authmethod",
+          "displayName": "Authentication Method",
+          "isExpanded": true
+        },
+        {
+            "name": "advanced",
+            "displayName": "Advanced Options",
+            "isExpanded": false
+        }
+    ],
     "version": {
         "Major": "1",
         "Minor": "2",
-        "Patch": "6"
+        "Patch": "8"
      },
     "minimumAgentVersion": "1.95.0",
     "inputs": [
@@ -56,9 +68,9 @@
             "helpMarkDown": "Choose if you wish to overwrite SQLCMD Variables within the DAC Publish Profile and, if so, in which format.\nWe recommend JSON format as this is easy to validate.",
             "defaultValue": "none",
             "options": {
-                "none": "No SQLCMD Variables need overwriting",
+                "none": "No SQLCMD Variables needed",
                 "json": "JSON format (Recommended)",
-                "text": "Muiti-line text input as name/value pairs"
+                "text": "Multi-line text input as name/value pairs"
             }
         },
         {
@@ -78,8 +90,39 @@
             "required": false,
             "visibleRule": "SqlCmdVariableType=text",
             "helpMarkDown": "A list of SqlCmd variables and their values in the format var=varvalue. \nThese will be used to dynamically update the DAC Publish Profile"
+        },		
+	    {
+            "name": "AuthenticationMethod",
+            "type": "pickList",
+            "label": "Authentication Method",
+            "required": true,
+            "helpMarkDown": "How to authenticate with the SQL Server instance.",
+            "defaultValue": "windows",
+            "options": {
+                "windows": "Windows Authentication (default)",
+                "sqlauth": "SQL Server or Azure SQL Authentication"
+            },
+            "groupName": "authmethod"
         },
-		{
+        {
+            "name": "AuthenticationUser",
+            "type": "string",
+            "label": "The SQL Server Authentication Login ID for the SQL database",
+            "required": false,
+            "helpMarkDown": "The login ID for making a SQL Server Authentication connection to an instance of the Database Engine",
+            "groupName": "authmethod",
+            "visibleRule": "AuthenticationMethod = sqlauth"
+        },
+        {
+            "name": "AuthenticationPassword",
+            "type": "string",
+            "label": "The SQL Server Authentication Password for the SQL database Login ID",
+            "required": false,
+            "helpMarkDown": "Specifies the password for the SQL Server Authentication login ID that was specified in the Username parameter. Please use a secured variable in this field.",
+            "groupName": "authmethod",
+            "visibleRule": "AuthenticationMethod = sqlauth"
+        },
+        {
             "name": "PreferredVersion",
             "type": "pickList",
             "label": "SqlPackage.exe Version",
@@ -93,10 +136,40 @@
                 "130": "SQL Server 2016",
                 "120": "SQL Server 2014",
                 "110": "SQL Server 2012"
-            }
+            },
+            "groupName": "advanced"
+        },
+        {
+            "name": "EncryptConnection",
+            "type": "pickList",
+            "label": "Encrypt Connection",
+            "required": false,
+            "helpMarkDown": "Specifies if SQL encryption should be used for the target database connection.",
+            "defaultValue": "false",
+            "options": {
+                "false": "Do not encrypt connection to target database (default)",
+                "true": "Encrypt connection to target database"
+            },
+            "groupName": "advanced"
+        },    
+        {
+            "name": "DeployScriptPath",
+            "type": "filePath",
+            "label": "Deploy Script Path: Generates deployment script BUT does NOT deploy the database!",
+            "required": false,
+            "helpMarkDown": "Simply generates a SqlCmd deployment script and does NOT deploy the database. Specifies an optional file path to output the deployment script.",
+            "groupName": "advanced"
+        },
+        {
+            "name": "DeployReportPath",
+            "type": "filePath",
+            "label": "Deploy Report Path",
+            "required": false,
+            "helpMarkDown": "Specifies an optional file path to output the deployment report xml file.",
+            "groupName": "advanced"
         }
     ],
-    "instanceNameFormat": "Deploy database DACPAC using a DAC Publish Profile",
+    "instanceNameFormat": "Publish DACPAC to $(TargetDatabaseName) using DAC Publish Profile",
     "execution": {
         "PowerShell3": {
             "target": "PublishDacPacTask.ps1"

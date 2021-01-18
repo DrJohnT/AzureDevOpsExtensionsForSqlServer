@@ -1,5 +1,3 @@
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/LICENSE)
-
 [![Donate with PayPal to Dr John T](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/blob/master/images/donate.png)](https://paypal.me/drjohnt)
 
 ## Azure DevOps Extensions for SQL Server

@@ -583,7 +583,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="Username, UserID">
           <maml:name>AuthenticationUser</maml:name>
           <maml:Description>
             <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -595,7 +595,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="Password">
           <maml:name>AuthenticationPassword</maml:name>
           <maml:Description>
             <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -838,7 +838,7 @@
         </dev:type>
         <dev:defaultValue>Windows</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="Username, UserID">
         <maml:name>AuthenticationUser</maml:name>
         <maml:Description>
           <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -850,7 +850,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="Password">
         <maml:name>AuthenticationPassword</maml:name>
         <maml:Description>
           <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -972,7 +972,7 @@
           </dev:type>
           <dev:defaultValue>Windows</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="Username, UserID">
           <maml:name>AuthenticationUser</maml:name>
           <maml:Description>
             <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -984,7 +984,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="Password">
           <maml:name>AuthenticationPassword</maml:name>
           <maml:Description>
             <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -1048,7 +1048,7 @@
         </dev:type>
         <dev:defaultValue>Windows</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="Username, UserID">
         <maml:name>AuthenticationUser</maml:name>
         <maml:Description>
           <maml:para>UserID for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -1060,7 +1060,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="Password">
         <maml:name>AuthenticationPassword</maml:name>
         <maml:Description>
           <maml:para>Password for the AuthenticationUser Only required if AuthenticationMethod = sqlauth</maml:para>
@@ -1086,7 +1086,16 @@
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
-    <command:returnValues />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Returns $true if the database is deleted, $false otherwise.</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
     <maml:alertSet>
       <maml:alert>
         <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
