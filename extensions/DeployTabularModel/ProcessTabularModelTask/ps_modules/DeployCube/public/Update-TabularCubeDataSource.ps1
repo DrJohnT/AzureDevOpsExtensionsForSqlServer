@@ -33,8 +33,14 @@ function Update-TabularCubeDataSource
     .PARAMETER ImpersonationPwd
     The password of the account that will be used to connect to the SQL Server database.  Required for ImpersonationMode='ImpersonateAccount'.
 
+    .PARAMETER DataSource
+    The name of the data source that will be updated.  Optional, use when there are multiple data sources in the deployed tabular cube database.
+
     .EXAMPLE
     Update-TabularCubeDataSource -Server localhost -CubeDatabase MyCube -SourceSqlServer localhost -SourceSqlDatabase MyDB -ImpersonationMode ImpersonateServiceAccount;
+
+    .EXAMPLE
+    Update-TabularCubeDataSource -Server localhost -CubeDatabase MyCube -SourceSqlServer localhost -SourceSqlDatabase MyDB -ImpersonationMode ImpersonateAccount -ImpersonationAccount "DOMAIN\user" -ImpersonationPwd "Password" -DataSource DataSource2;
 
     .OUTPUTS
     Returns true if the cube's data source was updated successfully.
@@ -80,8 +86,10 @@ function Update-TabularCubeDataSource
 
         [Alias("ImpersonationPassword")]
         [String] [Parameter(Mandatory = $false)]
-        $ImpersonationPwd
+        $ImpersonationPwd,
 
+        [String] [Parameter(Mandatory = $false)]
+        $DataSource
     )
 
     # validate inputs
@@ -112,6 +120,11 @@ function Update-TabularCubeDataSource
     $nsmgr.AddNamespace('rootNS', 		'urn:schemas-microsoft-com:xml-analysis:rowset');
 
     $rows = $returnXML.SelectNodes("//xmlAnalysis:return/rootNS:root/rootNS:row", $nsmgr);
+
+    If (![string]::IsNullOrEmpty($DataSource)) {
+        $rows = @($rows | Where-Object { $_.name -eq $DataSource })
+    }
+
     if ($rows.Count -ge 1) {
         [string]$DataSourceName = $rows[0].name;
         $type = $rows[0].type;
@@ -159,7 +172,7 @@ function Update-TabularCubeDataSource
                  }
             }
 
-            $dataSource = [pscustomobject]@{
+            $dataSourceObject = [pscustomobject]@{
                 type = $type
                 name = $DataSourceName
                 description = $description
@@ -181,7 +194,7 @@ function Update-TabularCubeDataSource
             $ConnectionString  = Get-SqlConnectionString -SourceSqlServer $SourceSqlServer -SourceSqlDatabase $SourceSqlDatabase -ExistingConnectionString $ExistingConnectionString 
 
             if ($ImpersonationMode -eq 'ImpersonateAccount') {
-                $dataSource = [pscustomobject]@{
+                $dataSourceObject = [pscustomobject]@{
                     name = $DataSourceName
                     connectionString = $ConnectionString
                     maxConnections = $MaxConnections
@@ -190,7 +203,7 @@ function Update-TabularCubeDataSource
                     password = $ImpersonationPwd
                 }
             } else {
-                $dataSource = [pscustomobject]@{
+                $dataSourceObject = [pscustomobject]@{
                     name = $DataSourceName
                     connectionString = $ConnectionString
                     maxConnections = $MaxConnections
@@ -205,7 +218,7 @@ function Update-TabularCubeDataSource
                     database = $CubeDatabase
                     dataSource = $DataSourceName
                 }
-                dataSource = $dataSource
+                dataSource = $dataSourceObject
             }
         }
 

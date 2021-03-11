@@ -12,7 +12,7 @@
     "demands": [],
     "groups": [
         {
-          "name": "authmethod",
+          "name": "AuthenticationGroup",
           "displayName": "Authentication Method",
           "isExpanded": true
         }
@@ -21,7 +21,7 @@
     "version": {
         "Major": "1",
         "Minor": "1",
-        "Patch": "12"
+        "Patch": "14"
     },
     "instanceNameFormat": "Process SSAS tabular cube $(CubeDatabaseName)",
     "inputs": [
@@ -64,7 +64,7 @@
                 "WIN": "Windows Authentication (default)",
                 "SQL": "SQL Server or Azure SQL Authentication"
             },
-            "groupName": "authmethod"
+            "groupName": "AuthenticationGroup"
         },        
         {
             "name": "AuthenticationUser",
@@ -72,7 +72,7 @@
             "label": "Authentication User ID for the SSAS/AAS server",
             "required": false,
             "helpMarkDown": "The login ID for authenticating the connection to the Analysis Services instance",
-            "groupName": "authmethod",
+            "groupName": "AuthenticationGroup",
             "visibleRule": "AuthenticationMethod = SQL"
         },
         {
@@ -81,7 +81,7 @@
             "label": "The Password for the Authentication User ID",
             "required": false,
             "helpMarkDown": "Specifies the password for the Authentication login ID that was specified in the Authentication User ID parameter. Please use a secured variable in this field.",
-            "groupName": "authmethod",
+            "groupName": "AuthenticationGroup",
             "visibleRule": "AuthenticationMethod = SQL"
         }
     ],

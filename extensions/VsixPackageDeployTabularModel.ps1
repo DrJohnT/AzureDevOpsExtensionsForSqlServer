@@ -13,7 +13,7 @@ $json = Get-Content -Raw -Path $vssFile | ConvertFrom-Json;
 $PackageName = $json.id;
 $CurrentVersion = $json.version;
 Write-Host "Package: $PackageName" -ForegroundColor Blue; 
-Write-Host "Current Version: $CurrentVersion" -ForegroundColor Yellow; 
+Write-Host "Current Version: $CurrentVersion - will be incremented by 1" -ForegroundColor Yellow; 
 
 [System.IO.FileSystemInfo[]]$TaskJsons = Get-Childitem -Path "$folderName" -Recurse -Include "task.json" -ErrorAction SilentlyContinue;
 foreach ($TaskJson in $TaskJsons) {
