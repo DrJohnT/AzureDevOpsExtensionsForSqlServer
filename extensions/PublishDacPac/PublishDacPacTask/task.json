@@ -4,13 +4,13 @@
     "friendlyName": "Publish DACPAC using a DAC Publish Profile",
     "description": "Deploys a SQL Server Database DACPAC to a server using a DAC Publish Profile",
     "helpMarkDown": "[More Information](https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/PublishDacPac)",
-	"category": "Utility",
+    "category": "Utility",
     "visibility": [
-	    "Build",
+        "Build",
         "Release"
     ],
     "author": "Dr. John Tunnicliffe",
-	"demands": [
+    "demands": [
         "SqlPackage"
     ],
     "groups": [
@@ -32,28 +32,28 @@
      },
     "minimumAgentVersion": "1.95.0",
     "inputs": [
-		{
+        {
             "name": "DacPacPath",
             "type": "filePath",
             "label": "DACPAC Path",
             "required": true,
             "helpMarkDown": "Relative path from repo root of the DacPac to publish.  Wildcards can be used. Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
         },
-		{
+        {
             "name": "DacPublishProfile",
             "type": "filePath",
             "label": "DAC Publish Profile Path",
             "required": true,
             "helpMarkDown": "Relative path to the DAC Publish Profile. Wildcards can be used.  Note that the repo root is held in the variable $(System.DefaultWorkingDirectory)"
         },
-		{
+        {
             "name": "TargetServerName",
             "type": "string",
             "label": "Target Server Name or IP address",
             "required": true,
             "helpMarkDown": "Target Server Name or IP address.  Include the database instance name and port if necessary (e.g. myserver\\myinstance,myport)"
         },
-		{
+        {
             "name": "TargetDatabaseName",
             "type": "string",
             "label": "Target Database Name",
@@ -90,8 +90,8 @@
             "required": false,
             "visibleRule": "SqlCmdVariableType=text",
             "helpMarkDown": "A list of SqlCmd variables and their values in the format var=varvalue. \nThese will be used to dynamically update the DAC Publish Profile"
-        },		
-	    {
+        },      
+        {
             "name": "AuthenticationMethod",
             "type": "pickList",
             "label": "Authentication Method",
@@ -131,6 +131,7 @@
             "defaultValue": "latest",
             "options": {
                 "latest": "Latest",
+                "160": "SQL Server 2022",
                 "150": "SQL Server 2019",
                 "140": "SQL Server 2017",
                 "130": "SQL Server 2016",
