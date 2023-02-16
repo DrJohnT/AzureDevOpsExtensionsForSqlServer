@@ -131,6 +131,7 @@
             "defaultValue": "latest",
             "options": {
                 "latest": "Latest",
+                "160": "SQL Server 2022",
                 "150": "SQL Server 2019",
                 "140": "SQL Server 2017",
                 "130": "SQL Server 2016",
