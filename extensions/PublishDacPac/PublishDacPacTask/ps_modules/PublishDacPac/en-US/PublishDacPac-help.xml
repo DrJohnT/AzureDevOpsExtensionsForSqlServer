@@ -41,7 +41,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -140,7 +140,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -188,7 +188,8 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Version</maml:name>
           <maml:Description>
-            <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+            <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path. Valid values for -Version are: ('16', '15', '14', '13', '12', '11') which translate as follows:</maml:para>
+            <maml:para>* 16: SQL Server 2022</maml:para>
             <maml:para>* 15: SQL Server 2019</maml:para>
             <maml:para>* 14: SQL Server 2017</maml:para>
             <maml:para>* 13: SQL Server 2016</maml:para>
@@ -210,7 +211,8 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Version</maml:name>
         <maml:Description>
-          <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
+          <maml:para>Defines the specific version of SqlPackage.exe to which you wish to obtain the path. Valid values for -Version are: ('16', '15', '14', '13', '12', '11') which translate as follows:</maml:para>
+          <maml:para>* 16: SQL Server 2022</maml:para>
           <maml:para>* 15: SQL Server 2019</maml:para>
           <maml:para>* 14: SQL Server 2017</maml:para>
           <maml:para>* 13: SQL Server 2016</maml:para>
@@ -240,7 +242,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -361,7 +363,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021  This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023  This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -460,7 +462,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -535,7 +537,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -675,7 +677,7 @@
           <maml:name>PreferredVersion</maml:name>
           <maml:Description>
             <maml:para>Defines the preferred version of SqlPackage.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter at all. Recommed you use the latest version of SqlPackage.exe as this will deploy to all previous version of SQL Server.</maml:para>
-            <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
+            <maml:para>    latest = use the latest version of SqlPackage.exe     16 = SQL Server 2022     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -792,7 +794,7 @@
         <maml:name>PreferredVersion</maml:name>
         <maml:Description>
           <maml:para>Defines the preferred version of SqlPackage.exe you wish to use.  Use 'latest' for the latest version, or do not provide the parameter at all. Recommed you use the latest version of SqlPackage.exe as this will deploy to all previous version of SQL Server.</maml:para>
-          <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
+          <maml:para>    latest = use the latest version of SqlPackage.exe     16 = SQL Server 2022     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -879,7 +881,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1098,7 +1100,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1143,8 +1145,8 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>PreferredVersion</maml:name>
           <maml:Description>
-            <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
-            <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
+            <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter. Valid values for -Version are: ('16', '15', '14', '13', '12', '11') which translate as follows:</maml:para>
+            <maml:para>    latest = use the latest version of SqlPackage.exe     16 = SQL Server 2022     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
             <maml:para>If you are unsure which version(s) of SqlPackage.exe you have installed, use the function Find-SqlPackageLocations to obtain a full list.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -1160,8 +1162,8 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>PreferredVersion</maml:name>
         <maml:Description>
-          <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter. Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:</maml:para>
-          <maml:para>    latest = use the latest version of SqlPackage.exe     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
+          <maml:para>Defines the preferred version of SqlPackage.exe you wish to find.  Use 'latest' for the latest version, or do not provide the parameter. Valid values for -Version are: ('16', '15', '14', '13', '12', '11') which translate as follows:</maml:para>
+          <maml:para>    latest = use the latest version of SqlPackage.exe     16 = SQL Server 2022     15 = SQL Server 2019     14 = SQL Server 2017     13 = SQL Server 2016     12 = SQL Server 2014     11 = SQL Server 2012</maml:para>
           <maml:para>If you are unsure which version(s) of SqlPackage.exe you have installed, use the function Find-SqlPackageLocations to obtain a full list.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -1185,7 +1187,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2021 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
+        <maml:para>Written by (c) Dr. John Tunnicliffe, 2019-2023 https://github.com/DrJohnT/PublishDacPac This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>

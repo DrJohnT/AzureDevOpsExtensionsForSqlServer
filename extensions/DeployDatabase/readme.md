@@ -112,6 +112,7 @@ Defines the preferred version of SqlPackage.exe to use.  Simply pick 'latest' to
 |Version|SQL Server Release|
 |-------|------------------|
 |latest|Latest SQL Server version found on agent|
+|160|SQL Server 2022|
 |150|SQL Server 2019|
 |140|SQL Server 2017|
 |130|SQL Server 2016|

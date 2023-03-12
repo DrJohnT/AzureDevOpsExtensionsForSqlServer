@@ -22,8 +22,9 @@ function Get-SqlPackagePath {
 
     .PARAMETER Version
     Defines the specific version of SqlPackage.exe to which you wish to obtain the path.
-    Valid values for -Version are: ('15', '14', '13', '12', '11') which translate as follows:
+    Valid values for -Version are: ('16', '15', '14', '13', '12', '11') which translate as follows:
 
+    * 16: SQL Server 2022
     * 15: SQL Server 2019
     * 14: SQL Server 2017
     * 13: SQL Server 2016
@@ -56,7 +57,7 @@ function Get-SqlPackagePath {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
-        [ValidateSet('150', '140', '130', '120', '110', '15', '14', '13', '12', '11')]
+        [ValidateSet('160', '150', '140', '130', '120', '110', '16', '15', '14', '13', '12', '11')]
         [string]$Version
     )
 
