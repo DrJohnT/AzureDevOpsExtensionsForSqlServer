@@ -86,6 +86,13 @@
             "helpMarkDown": "The query timeout in seconds"
         },
         {
+            "name": "TrustServerCertificate",
+            "type": "boolean",
+            "label": "Trust server certificate chain",
+            "required": false,
+            "helpMarkDown": "Specifies if the server certificate chain is trusted."
+        },
+        {
             "name": "AuthenticationMethod",
             "type": "pickList",
             "label": "Authentication Method",
