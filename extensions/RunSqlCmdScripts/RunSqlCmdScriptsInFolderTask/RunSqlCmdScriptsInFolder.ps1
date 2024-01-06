@@ -21,7 +21,8 @@ param()
     [string]$AuthenticationMethod = Get-VstsInput -Name AuthenticationMethod;
     [string]$AuthenticationUser = Get-VstsInput -Name AuthenticationUser;
     [string]$AuthenticationPassword = Get-VstsInput -Name AuthenticationPassword;
-    [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;    
+    [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;   
+    [boolean]$TrustServerCertificate = Get-vstsInput -name TrustServerCertificate; 
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -94,7 +95,7 @@ param()
             foreach ($SqlCmdFile in $SqlCmdFiles) {
                 Write-Host "Running SQLCMD file:   $(Split-Path -Leaf $SqlCmdFile)";
 
-                $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database '$Database' -InputFile '$SqlCmdFile' -OutputSqlErrors 1 -ErrorAction Stop";
+                $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database '$Database' -InputFile '$SqlCmdFile' -OutputSqlErrors 1 -ErrorAction Stop -TrustServerCertificate:$TrustServerCertificate";
                 if ("$QueryTimeout" -ne "") {
                     $Command += " -QueryTimeout $QueryTimeout";
                 }

@@ -98,6 +98,13 @@
             "helpMarkDown": "The query timeout in seconds"
         },
         {
+            "name": "TrustServerCertificate",
+            "type": "boolean",
+            "label": "Trust server certificate chain",
+            "required": false,
+            "helpMarkDown": "Specifies if the server certificate chain is trusted."
+        },
+        {
             "name": "AuthenticationMethod",
             "type": "pickList",
             "label": "Authentication Method",
@@ -127,7 +134,7 @@
             "helpMarkDown": "Specifies the password for the SQL Server Authentication login ID that was specified in the Username parameter. Please use a secured variable in this field.",
             "groupName": "authmethod",
             "visibleRule": "AuthenticationMethod = sqlauth"
-        }
+        }        
     ],
     "execution": {
         "PowerShell3": {

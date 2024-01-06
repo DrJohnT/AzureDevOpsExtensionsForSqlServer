@@ -21,6 +21,7 @@ param()
     [string]$AuthenticationUser = Get-VstsInput -Name AuthenticationUser;
     [string]$AuthenticationPassword = Get-VstsInput -Name AuthenticationPassword;
     [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;
+    [boolean]$TrustServerCertificate = Get-vstsInput -name TrustServerCertificate;
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -38,6 +39,7 @@ param()
         Write-Host "Database:           $Database";
         Write-Host "SqlCmdSciptPath:    $SqlCmdSciptPath";
         Write-Host "SqlCmdVariableType: $SqlCmdVariableType";
+        Write-Host "TrustServerCertificate: $TrustServerCertificate";
         if ($AuthenticationMethod -eq "sqlauth") {
             Write-Host "AuthenticationUser: $AuthenticationUser";
         }
@@ -80,7 +82,7 @@ param()
         }
 
         # Now Invoke-Sqlcmd
-        $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database '$Database' -InputFile '$SqlCmdSciptPath' -OutputSqlErrors 1 -ErrorAction Stop";
+        $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database '$Database' -InputFile '$SqlCmdSciptPath' -OutputSqlErrors 1 -ErrorAction Stop -TrustServerCertificate:$TrustServerCertificate";
 
         if ("$QueryTimeout" -ne "") {
             $Command += " -QueryTimeout $QueryTimeout";
