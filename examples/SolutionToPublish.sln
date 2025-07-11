@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DatabaseToPublish", "DatabaseToPublish\DatabaseToPublish.sqlproj", "{692977CE-0842-4424-B08A-FE676674A66D}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "CubeAtCompatibility1500", "CubeAtCompatibility1500\CubeAtCompatibility1500.smproj", "{EF14186E-FA9B-4882-8B18-CD14E2ECD631}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DatabaseToPublishToAzureSqlDB", "DatabaseToPublishToAzureSqlDB\DatabaseToPublishToAzureSqlDB.sqlproj", "{D36C464D-DAB9-4C92-991C-C8953F2B12C3}"
+EndProject
+Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "CubeAtCompatibility1600", "CubeAtCompatibility1600\CubeAtCompatibility1600.smproj", "{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,24 @@ Global
 		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.ActiveCfg = Release|Any CPU
 		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.Build.0 = Release|Any CPU
 		{D36C464D-DAB9-4C92-991C-C8953F2B12C3}.Release|x86.Deploy.0 = Release|Any CPU
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Debug|Any CPU.ActiveCfg = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Debug|Any CPU.Build.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Debug|Any CPU.Deploy.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Debug|x86.ActiveCfg = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Debug|x86.Build.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Debug|x86.Deploy.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Development|Any CPU.ActiveCfg = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Development|Any CPU.Build.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Development|Any CPU.Deploy.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Development|x86.ActiveCfg = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Development|x86.Build.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Development|x86.Deploy.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Release|Any CPU.ActiveCfg = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Release|Any CPU.Build.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Release|Any CPU.Deploy.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Release|x86.ActiveCfg = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Release|x86.Build.0 = Development|x86
+		{73BD5E0D-EA17-4490-9182-CCD8E9C8D2FD}.Release|x86.Deploy.0 = Development|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
