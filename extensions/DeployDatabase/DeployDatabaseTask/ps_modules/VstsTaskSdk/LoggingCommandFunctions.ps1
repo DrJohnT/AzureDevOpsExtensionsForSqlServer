@@ -8,6 +8,17 @@ $script:loggingCommandEscapeMappings = @( # TODO: WHAT ABOUT "="? WHAT ABOUT "%"
 # TODO: BUG: Escape % ???
 # TODO: Add test to verify don't need to escape "=".
 
+$commandCorrelationId = $env:COMMAND_CORRELATION_ID
+if ($null -ne $commandCorrelationId)
+{
+    [System.Environment]::SetEnvironmentVariable("COMMAND_CORRELATION_ID", $null)
+}
+
+$IssueSources = @{
+    CustomerScript = "CustomerScript"
+    TaskInternal = "TaskInternal"
+}
+
 <#
 .SYNOPSIS
 See https://github.com/Microsoft/vsts-tasks/blob/master/docs/authoring/commands.md
@@ -286,7 +297,10 @@ function Write-TaskError {
         [string]$SourcePath,
         [string]$LineNumber,
         [string]$ColumnNumber,
-        [switch]$AsOutput)
+        [switch]$AsOutput,
+        [string]$IssueSource,
+        [string]$AuditAction
+    )
 
     Write-LogIssue -Type error @PSBoundParameters
 }
@@ -322,7 +336,10 @@ function Write-TaskWarning {
         [string]$SourcePath,
         [string]$LineNumber,
         [string]$ColumnNumber,
-        [switch]$AsOutput)
+        [switch]$AsOutput,
+        [string]$IssueSource,
+        [string]$AuditAction
+    )
 
     Write-LogIssue -Type warning @PSBoundParameters
 }
@@ -436,6 +453,41 @@ function Write-UpdateReleaseName {
     Write-LoggingCommand -Area 'release' -Event 'updatereleasename' -Data $Name -AsOutput:$AsOutput
 }
 
+<#
+.SYNOPSIS
+See https://github.com/Microsoft/vsts-tasks/blob/master/docs/authoring/commands.md
+
+.PARAMETER AsOutput
+Indicates whether to write the logging command directly to the host or to the output pipeline.
+#>
+function Write-LoggingCommand {
+    [CmdletBinding(DefaultParameterSetName = 'Parameters')]
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Parameters')]
+        [string]$Area,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Parameters')]
+        [string]$Event,
+        [Parameter(ParameterSetName = 'Parameters')]
+        [string]$Data,
+        [Parameter(ParameterSetName = 'Parameters')]
+        [hashtable]$Properties,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Object')]
+        $Command,
+        [switch]$AsOutput)
+
+    if ($PSCmdlet.ParameterSetName -eq 'Object') {
+        Write-LoggingCommand -Area $Command.Area -Event $Command.Event -Data $Command.Data -Properties $Command.Properties -AsOutput:$AsOutput
+        return
+    }
+
+    $command = Format-LoggingCommand -Area $Area -Event $Event -Data $Data -Properties $Properties
+    if ($AsOutput) {
+        $command
+    } else {
+        Write-Host $command
+    }
+}
+
 ########################################
 # Private functions.
 ########################################
@@ -469,7 +521,7 @@ function Format-LoggingCommand {
         [Parameter(Mandatory = $true)]
         [string]$Event,
         [string]$Data,
-        [hashtable]$Properties)
+        [System.Collections.IDictionary]$Properties)
 
     # Append the preamble.
     [System.Text.StringBuilder]$sb = New-Object -TypeName System.Text.StringBuilder
@@ -498,34 +550,6 @@ function Format-LoggingCommand {
     $sb.Append(']').Append($Data).ToString()
 }
 
-function Write-LoggingCommand {
-    [CmdletBinding(DefaultParameterSetName = 'Parameters')]
-    param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Parameters')]
-        [string]$Area,
-        [Parameter(Mandatory = $true, ParameterSetName = 'Parameters')]
-        [string]$Event,
-        [Parameter(ParameterSetName = 'Parameters')]
-        [string]$Data,
-        [Parameter(ParameterSetName = 'Parameters')]
-        [hashtable]$Properties,
-        [Parameter(Mandatory = $true, ParameterSetName = 'Object')]
-        $Command,
-        [switch]$AsOutput)
-
-    if ($PSCmdlet.ParameterSetName -eq 'Object') {
-        Write-LoggingCommand -Area $Command.Area -Event $Command.Event -Data $Command.Data -Properties $Command.Properties -AsOutput:$AsOutput
-        return
-    }
-
-    $command = Format-LoggingCommand -Area $Area -Event $Event -Data $Data -Properties $Properties
-    if ($AsOutput) {
-        $command
-    } else {
-        Write-Host $command
-    }
-}
-
 function Write-LogIssue {
     [CmdletBinding()]
     param(
@@ -537,15 +561,24 @@ function Write-LogIssue {
         [string]$SourcePath,
         [string]$LineNumber,
         [string]$ColumnNumber,
-        [switch]$AsOutput)
+        [switch]$AsOutput,
+        [AllowNull()]
+        [ValidateSet('CustomerScript', 'TaskInternal')]
+        [string]$IssueSource = $IssueSources.TaskInternal,
+        [string]$AuditAction
+    )
 
-    $command = Format-LoggingCommand -Area 'task' -Event 'logissue' -Data $Message -Properties @{
-            'type' = $Type
-            'code' = $ErrCode
-            'sourcepath' = $SourcePath
-            'linenumber' = $LineNumber
-            'columnnumber' = $ColumnNumber
-        }
+    $properties = [ordered]@{
+        'type'          = $Type
+        'code'          = $ErrCode
+        'sourcepath'    = $SourcePath
+        'linenumber'    = $LineNumber
+        'columnnumber'  = $ColumnNumber
+        'source'        = $IssueSource
+        'correlationId' = $commandCorrelationId
+        'auditAction'   = $AuditAction
+    }
+    $command = Format-LoggingCommand -Area 'task' -Event 'logissue' -Data $Message -Properties $properties
     if ($AsOutput) {
         return $command
     }

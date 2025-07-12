@@ -44,6 +44,7 @@ Export-ModuleMember -Function @(
         'Get-TaskVariable'
         'Get-TaskVariableInfo'
         'Set-TaskVariable'
+        'Get-PipelineFeature'
         # Legacy find functions.
         'Find-Files'
         # Localization functions.
@@ -54,6 +55,7 @@ Export-ModuleMember -Function @(
         'Write-AddBuildTag'
         'Write-AssociateArtifact'
         'Write-LogDetail'
+        'Write-LoggingCommand'
         'Write-PrependPath'
         'Write-SetEndpoint'
         'Write-SetProgress'
@@ -82,6 +84,7 @@ Export-ModuleMember -Function @(
         'Assert-Agent'
         'Assert-Path'
         'Invoke-Tool'
+        'Invoke-Process'
         # Trace functions.
         'Trace-EnteringInvocation'
         'Trace-LeavingInvocation'
@@ -91,6 +94,16 @@ Export-ModuleMember -Function @(
         # Client cert functions
         'Get-ClientCertificate'
     )
+
+$IssueAuditActions = @{
+    Unknown              = '0'
+    ShellTasksValidation = '1'
+}
+
+Export-ModuleMember -Variable @(
+    'IssueSources'
+    $IssueAuditActions
+)
 
 # Override Out-Default globally.
 $null = New-Item -Force -Path "function:\global:Out-Default" -Value (Get-Command -CommandType Function -Name Out-Default -ListImported)

@@ -8,7 +8,7 @@ param()
     Run a single SQL Script in SQLCMD mode, passing in an array of SQLCMD variables if supplied.
 
     .NOTES
-    Script written by (c) Dr. John Tunnicliffe, 2019 https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/RunSqlCmdScripts
+    Script written by (c) Dr. John Tunnicliffe, 2019 - 2025 https://github.com/DrJohnT/AzureDevOpsExtensionsForSqlServer/tree/master/extensions/RunSqlCmdScripts
 	This PowerShell script is released under the MIT license http://www.opensource.org/licenses/MIT
 #>
     [string]$SqlCmdSciptPath = Get-VstsInput -Name SqlCmdSciptPath -Require;

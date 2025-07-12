@@ -9,7 +9,7 @@ Only a subset of the referenced assemblies may actually be required, depending o
 
 Walks an assembly's references to determine all of it's dependencies. Also walks the references of the dependencies, and so on until all nested dependencies have been traversed. Dependencies are searched for in the directory of the specified assembly. NET Framework assemblies are omitted.
 
-See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
+See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .PARAMETER LiteralPath
 Assembly to walk.
@@ -106,14 +106,14 @@ The agent job token is used to construct the credentials object. The identity as
 
 Refer to Get-VstsTfsService for a more simple to get a TFS service object.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .PARAMETER OMDirectory
 Directory where the extended client object model DLLs are located. If the DLLs for the credential types are not already loaded, an attempt will be made to automatically load the required DLLs from the object model directory.
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .EXAMPLE
 #
@@ -139,6 +139,31 @@ function Get-TfsClientCredentials {
         # Get the endpoint.
         $endpoint = Get-Endpoint -Name SystemVssConnection -Require
 
+        # Test if the Newtonsoft.Json DLL exists in the OM directory.
+        $newtonsoftDll = [System.IO.Path]::Combine($OMDirectory, "Newtonsoft.Json.dll")
+        Write-Verbose "Testing file path: '$newtonsoftDll'"
+        if (!(Test-Path -LiteralPath $newtonsoftDll -PathType Leaf)) {
+            Write-Verbose 'Not found. Rethrowing exception.'
+            throw
+        }
+
+        # Add a binding redirect and try again. Parts of the Dev15 preview SDK have a
+        # dependency on the 6.0.0.0 Newtonsoft.Json DLL, while other parts reference
+        # the 8.0.0.0 Newtonsoft.Json DLL.
+        Write-Verbose "Adding assembly resolver."
+        $onAssemblyResolve = [System.ResolveEventHandler] {
+            param($sender, $e)
+
+            if ($e.Name -like 'Newtonsoft.Json, *') {
+                Write-Verbose "Resolving '$($e.Name)' to '$newtonsoftDll'."
+
+                return [System.Reflection.Assembly]::LoadFrom($newtonsoftDll)
+            }
+
+            return $null
+        }
+        [System.AppDomain]::CurrentDomain.add_AssemblyResolve($onAssemblyResolve)
+
         # Validate the type can be found.
         $null = Get-OMType -TypeName 'Microsoft.TeamFoundation.Client.TfsClientCredentials' -OMKind 'ExtendedClient' -OMDirectory $OMDirectory -Require
 
@@ -162,7 +187,7 @@ Gets a TFS extended client service.
 .DESCRIPTION
 Gets an instance of an ITfsTeamProjectCollectionObject.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .PARAMETER TypeName
 Namespace-qualified type name of the service to get.
@@ -172,7 +197,7 @@ Directory where the extended client object model DLLs are located. If the DLLs f
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .PARAMETER Uri
 URI to use when initializing the service. If not specified, defaults to System.TeamFoundationCollectionUri.
@@ -239,14 +264,14 @@ The agent job token is used to construct the credentials object. The identity as
 
 Refer to Get-VstsVssHttpClient for a more simple to get a VSS HTTP client.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 .PARAMETER OMDirectory
 Directory where the REST client object model DLLs are located. If the DLLs for the credential types are not already loaded, an attempt will be made to automatically load the required DLLs from the object model directory.
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 .EXAMPLE
 #
@@ -306,7 +331,7 @@ Gets a VSS HTTP client.
 .DESCRIPTION
 Gets an instance of an VSS HTTP client.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 .PARAMETER TypeName
 Namespace-qualified type name of the HTTP client to get.
@@ -316,7 +341,7 @@ Directory where the REST client object model DLLs are located. If the DLLs for t
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 # .PARAMETER Uri
 # URI to use when initializing the HTTP client. If not specified, defaults to System.TeamFoundationCollectionUri.
@@ -475,7 +500,7 @@ VstsTaskSdk.VstsWebProxy implement System.Net.IWebProxy interface.
 
 .EXAMPLE
 $webProxy = Get-VstsWebProxy
-$webProxy.GetProxy(New-Object System.Uri("https://github.com/Microsoft/vsts-task-lib"))
+$webProxy.GetProxy(New-Object System.Uri("https://github.com/Microsoft/azure-pipelines-task-lib"))
 #>
 function Get-WebProxy {
     [CmdletBinding()]

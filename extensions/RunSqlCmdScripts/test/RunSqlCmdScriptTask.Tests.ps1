@@ -35,7 +35,15 @@
         $data.SqlCmdScriptFile3 =  Resolve-Path "$SqlCmdFolder\InsertIntoMyOtherTableSqlCmd3.sql";
         $data.RowCountQuery = "select COUNT(*) as CountOfRows from dbo.MyOtherTable;";
         $data.HasValueQuery = "select MyOtherColumn from dbo.MyOtherTable where MyOtherTableId = 2";
-                
+           
+        <#
+        Write-Host $data.ServerInstance 
+        Write-Host $data.Database
+        Write-Host $data.AuthenticationUser
+        Write-Host $data.AuthenticationPassword
+        Write-Host $data.RunSqlCmdScriptTask    
+        Write-Host $SecurePassword
+        #>
         return $data;
     }
 }
@@ -60,7 +68,8 @@ Describe "RunSqlCmdScriptTask" -Tag Azure,OnPrem {
             $env:INPUT_SqlCmdVariableType = 'none'
             $env:INPUT_SqlCmdVariablesInJson = ''
             $env:INPUT_SqlCmdVariablesInText = '';
-            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
+            $scriptContent = Get-Content $data.RunSqlCmdScriptTask -Raw
+            Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($scriptContent));
 
             $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
             $results.Item('CountOfRows') | Should -Be 1;

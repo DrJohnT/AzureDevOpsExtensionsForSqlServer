@@ -1,12 +1,12 @@
+# Before using this script, ensure that the VstsTaskSdk module is installed using the following command:
+# Install-Module -Name VstsTaskSdk -Scope AllUsers -AllowClobber -Force
+# Then change the following line to the correct path of the VstsTaskSdk module:
+$sourceDir = "C:\Program Files\WindowsPowerShell\Modules\VstsTaskSdk\0.21.0\*";
 
 $ScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path;
 
 foreach ($folder in Get-ChildItem | Where-Object { $_.PSIsContainer })
 {
-    #Write-host "Folder = $folder";
-  
-    $sourceDir = "C:\Users\LJ227PH\OneDrive - EY\Documents\WindowsPowerShell\Modules\VstsTaskSdk\0.11.0\*";
-
     $targetDirs = Get-Childitem -Path "$ScriptPath\$folder\*Task\ps_modules\VstsTaskSdk" -ErrorAction SilentlyContinue;
     
     foreach ($targetDir in $targetDirs) {
