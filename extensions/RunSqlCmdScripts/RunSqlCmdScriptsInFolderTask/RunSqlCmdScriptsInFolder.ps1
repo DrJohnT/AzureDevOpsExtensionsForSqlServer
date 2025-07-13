@@ -22,7 +22,7 @@ param()
     [string]$AuthenticationUser = Get-VstsInput -Name AuthenticationUser;
     [string]$AuthenticationPassword = Get-VstsInput -Name AuthenticationPassword;
     [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;   
-    [boolean]$TrustServerCertificate = Get-vstsInput -name TrustServerCertificate; 
+    [boolean]$TrustServerCertificate = Get-VstsInput -name TrustServerCertificate; 
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -42,8 +42,10 @@ param()
             Write-Host "Database:              $Database";
             Write-Host "SqlCmdSciptFolderPath: $SqlCmdSciptFolderPath";
             Write-Host "Recursive:             $Recursive";
+            Write-Host "TrustServerCertificate: $TrustServerCertificate";
             Write-Host "SqlCmdVariableType:    $SqlCmdVariableType";
             if ($AuthenticationMethod -eq "sqlauth") {
+                Write-Host "AuthenticationMethod:  $AuthenticationMethod";
                 Write-Host "AuthenticationUser:    $AuthenticationUser";
             }
 
@@ -86,30 +88,34 @@ param()
 
             Write-Host "SQLCMD folder:         $SqlCmdSciptFolderPath";
             if ($Recursive -eq 'true') {
-                $SqlCmdFiles = Get-ChildItem -Path $SqlCmdSciptFolderPath -Recurse -Include *.sql;
+                $SqlCmdFiles = Get-ChildItem -Path $SqlCmdSciptFolderPath -Recurse -Include:*.sql;
             } else {
-                $SqlCmdFiles = Get-ChildItem -Path "$SqlCmdSciptFolderPath\*" -Include *.sql;
+                $SqlCmdFiles = Get-ChildItem -Path "$SqlCmdSciptFolderPath\*" -Include:*.sql;
             }
 
             # Now Invoke-Sqlcmd for each script in the folder
             foreach ($SqlCmdFile in $SqlCmdFiles) {
                 Write-Host "Running SQLCMD file:   $(Split-Path -Leaf $SqlCmdFile)";
 
-                $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database '$Database' -InputFile '$SqlCmdFile' -OutputSqlErrors 1 -ErrorAction Stop -TrustServerCertificate:$TrustServerCertificate";
+                $Command = "Invoke-Sqlcmd -ServerInstance:'$Server' -Database:'$Database' -InputFile:'$SqlCmdFile' -OutputSqlErrors:1 -ErrorAction:Stop";
                 if ("$QueryTimeout" -ne "") {
-                    $Command += " -QueryTimeout $QueryTimeout";
+                    $Command += " -QueryTimeout:$QueryTimeout";
                 }
 
                 if ($AuthenticationMethod -eq "sqlauth") { 
                     [SecureString] $SecurePassword = ConvertTo-SecureString $AuthenticationPassword -AsPlainText -Force;
                     [PsCredential] $Credential = New-Object System.Management.Automation.PSCredential($AuthenticationUser, $SecurePassword);
-                    $Command += ' -Credential $Credential';
+                    $Command += ' -Credential:$Credential';
                 }
 
                 if ($SqlCmdVariableType -ne 'none') {
-                    $Command += ' -Variable $SqlCmdVariables';
+                    $Command += ' -Variable:$SqlCmdVariables';
                 }     
-write-host $Command
+
+                if ($TrustServerCertificate) {
+                    $Command += ' -TrustServerCertificate:$true';
+                }
+write-host $Command;
                 $scriptBlock = [Scriptblock]::Create($Command);          
                 
                 if ($SqlCmdVariableType -ne 'none' -and $AuthenticationMethod -eq "sqlauth") {

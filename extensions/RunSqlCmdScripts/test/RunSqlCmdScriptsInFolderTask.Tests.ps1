@@ -42,7 +42,7 @@ Describe "RunSqlCmdScriptsInFolder" -Tag Azure,OnPrem {
     Context "Execute Sql Script" {
         BeforeEach {
             $data = Get-Config;
-            Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query "truncate table dbo.MyTable" -Credential $data.Credential -ErrorAction Stop;
+            Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:"truncate table dbo.MyTable" -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
         }
 
         It "Execute plain SQL Script in folder" {
@@ -54,12 +54,13 @@ Describe "RunSqlCmdScriptsInFolder" -Tag Azure,OnPrem {
             $env:INPUT_AuthenticationMethod = "sqlauth";
             $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
             $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;             
+            $env:INPUT_TrustServerCertificate = 'true';
             $env:INPUT_SqlCmdVariableType = 'none'
             $env:INPUT_SqlCmdVariablesInJson = ''
             $env:INPUT_SqlCmdVariablesInText = '';
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptsInFolderTask));
 
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.RowCountQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('CountOfRows') | Should -Be 6;
         }
 
@@ -71,7 +72,8 @@ Describe "RunSqlCmdScriptsInFolder" -Tag Azure,OnPrem {
             $env:INPUT_Recursive = 'true';
             $env:INPUT_AuthenticationMethod = "sqlauth";
             $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
-            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;          
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword; 
+            $env:INPUT_TrustServerCertificate = 'true';         
             $env:INPUT_SqlCmdVariableType = 'text'
 
             [string] $sqlCmdValues = @"
@@ -88,13 +90,13 @@ NewDataValue3=ThreeValues3
 
             $query = $data.HasValueQuery;
 
-            $results = Invoke-Sqlcmd -ServerInstance  $data.ServerInstance -Database $data.Database -Query "$query 3" -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:"$query 3" -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('MyColumn') | Should -Be 'DataValue2';
 
-            $results = Invoke-Sqlcmd -ServerInstance  $data.ServerInstance -Database $data.Database -Query "$query 5" -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:"$query 5" -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('MyColumn') | Should -Be 'ThreeValues2';
 
-            $results = Invoke-Sqlcmd -ServerInstance  $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.RowCountQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
 
         }
 
@@ -106,7 +108,8 @@ NewDataValue3=ThreeValues3
             $env:INPUT_Recursive = 'false';
             $env:INPUT_AuthenticationMethod = "sqlauth";
             $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
-            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;           
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;  
+            $env:INPUT_TrustServerCertificate = 'true';       
             $env:INPUT_SqlCmdVariableType = 'json'
             [string] $sqlCmdValues = @"
             {
@@ -123,13 +126,13 @@ NewDataValue3=ThreeValues3
 
             $query = $data.HasValueQuery;
             
-            $results = Invoke-Sqlcmd -ServerInstance  $data.ServerInstance -Database $data.Database -Query "$query 3" -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:"$query 3" -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('MyColumn') | Should -Be 'JsonValue2';
 
-            $results = Invoke-Sqlcmd -ServerInstance  $data.ServerInstance -Database $data.Database -Query "$query 5" -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:"$query 5" -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('MyColumn') | Should -Be 'ThreeJsonValues2';
 
-            $results = Invoke-Sqlcmd -ServerInstance  $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.RowCountQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('CountOfRows') | Should -Be 6;
         }
     }

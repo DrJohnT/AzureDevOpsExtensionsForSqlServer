@@ -54,7 +54,7 @@ Describe "RunSqlCmdScriptTask" -Tag Azure,OnPrem {
         
         BeforeEach {
             $data = Get-Config;
-            Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query "truncate table dbo.MyOtherTable;" -Credential $data.Credential -ErrorAction Stop;
+            Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:"truncate table dbo.MyOtherTable;" -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
         }
 
         It "Execute plain SQL Script" {
@@ -64,14 +64,15 @@ Describe "RunSqlCmdScriptTask" -Tag Azure,OnPrem {
             $env:INPUT_Database = $data.Database;
             $env:INPUT_AuthenticationMethod = "sqlauth";
             $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
-            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;             
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;   
+            $env:INPUT_TrustServerCertificate = 'true';          
             $env:INPUT_SqlCmdVariableType = 'none'
             $env:INPUT_SqlCmdVariablesInJson = ''
             $env:INPUT_SqlCmdVariablesInText = '';
             $scriptContent = Get-Content $data.RunSqlCmdScriptTask -Raw
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($scriptContent));
 
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.RowCountQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('CountOfRows') | Should -Be 1;
         }
 
@@ -82,7 +83,8 @@ Describe "RunSqlCmdScriptTask" -Tag Azure,OnPrem {
             $env:INPUT_Database = $data.Database;
             $env:INPUT_AuthenticationMethod = "sqlauth";
             $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
-            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;                
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword; 
+            $env:INPUT_TrustServerCertificate = 'true';                 
             $env:INPUT_SqlCmdVariableType = 'text';
             $env:INPUT_SqlCmdVariablesInJson = '';
             $env:INPUT_SqlCmdVariablesInText = @"
@@ -91,10 +93,10 @@ MyDataValue2=Value2
 "@
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
 
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.HasValueQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.HasValueQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('MyOtherColumn') | Should -Be 'Value2';
 
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.RowCountQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('CountOfRows') | Should -Be 2;
         }
 
@@ -105,7 +107,8 @@ MyDataValue2=Value2
             $env:INPUT_Database = $data.Database;
             $env:INPUT_AuthenticationMethod = "sqlauth";
             $env:INPUT_AuthenticationUser = $data.AuthenticationUser;
-            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;                
+            $env:INPUT_AuthenticationPassword = $data.AuthenticationPassword;   
+            $env:INPUT_TrustServerCertificate = 'true';              
             $env:INPUT_SqlCmdVariableType = 'text'
             $env:INPUT_SqlCmdVariablesInJson = ''
             [string] $sqlCmdValues = @"
@@ -116,10 +119,10 @@ NewDataValue3=ThreeValues3
             $env:INPUT_SqlCmdVariablesInText = $sqlCmdValues;
             Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create($data.RunSqlCmdScriptTask));
 
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.HasValueQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.HasValueQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('MyOtherColumn') | Should -Be 'ThreeValues2';
 
-            $results = Invoke-Sqlcmd -ServerInstance $data.ServerInstance -Database $data.Database -Query $data.RowCountQuery -Credential $data.Credential -ErrorAction Stop;
+            $results = Invoke-Sqlcmd -ServerInstance:$data.ServerInstance -Database:$data.Database -Query:$data.RowCountQuery -Credential:$data.Credential -ErrorAction:Stop -TrustServerCertificate:$true;
             $results.Item('CountOfRows') | Should -Be 3;
         }
 

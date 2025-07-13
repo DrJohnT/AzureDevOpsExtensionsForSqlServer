@@ -21,7 +21,7 @@ param()
     [string]$AuthenticationUser = Get-VstsInput -Name AuthenticationUser;
     [string]$AuthenticationPassword = Get-VstsInput -Name AuthenticationPassword;
     [string]$QueryTimeout = Get-VstsInput -Name QueryTimeout;
-    [boolean]$TrustServerCertificate = Get-vstsInput -name TrustServerCertificate;
+    [boolean]$TrustServerCertificate = Get-VstsInput -name TrustServerCertificate;
 
     $global:ErrorActionPreference = 'Stop';
 
@@ -82,7 +82,7 @@ param()
         }
 
         # Now Invoke-Sqlcmd
-        $Command = "Invoke-Sqlcmd -ServerInstance '$Server' -Database '$Database' -InputFile '$SqlCmdSciptPath' -OutputSqlErrors 1 -ErrorAction Stop -TrustServerCertificate:$TrustServerCertificate";
+        $Command = "Invoke-Sqlcmd -ServerInstance:'$Server' -Database:'$Database' -InputFile:'$SqlCmdSciptPath' -OutputSqlErrors:1 -ErrorAction:Stop";
 
         if ("$QueryTimeout" -ne "") {
             $Command += " -QueryTimeout $QueryTimeout";
@@ -91,13 +91,17 @@ param()
         if ($AuthenticationMethod -eq "sqlauth") { 
             [SecureString] $SecurePassword = ConvertTo-SecureString $AuthenticationPassword -AsPlainText -Force;
             [PsCredential] $Credential = New-Object System.Management.Automation.PSCredential($AuthenticationUser, $SecurePassword);
-            $Command += ' -Credential $Credential';
+            $Command += ' -Credential:$Credential';
         }
 
         if ($SqlCmdVariableType -ne 'none') {
-            $Command += ' -Variable $SqlCmdVariables';
+            $Command += ' -Variable:$SqlCmdVariables';
         }     
 
+        if ($TrustServerCertificate) {
+            $Command += ' -TrustServerCertificate:$true';
+        }
+write-host $Command;
         $scriptBlock = [Scriptblock]::Create($Command);          
         
         if ($SqlCmdVariableType -ne 'none' -and $AuthenticationMethod -eq "sqlauth") {
